@@ -13,7 +13,11 @@ public class Enthusiast {
 	//temporary until IDs are implemented for other classes
 	private String favoritePlayer;
 
-	public Enthusiast(String username, String lastName, String firstName, String middleName, String dateOfBirth, String sex, String joinDate) {
+	public Enthusiast() {
+		//empty constructor
+	};
+
+	public Enthusiast(String username, String lastName, String firstName, String middleName, String dateOfBirth, String sex) {
 		this.ID = nextID++;
 		this.username = username;
 		this.lastName = lastName;
