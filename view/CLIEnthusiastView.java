@@ -26,7 +26,10 @@ public class CLIEnthusiastView implements EnthusiastView {
 
 	@Override
 	public void showEnthusiast(Enthusiast enthusiast) {
-		System.out.println("To be implemented");
+		System.out.println(enthusiast.getUsername() + " ID#" + enthusiast.getID());
+		System.out.println("Name: " + enthusiast.getFirstName() + " " + enthusiast.getMiddleName() + ". " + enthusiast.getLastName());
+		System.out.println("Birthday: " + enthusiast.getDateOfBirth());
+		System.out.println("Sex: " + enthusiast.getSex());
 	}
 
 	@Override
