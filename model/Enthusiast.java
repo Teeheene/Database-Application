@@ -1,5 +1,7 @@
 package model;
 
+import view.LoginBuilder;
+
 public class Enthusiast {
 	private static int nextID = 1;
 	private int ID;
@@ -13,11 +15,14 @@ public class Enthusiast {
 	//temporary until IDs are implemented for other classes
 	private String favoritePlayer;
 
+	//login details
+	private LoginBuilder loginDetails;
+
 	public Enthusiast() {
 		//empty constructor
 	};
 
-	public Enthusiast(String username, String lastName, String firstName, String middleName, String dateOfBirth, String sex) {
+	public Enthusiast(String username, String lastName, String firstName, String middleName, String dateOfBirth, String sex, String password) {
 		this.ID = nextID++;
 		this.username = username;
 		this.lastName = lastName;
@@ -26,6 +31,7 @@ public class Enthusiast {
 		this.dateOfBirth = dateOfBirth;
 		this.sex = sex;
 		this.joinDate = joinDate;
+		this.loginDetails = new LoginBuilder(username, password, "enthusiast"); 
 	}
 
 	public int getID() { return ID; }
@@ -36,7 +42,8 @@ public class Enthusiast {
 	public String getDateOfBirth() { return dateOfBirth; }
 	public String getSex() { return sex; }
 	public String getJoinDate() { return joinDate; }
-	public String favoritePlayer() { return favoritePlayer; }
+	public String getFavoritePlayer() { return favoritePlayer; }
+	public String getPassword() { return loginDetails.getPassword(); } 
 
 	public void setUsername(String username) { this.username = username; }
 	public void setLastName(String lastName) { this.lastName = lastName; }

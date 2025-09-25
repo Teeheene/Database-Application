@@ -8,6 +8,8 @@ public class CLIEnthusiastView implements EnthusiastView {
 
 	@Override
 	public Enthusiast createEnthusiast() {
+		System.out.println("_______________________");	
+		System.out.println("REGISTER");
 		System.out.print("Username: ");
 		String username = input.nextLine();
 		System.out.print("Last Name: ");
@@ -20,16 +22,23 @@ public class CLIEnthusiastView implements EnthusiastView {
 		String dateOfBirth = input.nextLine();
 		System.out.print("Sex: ");
 		String sex = input.nextLine();
+		System.out.println("");
+		System.out.print("Account Password: ");
+		String password = input.nextLine();
+		System.out.println("_______________________");	
 		
-		return new Enthusiast(username, lastName, firstName, middleName, dateOfBirth, sex);
+		return new Enthusiast(username, lastName, firstName, middleName, dateOfBirth, sex, password);
 	}
 
 	@Override
 	public void showEnthusiast(Enthusiast enthusiast) {
+		System.out.println("_______________________");	
+		System.out.println("PROFILE");	
 		System.out.println(enthusiast.getUsername() + " ID#" + enthusiast.getID());
 		System.out.println("Name: " + enthusiast.getFirstName() + " " + enthusiast.getMiddleName() + ". " + enthusiast.getLastName());
 		System.out.println("Birthday: " + enthusiast.getDateOfBirth());
 		System.out.println("Sex: " + enthusiast.getSex());
+		System.out.println("_______________________");	
 	}
 
 	@Override
@@ -40,6 +49,6 @@ public class CLIEnthusiastView implements EnthusiastView {
 	@Override
 	public void showDelete(Enthusiast enthusiast) {
 		System.out.println("To be implemented");
-
 	}
 }
+
