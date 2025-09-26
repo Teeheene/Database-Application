@@ -23,9 +23,12 @@ public class EnthusiastManagement {
 		enthusiastList.remove(enthusiast);
 	}
 
-	public void updateEnthusiast(int id, Enthusiast updatedEnthusiast) {
-		Enthusiast enthusiastReference = searchEnthusiast("id", String.valueOf(id));
-		
+	public Enthusiast updateEnthusiast(Enthusiast oldEnthusiast, 
+			Enthusiast updatedEnthusiast) {
+		Enthusiast enthusiastReference = 
+			searchEnthusiast("id", String.valueOf(oldEnthusiast.getID()));
+		enthusiastReference.update(updatedEnthusiast);
+		return enthusiastReference;
 	}
 	
 	public Enthusiast searchEnthusiast(String category, String key) {

@@ -2,6 +2,9 @@ package model;
 
 import view.LoginBuilder;
 
+/*
+ *	Make a builder for enthusiast :D
+ * */
 public class Enthusiast {
 	private static int nextID = 1;
 	private int ID;
@@ -35,12 +38,12 @@ public class Enthusiast {
 	}
 
 	public void update(Enthusiast other) {
-		this.username = other.getUsername();
-		this.lastName = other.getLastName();
-		this.firstName = other.getFirstName();
-		this.middleName = other.getMiddleName();
-		this.dateOfBirth = other.getDateOfBirth();
-		this.sex = other.getSex();
+		if(other.getUsername() != null) { this.username = other.getUsername(); }
+		if(other.getLastName() != null) { this.lastName = other.getLastName(); }
+		if(other.getFirstName() != null) { this.firstName = other.getFirstName(); }
+		if(other.getMiddleName() != null) { this.middleName = other.getMiddleName(); }
+		if(other.getDateOfBirth() != null) { this.dateOfBirth = other.getDateOfBirth(); }
+		if(other.getSex() != null) { this.sex = other.getSex(); }
 	}
 
 	public int getID() { return ID; }

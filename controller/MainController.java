@@ -65,8 +65,10 @@ public class MainController {
 			String option = view.showEnthusiastProfile(user);
 			switch(option) {
 				case "edit":
-					enthusiastView.showUpdate(user); 
-					//enthusiastModel.udpateEnthusiast(user);
+					//passing it to model for a future 
+					//sql implementation update
+					Enthusiast newUser = enthusiastView.showUpdate(); 
+					user = enthusiastModel.updateEnthusiast(user, newUser);
 					break;
 				case "delete": 
 					if(enthusiastView.showDelete(user)) 

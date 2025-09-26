@@ -44,14 +44,33 @@ public class CLIEnthusiastView implements EnthusiastView {
 	//will probably change this to something
 	//that passes only text and not just outright changes the data
 	//but for another time :p
+	//IMPLEMENT A BUILDER PLEASE :sob:
 	@Override
-	public void showUpdate(Enthusiast enthusiast) {
+	public Enthusiast showUpdate() {
+		Enthusiast enthusiast = new Enthusiast();
 		System.out.println("_______________________");	
 		System.out.println("UPDATE");
 		System.out.println("Type 'same' to not edit");
 		System.out.print("Username: ");
 		String username = input.nextLine();
 		if(!username.equalsIgnoreCase("same")) { enthusiast.setUsername(username); }
+		System.out.print("Last Name: ");
+		String lastName = input.nextLine();
+		if(!lastName.equalsIgnoreCase("same")) { enthusiast.setLastName(lastName); }
+		System.out.print("First Name: ");
+		String firstName = input.nextLine();
+		if(!firstName.equalsIgnoreCase("same")) { enthusiast.setFirstName(firstName); }
+		System.out.print("Middle Name: ");
+		String middleName = input.nextLine();
+		if(!middleName.equalsIgnoreCase("same")) { enthusiast.setMiddleName(middleName); }
+		System.out.print("Date of Birth: ");
+		String dateOfBirth = input.nextLine();
+		if(!dateOfBirth.equalsIgnoreCase("same")) { enthusiast.setDateOfBirth(dateOfBirth); }
+		System.out.print("Sex: ");
+		String sex = input.nextLine();
+		if(!sex.equalsIgnoreCase("same")) { enthusiast.setSex(sex); }
+
+		return enthusiast;
 	}
 
 	@Override
