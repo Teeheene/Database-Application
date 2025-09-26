@@ -41,14 +41,33 @@ public class CLIEnthusiastView implements EnthusiastView {
 		System.out.println("_______________________");	
 	}
 
+	//will probably change this to something
+	//that passes only text and not just outright changes the data
+	//but for another time :p
 	@Override
 	public void showUpdate(Enthusiast enthusiast) {
-		System.out.println("To be implemented");
+		System.out.println("_______________________");	
+		System.out.println("UPDATE");
+		System.out.println("Type 'same' to not edit");
+		System.out.print("Username: ");
+		String username = input.nextLine();
+		if(!username.equalsIgnoreCase("same")) { enthusiast.setUsername(username); }
 	}
 
 	@Override
-	public void showDelete(Enthusiast enthusiast) {
-		System.out.println("To be implemented");
+	public boolean showDelete(Enthusiast enthusiast) {
+		System.out.println("_______________________");	
+		System.out.println("DELETE CONFIRMATION");
+		System.out.println("Please type 'yes' to ");
+		System.out.println("confirm deletion");
+		System.out.println("_______________________");	
+		System.out.print("> ");
+		if(input.nextLine().equals("yes")) {
+			System.out.println("Deleting Account...");
+			return true;
+		}
+		System.out.println("Failed to Delete Account...");
+		return false;
 	}
 }
 

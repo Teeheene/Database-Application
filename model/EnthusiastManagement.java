@@ -25,6 +25,7 @@ public class EnthusiastManagement {
 
 	public void updateEnthusiast(int id, Enthusiast updatedEnthusiast) {
 		Enthusiast enthusiastReference = searchEnthusiast("id", String.valueOf(id));
+		
 	}
 	
 	public Enthusiast searchEnthusiast(String category, String key) {

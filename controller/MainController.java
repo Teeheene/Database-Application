@@ -18,6 +18,8 @@ public class MainController {
 	public void start() {
 		boolean exit = false;
 		boolean login = false;
+
+		LoginBuilder loginDetails = new LoginBuilder();
 		Enthusiast enthusiast = new Enthusiast();
 		
 		do {
@@ -25,7 +27,6 @@ public class MainController {
 
 			switch(command) {
 				case "login":
-					LoginBuilder loginDetails = new LoginBuilder();
 					loginDetails = view.showLoginScreen();
 					login = true;	
 					break;
@@ -64,9 +65,14 @@ public class MainController {
 			String option = view.showEnthusiastProfile(user);
 			switch(option) {
 				case "edit":
+					enthusiastView.showUpdate(user); 
+					//enthusiastModel.udpateEnthusiast(user);
 					break;
 				case "delete": 
-					enthusiastModel.deleteEnthusiast(user);
+					if(enthusiastView.showDelete(user)) 
+						enthusiastModel.deleteEnthusiast(user);
+					else 
+						break;
 				case "exit":
 					exit = true;
 					break;

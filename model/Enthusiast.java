@@ -34,6 +34,15 @@ public class Enthusiast {
 		this.loginDetails = new LoginBuilder(username, password, "enthusiast"); 
 	}
 
+	public void update(Enthusiast other) {
+		this.username = other.getUsername();
+		this.lastName = other.getLastName();
+		this.firstName = other.getFirstName();
+		this.middleName = other.getMiddleName();
+		this.dateOfBirth = other.getDateOfBirth();
+		this.sex = other.getSex();
+	}
+
 	public int getID() { return ID; }
 	public String getUsername() { return username; }
 	public String getLastName() { return lastName; }
