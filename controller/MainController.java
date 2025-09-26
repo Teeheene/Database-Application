@@ -17,6 +17,7 @@ public class MainController {
 	
 	public void start() {
 		boolean exit = false;
+		boolean login = false;
 		Enthusiast enthusiast = new Enthusiast();
 		
 		do {
@@ -26,13 +27,7 @@ public class MainController {
 				case "login":
 					LoginBuilder loginDetails = new LoginBuilder();
 					loginDetails = view.showLoginScreen();
-					switch(loginDetails.getType()) {
-						case "enthusiast": 
-							enthusiast = enthusiastModel.verifyLogin(loginDetails);
-							if(enthusiast != null) {
-								view.showEnthusiastProfile(enthusiast);
-							}
-					}
+					login = true;	
 					break;
 				case "register": 
 					enthusiast = enthusiastView.createEnthusiast();
@@ -41,6 +36,40 @@ public class MainController {
 					break;
 				case "exit":
 					exit = true; 
+					break;
+			}
+			
+			if(login) {
+				switch(loginDetails.getType()) {
+					case "enthusiast": 
+						enthusiast = enthusiastModel.verifyLogin(loginDetails);
+						if(enthusiast != null) { enthusiastProfile(enthusiast); }
+						break;
+					case "player":
+						break;
+					case "coach":
+						break;
+					case "manager":
+						break;
+				}
+				login = false;
+			}
+
+		} while(!exit);
+	}
+
+	public void enthusiastProfile(Enthusiast user) {
+		boolean exit = false;
+		do {
+			String option = view.showEnthusiastProfile(user);
+			switch(option) {
+				case "edit":
+					break;
+				case "delete": 
+					enthusiastModel.deleteEnthusiast(user);
+				case "exit":
+					exit = true;
+					break;
 			}
 		} while(!exit);
 	}
