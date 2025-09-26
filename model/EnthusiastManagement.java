@@ -10,15 +10,45 @@ public class EnthusiastManagement {
 		enthusiastList = new ArrayList<Enthusiast>();
 	}
 
+	/* *
+	 * Once MySQL is connected, this in-memory storage
+	 * can be updated. Basic CRUD can be seen below :)
+	 * */
+
 	public void addEnthusiast(Enthusiast enthusiast) {
 		enthusiastList.add(enthusiast);
+	}
+
+	public void deleteEnthusiast(Enthusiast enthusiast) {
+		enthusiastList.remove(enthusiast);
+	}
+
+	public void updateEnthusiast(int id, Enthusiast updatedEnthusiast) {
+		Enthusiast enthusiastReference = searchEnthusiast("id", String.valueOf(id));
+	}
+	
+	public Enthusiast searchEnthusiast(String category, String key) {
+		for(Enthusiast enthusiast : enthusiastList) {
+			if(enthusiast == null) { continue; }
+			switch(category) {
+				case "id":
+					if(String.valueOf(enthusiast.getID()).equalsIgnoreCase(key))
+						return enthusiast;
+					break;
+				case "username":
+					if(enthusiast.getUsername().equalsIgnoreCase(key))
+						return enthusiast;
+					break;
+			}
+		}
+		return null;
 	}
 
 	public Enthusiast verifyLogin(LoginBuilder loginDetails) {
 		for(Enthusiast enthusiast : enthusiastList) {
 			if(enthusiast == null) { continue; }
-			if(enthusiast.getUsername().equalsIgnoreCase(loginDetails.getUsername()) 
-					&& enthusiast.getPassword().equalsIgnoreCase(loginDetails.getPassword())) {
+			if(enthusiast.getUsername().equalsIgnoreCase(loginDetails.getUsername()) && 
+					enthusiast.getPassword().equalsIgnoreCase(loginDetails.getPassword())) {
 				return enthusiast;
 			}
 		}	
