@@ -3,7 +3,7 @@
 mkdir -p src/classes
 
 # Path to connector
-JAR_PATH="src/lib/mysql-connector-j-9.4.0/mysql-connector-j-9.4.0.jar"
+JAR_PATH="lib/mysql-connector-j-9.4.0/mysql-connector-j-9.4.0.jar"
 
 # Compiling
 javac -Xmaxerrs 10000 -Xmaxwarns 500 -Xlint \
