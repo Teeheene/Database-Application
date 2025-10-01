@@ -2,11 +2,18 @@
 # Create the output directory if it doesn't exist
 mkdir -p src/classes
 
-# Compile Java files into the classes/ folder
-javac -Xmaxerrs 10000 -Xmaxwarns 500 -Xlint -d src/classes src/*.java src/model/*.java src/view/*.java src/controller/*.java
+# Path to connector
+JAR_PATH="src/lib/mysql-connector-j-9.4.0/mysql-connector-j-9.4.0.jar"
 
-# Run Main from the classes folder
+# Compiling
+javac -Xmaxerrs 10000 -Xmaxwarns 500 -Xlint \
+	-cp "$JAR_PATH:src/classes" \
+	-d src/classes \
+	src/*.java src/model/*.java src/view/*.java src/controller/*.java
+
+
+# Run main if compiling is successful 
 if [ $? -eq 0 ]; then
-   java -cp src/classes Main 
+   java -cp "$JAR_PATH:src/classes" Main 
 fi
 

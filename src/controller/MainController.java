@@ -71,8 +71,11 @@ public class MainController {
 					user = enthusiastModel.updateEnthusiast(user, newUser);
 					break;
 				case "delete": 
-					if(enthusiastView.showDelete(user)) 
+					if(enthusiastView.showDelete(user)) { 
 						enthusiastModel.deleteEnthusiast(user);
+						exit = true;
+						break;
+					}
 					else 
 						break;
 				case "exit":
