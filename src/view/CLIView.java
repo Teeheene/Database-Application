@@ -76,7 +76,7 @@ public class CLIView implements View {
 		}
 		System.out.println("_______________________");	
 
-		return new LoginBuilder(username, password, type);
+		return new LoginBuilder(username, password.hashCode(), type);
 	} 
 
 	@Override

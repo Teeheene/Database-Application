@@ -18,8 +18,13 @@ public class CLIEnthusiastView implements EnthusiastView {
 		String firstName = input.nextLine();
 		System.out.print("Middle Name: ");
 		String middleName = input.nextLine();
-		System.out.print("Date Of Birth: ");
-		String dateOfBirth = input.nextLine();
+		System.out.print("Year Of Birth: ");
+		int birthYear = input.nextInt();
+		System.out.print("Month Of Birth: ");
+		int birthMonth = input.nextInt();
+		System.out.print("Day Of Birth: ");
+		int birthDay = input.nextInt();
+		input.nextLine();
 		System.out.print("Sex: ");
 		String sex = input.nextLine();
 		System.out.println("");
@@ -27,7 +32,12 @@ public class CLIEnthusiastView implements EnthusiastView {
 		String password = input.nextLine();
 		System.out.println("_______________________");	
 		
-		return new Enthusiast(username, lastName, firstName, middleName, dateOfBirth, sex, password);
+		return new Enthusiast(
+				username, 
+				lastName, firstName, middleName, 
+				sex, 
+				new Timestamp(birthYear, birthMonth, birthDay), 
+				password.hashCode());
 	}
 
 	@Override
@@ -36,7 +46,8 @@ public class CLIEnthusiastView implements EnthusiastView {
 		System.out.println("PROFILE");	
 		System.out.println(enthusiast.getUsername() + " ID#" + enthusiast.getID());
 		System.out.println("Name: " + enthusiast.getFirstName() + " " + enthusiast.getMiddleName() + ". " + enthusiast.getLastName());
-		System.out.println("Birthday: " + enthusiast.getDateOfBirth());
+		System.out.print("Birthday: ");
+		enthusiast.getDateOfBirth().displayDate();
 		System.out.println("Sex: " + enthusiast.getSex());
 		System.out.println("_______________________");	
 	}
@@ -45,6 +56,7 @@ public class CLIEnthusiastView implements EnthusiastView {
 	//that passes only text and not just outright changes the data
 	//but for another time :p
 	//IMPLEMENT A BUILDER PLEASE :sob:
+	//update 10/27/25 - this is so stupid pls update (im not doing it hehe)
 	@Override
 	public Enthusiast showUpdate() {
 		Enthusiast enthusiast = new Enthusiast();
@@ -65,7 +77,14 @@ public class CLIEnthusiastView implements EnthusiastView {
 		if(!middleName.equalsIgnoreCase("same")) { enthusiast.setMiddleName(middleName); }
 		System.out.print("Date of Birth: ");
 		String dateOfBirth = input.nextLine();
-		if(!dateOfBirth.equalsIgnoreCase("same")) { enthusiast.setDateOfBirth(dateOfBirth); }
+		if(!dateOfBirth.equalsIgnoreCase("same")) { 
+			System.out.print("Year of Birth: ");
+			int birthYear = input.nextInt();
+			System.out.print("Month of Birth: ");
+			int birthMonth = input.nextInt();
+			System.out.print("Day of Birth: ");
+			int birthDay = input.nextInt();
+			enthusiast.setDateOfBirth(new Timestamp(birthYear, birthMonth, birthDay)); }
 		System.out.print("Sex: ");
 		String sex = input.nextLine();
 		if(!sex.equalsIgnoreCase("same")) { enthusiast.setSex(sex); }

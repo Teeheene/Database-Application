@@ -3,6 +3,10 @@ package model;
 import view.LoginBuilder; 
 import java.util.ArrayList;
 
+enum SearchType {
+	ID, USERNAME;
+}
+
 public class EnthusiastManagement {
 	private ArrayList<Enthusiast> enthusiastList;
 
@@ -23,23 +27,22 @@ public class EnthusiastManagement {
 		enthusiastList.remove(enthusiast);
 	}
 
-	public Enthusiast updateEnthusiast(Enthusiast oldEnthusiast, 
-			Enthusiast updatedEnthusiast) {
+	public Enthusiast updateEnthusiast(Enthusiast oldEnthusiast, Enthusiast updatedEnthusiast) {
 		Enthusiast enthusiastReference = 
-			searchEnthusiast("id", String.valueOf(oldEnthusiast.getID()));
+			searchEnthusiast(SearchType.ID, String.valueOf(oldEnthusiast.getID()));
 		enthusiastReference.update(updatedEnthusiast);
 		return enthusiastReference;
 	}
 	
-	public Enthusiast searchEnthusiast(String category, String key) {
+	public Enthusiast searchEnthusiast(SearchType category, String key) {
 		for(Enthusiast enthusiast : enthusiastList) {
 			if(enthusiast == null) { continue; }
 			switch(category) {
-				case "id":
+				case ID:
 					if(String.valueOf(enthusiast.getID()).equalsIgnoreCase(key))
 						return enthusiast;
 					break;
-				case "username":
+				case USERNAME: 
 					if(enthusiast.getUsername().equalsIgnoreCase(key))
 						return enthusiast;
 					break;
@@ -52,9 +55,9 @@ public class EnthusiastManagement {
 		for(Enthusiast enthusiast : enthusiastList) {
 			if(enthusiast == null) { continue; }
 			if(enthusiast.getUsername().equalsIgnoreCase(loginDetails.getUsername()) && 
-					enthusiast.getPassword().equalsIgnoreCase(loginDetails.getPassword())) {
+					enthusiast.getPassword() == loginDetails.getPassword()) {
 				return enthusiast;
-			}
+			} 
 		}	
 		return null;
 	}

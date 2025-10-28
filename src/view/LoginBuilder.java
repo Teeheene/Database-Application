@@ -2,20 +2,20 @@ package view;
 
 public class LoginBuilder {
 	private String username;
-	private String password;
+	private int password; 
 	private String type;
 
 	public LoginBuilder() {
-		//empty constructor
+		this.password = -1;
 	}
 
-	public LoginBuilder(String username, String password, String type) {
+	public LoginBuilder(String username, int password, String type) {
 		this.username = username;
 		this.password = password;
 		this.type = type;
 	}
 
 	public String getUsername() { return username; }
-	public String getPassword() { return password; }
+	public int getPassword() { return password; }
 	public String getType() { return type; }
 }
