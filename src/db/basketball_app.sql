@@ -25,3 +25,17 @@ CREATE TABLE engagement (
     PRIMARY KEY (engagement_id),
     FOREIGN KEY (enthusiast_id) REFERENCES enthusiast(enthusiast_id)
 );
+
+DROP TABLE IF EXISTS player;
+CREATE TABLE player (
+	player_id INT NOT NULL AUTO_INCREMENT,
+    lastname VARCHAR(50) NOT NULL,
+    firstname VARCHAR(50) NOT NULL,
+    middlename VARCHAR(50),
+    sex VARCHAR(10) NOT NULL,
+    date_of_birth TIMESTAMP NOT NULL,
+    height INT,
+	weight INT,
+	rStatus BOOLEAN,
+	PRIMARY KEY (player_id)
+);
