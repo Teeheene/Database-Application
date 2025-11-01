@@ -1,5 +1,6 @@
 package model;
 import java.util.ArrayList;
+
 public class PlayerManagement {
     private ArrayList<Player> playerList;
 
@@ -39,4 +40,8 @@ public class PlayerManagement {
 		}
 		return null;
 	}
+	public ArrayList<Player> getAllPlayers(){
+		return new ArrayList<Player>(playerList);
+	} 
 }
+
