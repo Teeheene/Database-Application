@@ -6,8 +6,9 @@ public class Main {
 	public static void main(String[] args) {
 		View view = new CLIView();
 		EnthusiastView viewEnthusiast = new CLIEnthusiastView(); 
+		PlayerView viewPlayer = new CLIPlayerView();
 	
-		MainController app = new MainController(view, viewEnthusiast); 	
+		MainController app = new MainController(view, viewEnthusiast, viewPlayer); 	
 
 		app.start();
 	}

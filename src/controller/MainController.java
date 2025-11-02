@@ -78,6 +78,8 @@ public class MainController {
 					}
 					else 
 						break;
+				case "search":
+					
 				case "exit":
 					exit = true;
 					break;

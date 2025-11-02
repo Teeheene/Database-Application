@@ -146,12 +146,4 @@ public class PlayerController {
             view.displayError("Failed to display players: " + e.getMessage());
         }
     }
-
-    public static void main(String[] args) {
-        PlayerManagement model = new PlayerManagement();
-        PlayerView view = new CLIPlayerView();
-        PlayerController controller = new PlayerController(model, view);
-        
-        controller.run();
-    }
 }
