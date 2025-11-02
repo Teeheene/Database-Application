@@ -60,14 +60,14 @@ public class CLITournamentView {
         Timestamp startDate = new Timestamp(
                 Integer.parseInt(startParts[0]),
                 Integer.parseInt(startParts[1]),
-                Integer.parseInt(startParts[2])
+                Integer.parseInt(startParts[2]));
 
         System.out.print("Enter End Date (YYYY-MM-DD): ");
         String[] endParts = scanner.nextLine().split(" ");
         Timestamp endDate = new Timestamp(
                 Integer.parseInt(endParts[0]),
                 Integer.parseInt(endParts[1]),
-                Integer.parseInt(endParts[2])
+                Integer.parseInt(endParts[2]));
 
         System.out.print("Enter Team Bracket: ");
         String bracket = scanner.nextLine();
@@ -147,8 +147,7 @@ public class CLITournamentView {
                     tournament.setStartDate(new model.Timestamp(
                             Integer.parseInt(startParts[0]),
                             Integer.parseInt(startParts[1]),
-                            Integer.parseInt(startParts[2])
-                    ));
+                            Integer.parseInt(startParts[2])));
                     System.out.println("Start Date updated!");
                 }
                 case 4 -> {
@@ -157,8 +156,7 @@ public class CLITournamentView {
                     tournament.setEndDate(new model.Timestamp(
                             Integer.parseInt(endParts[0]),
                             Integer.parseInt(endParts[1]),
-                            Integer.parseInt(endParts[2])
-                    ));
+                            Integer.parseInt(endParts[2])));
                     System.out.println("End Date updated!");
                 }
                 case 5 -> {
@@ -192,3 +190,4 @@ public class CLITournamentView {
         }
     }
 }
+
