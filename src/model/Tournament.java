@@ -27,6 +27,20 @@ public class Tournament {
         this.fanFavoriteTeam = fanFavoriteTeam;
 
     }
+
+    /*
+    Update method
+     */
+    public void update(Tournament updatedTournament) {
+        this.tournamentName = updatedTournament.getTournamentName();
+        this.tournamentType = updatedTournament.getTournamentType();
+        this.startDate = updatedTournament.getStartDate();
+        this.endDate = updatedTournament.getEndDate();
+        this.teamBracket = updatedTournament.getTeamBracket();
+        this.fanFavoriteTeam = updatedTournament.getFanFavoriteTeam();
+    }
+
+
     /*
     Getters
      */
@@ -50,6 +64,6 @@ public class Tournament {
     public void setEndDate(Timestamp endDate) { this.endDate = endDate; }
     public void setTeamBracket(String teamBracket) { this.teamBracket = teamBracket; }
     public void setFanFavoriteTeam(String fanFavoriteTeam) { this.fanFavoriteTeam = fanFavoriteTeam; }
-    
+
 }
 
