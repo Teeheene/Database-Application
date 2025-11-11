@@ -43,7 +43,10 @@ public class CLIEnthusiastView implements EnthusiastView {
 		System.out.println("_______________________");	
 		System.out.println("PROFILE");	
 		System.out.println(enthusiast.getUsername() + " ID#" + enthusiast.getID());
-		System.out.println("Name: " + enthusiast.getFirstName() + " " + enthusiast.getMiddleName() + ". " + enthusiast.getLastName());
+		System.out.print("Name: " + enthusiast.getFirstName() + " ");
+		if(enthusiast.getMiddleName() != null)
+			System.out.print(enthusiast.getMiddleName().charAt(0) + ". ");
+		System.out.println(enthusiast.getLastName());
 		System.out.print("Birthday: ");
 		enthusiast.getDateOfBirth().displayDate();
 		System.out.println("Sex: " + enthusiast.getSex());
@@ -52,9 +55,10 @@ public class CLIEnthusiastView implements EnthusiastView {
 
 	@Override
 	public void showAllEnthusiast(ArrayList<Enthusiast> enthusiast) {
+		System.out.println("");
 		for(Enthusiast e : enthusiast) {
 			if(e == null) { continue; }
-			showEnthusiast(e);
+			System.out.println(e.getUsername() + " ID#" + e.getID());
 		}
 	}
 
