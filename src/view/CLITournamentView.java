@@ -5,7 +5,7 @@ import model.Tournament;
 import model.TournamentManagement;
 
 public class CLITournamentView {
-
+/*
     private TournamentManagement tournamentManagement;
     private Scanner scanner;
 
@@ -189,5 +189,5 @@ public class CLITournamentView {
             System.out.println("Tournament deleted successfully!");
         }
     }
+*/
 }
-
