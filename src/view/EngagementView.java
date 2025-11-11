@@ -1,9 +1,10 @@
 package view;
 
 import model.*;
+import java.util.ArrayList;
 
 public interface EngagementView {
 	String showEngagementPage();
-	void showProfiles(String scrollType);
+	boolean showProfiles(String scrollType, ArrayList<Object> feedList, int currentIndex);
 	void engageProfile(String type);
 }

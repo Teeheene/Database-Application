@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 import view.*;
+import java.util.ArrayList;
 
 public class MainController {
 	private View view;
@@ -11,6 +12,7 @@ public class MainController {
 	private PlayerManagement playerModel;
 	private PlayerController playerController;
 	private EngagementView engagementView;
+	private EngagementManagement engagementModel;
 	
 	public MainController(View view, EnthusiastView enthusiastView, PlayerView playerView, EngagementView engagementView) {
 		this.view = view;
@@ -21,6 +23,7 @@ public class MainController {
 		enthusiastModel = new EnthusiastManagement();
 		playerModel = new PlayerManagement();
 		playerController = new PlayerController(playerModel, playerView);
+		engagementModel = new EngagementManagement();
 	}
 	
 	public void start() {
@@ -162,14 +165,17 @@ public class MainController {
 
 	public boolean enthusiastEngagement(Enthusiast user) {
 		boolean exit = false;
+		int currentFeedIndex = 0;
 		do {
 			String option = engagementView.showEngagementPage();	
 			switch(option) {
 				case "scroll up":
-					engagementView.showProfiles("up");
+					if(engagementView.showProfiles("up", engagementModel.getFeed(), currentFeedIndex))
+						currentFeedIndex++;
 					break;
 				case "scroll down":
-					engagementView.showProfiles("down");
+					if(engagementView.showProfiles("down", engagementModel.getFeed(), currentFeedIndex))
+						currentFeedIndex--;
 					break;
 				case "like":
 					engagementView.engageProfile("like");

@@ -52,8 +52,21 @@ public class CLIEngagementView implements EngagementView {
 
 	//just for viewing the profiles (from all core records involved)
 	@Override
-	public void showProfiles(String scrollType) {
-
+	public boolean showProfiles(String scrollType, ArrayList<Object> feedList, int currentIndex) {
+		Object profile = feedList.get(currentIndex);
+		System.out.println("_______________________");	
+		System.out.println("FEED");
+		if(profile != null) {
+			if(profile instanceof Player) {
+				System.out.println("Player: ");
+			} else if(profile instanceof Coach) {
+				System.out.println("Coach: ");
+			} else if(profile instanceof Tournament) {
+				System.out.println("Tournament: ");
+			}
+			return true;
+		}
+		return false;
 	}
 
 	//for interacting

@@ -18,5 +18,10 @@ public class EngagementManagement {
 	public void getFollows(int enthusiastID) {}
 
 	public void getLikes(int enthusiastID) {}
+
+	public ArrayList<Object> getFeed() {
+
+		return null;
+	}
 }
 
