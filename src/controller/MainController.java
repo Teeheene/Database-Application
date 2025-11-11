@@ -40,8 +40,8 @@ public class MainController {
 					//viewRegisterScreen();
 					//to remove enthusiast only creation
 					enthusiast = enthusiastView.createEnthusiast();
-					enthusiastModel.addEnthusiast(enthusiast);
-					enthusiastView.showEnthusiast(enthusiast);
+					int ID = enthusiastModel.addEnthusiast(enthusiast);
+					enthusiastView.showEnthusiast(enthusiastModel.searchEnthusiastByID(ID));
 					break;
 				case "exit":
 					exit = true; 

@@ -30,12 +30,18 @@ public class CLIEnthusiastView implements EnthusiastView {
 		String sex = input.nextLine();
 		System.out.println("_______________________");	
 		
-		return new Enthusiast(
+		Enthusiast enthusiast = new Enthusiast(
 			username, 
 			lastName, firstName, middleName, 
 			sex, 
 			new Timestamp(birthYear, birthMonth, birthDay)
 		);
+
+		if(middleName.isEmpty()) {
+			enthusiast.setMiddleName(null);
+		}
+		
+		return enthusiast;
 	}
 
 	@Override

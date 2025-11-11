@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class EnthusiastManagement {
 	private ArrayList<Enthusiast> enthusiastList;
@@ -21,12 +22,12 @@ public class EnthusiastManagement {
 	 * can be updated. Basic CRUD can be seen below :)
 	 * */
 
-	public void addEnthusiast(Enthusiast enthusiast) {
+	public int addEnthusiast(Enthusiast enthusiast) {
 		String sql = "INSERT INTO enthusiast (username, lastname, firstname, middlename, sex, date_of_birth) " 
 			+ "VALUES (?, ?, ?, ?, ?, ?)";
 
 		try(Connection conn = DatabaseConnection.getConnection();
-			PreparedStatement statement = conn.prepareStatement(sql)) {
+			PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			statement.setString(1, enthusiast.getUsername());
 			statement.setString(2, enthusiast.getLastName());
 			statement.setString(3, enthusiast.getFirstName());
@@ -36,11 +37,24 @@ public class EnthusiastManagement {
 						.getDateOfBirth()
 						.getFormattedDate()));
 
-			statement.executeUpdate();
-			System.out.println("Enthusiast added.");
+			int affectedRows = statement.executeUpdate();
+			
+			if(affectedRows > 0)
+				System.out.println("Enthusiast added.");
+
+			try(ResultSet generatedKey = statement.getGeneratedKeys()) {
+				if(generatedKey.next()) {
+					int newID = generatedKey.getInt(1);
+					return newID;
+				} else {
+					throw new SQLException("Failed Creating Enthusiast");
+				}
+			}
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
+
+		return 0;
 	}
 
 	public void deleteEnthusiast(int enthusiastID) {
