@@ -7,12 +7,16 @@ public class MainController {
 	private View view;
 	private EnthusiastView enthusiastView;
 	private EnthusiastManagement enthusiastModel;
+	private PlayerView playerView;
+	private PlayerManagement playerModel;
 	
-	public MainController(View view, EnthusiastView enthusiastView) {
+	public MainController(View view, EnthusiastView enthusiastView, PlayerView playerView) {
 		this.view = view;
 		this.enthusiastView = enthusiastView;
+		this.playerView = playerView;
 
 		enthusiastModel = new EnthusiastManagement();
+		playerModel = new PlayerManagement();
 	}
 	
 	public void start() {
@@ -47,6 +51,7 @@ public class MainController {
 						if(enthusiast != null) { enthusiastProfile(enthusiast); }
 						break;
 					case "player":
+						//please implement player profile
 						break;
 					case "coach":
 						break;
