@@ -1,6 +1,7 @@
 package view;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 import model.*;
 
 public class CLIEnthusiastView implements EnthusiastView {
@@ -27,17 +28,14 @@ public class CLIEnthusiastView implements EnthusiastView {
 		input.nextLine();
 		System.out.print("Sex: ");
 		String sex = input.nextLine();
-		System.out.println("");
-		System.out.print("Account Password: ");
-		String password = input.nextLine();
 		System.out.println("_______________________");	
 		
 		return new Enthusiast(
-				username, 
-				lastName, firstName, middleName, 
-				sex, 
-				new Timestamp(birthYear, birthMonth, birthDay), 
-				password.hashCode());
+			username, 
+			lastName, firstName, middleName, 
+			sex, 
+			new Timestamp(birthYear, birthMonth, birthDay)
+		);
 	}
 
 	@Override
@@ -50,6 +48,14 @@ public class CLIEnthusiastView implements EnthusiastView {
 		enthusiast.getDateOfBirth().displayDate();
 		System.out.println("Sex: " + enthusiast.getSex());
 		System.out.println("_______________________");	
+	}
+
+	@Override
+	public void showAllEnthusiast(ArrayList<Enthusiast> enthusiast) {
+		for(Enthusiast e : enthusiast) {
+			if(e == null) { continue; }
+			showEnthusiast(e);
+		}
 	}
 
 	//will probably change this to something
@@ -92,6 +98,16 @@ public class CLIEnthusiastView implements EnthusiastView {
 		return enthusiast;
 	}
 
+	public int deleteEnthusiast() {
+		System.out.println("_______________________");	
+		System.out.println("DELETE");
+		System.out.println("Type 0 to cancel.");
+		System.out.print("Type ID to delete: ");
+		int ID = input.nextInt();
+		input.nextLine();
+		return ID;
+	}
+		
 	@Override
 	public boolean showDelete(Enthusiast enthusiast) {
 		System.out.println("_______________________");	

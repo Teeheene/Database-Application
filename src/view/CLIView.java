@@ -53,18 +53,15 @@ public class CLIView implements View {
 	public LoginBuilder showLoginScreen() {
 		System.out.println("_______________________");	
 		System.out.println("LOGIN");
-		System.out.print("Username: ");
-		String username = input.nextLine();	
-		System.out.print("Password: ");
-		String password = input.nextLine();
 		System.out.println("Type: ");
 		System.out.println("1. Enthusiast");
 		System.out.println("2. Player");
 		System.out.println("3. Coach");
 		System.out.println("4. Manager");	
+		System.out.println("5. Admin");
 		
 		String type = new String();
-		switch(getInput(1,4)) {
+		switch(getInput(1,5)) {
 			case 1: type = "enthusiast";
 					  break;
 			case 2: type = "player";
@@ -73,11 +70,72 @@ public class CLIView implements View {
 					  break;
 			case 4: type = "manager";
 					  break;
+			case 5: type = "admin";
 		}
-		System.out.println("_______________________");	
+	
+		if(!type.equals("admin")) {
+			System.out.print("ID: ");
+			try {
+				int ID = Integer.parseInt(input.nextLine());	
+				System.out.println("_______________________");	
+				return new LoginBuilder(ID, null, type);
+			} catch(NumberFormatException e) {
+				System.out.println("Invalid ID.");
+				System.out.println("_______________________");	
+				return null;
+			}
+		} else {
+			System.out.print("Password: ");
+			String password = input.nextLine();
+			System.out.println("_______________________");	
+			return new LoginBuilder(-1, password, "admin");
+		}
 
-		return new LoginBuilder(username, password.hashCode(), type);
 	} 
+
+	@Override
+	public String showAdminProfile() {
+		System.out.println("");
+		System.out.println("_______________________");		
+		System.out.println("OPTIONS");
+		System.out.println("1. Enthusiasts");
+		System.out.println("2. Players");
+		System.out.println("3. Coaches");
+		System.out.println("4. Tournaments");
+		System.out.println("5. Log out");
+
+		switch(getInput(1,5)) {
+			case 1: return "enthusiasts";
+			case 2: return "players";
+			case 3: return "coaches";
+			case 4: return "tournaments";
+			case 5: return "logout";
+		}
+
+		return null;
+	}
+
+	@Override
+	public String showAdminCrud(String type) {
+		System.out.println("");
+		System.out.println("_______________________");	
+		System.out.println("OPTIONS");
+		System.out.println("1. Create " + type); 
+		System.out.println("2. View all " + type); 
+		System.out.println("3. Update " + type); 
+		System.out.println("4. Delete " + type); 
+		System.out.println("5. Exit "); 
+
+		switch(getInput(1,5)) {
+			case 1: return "create";
+			case 2: return "view";
+			case 3: return "update";
+			case 4: return "delete";
+			case 5: return "exit";
+		}
+
+		return null;
+	}
 
 	@Override
 	public String showEnthusiastProfile(Enthusiast enthusiast) {

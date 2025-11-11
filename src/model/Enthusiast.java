@@ -16,10 +16,6 @@ public class Enthusiast {
 	private Timestamp joinDate;
 	//temporary until IDs are implemented for other classes
 
-	//login details
-	private int password;
-	private LoginBuilder loginDetails = new LoginBuilder();
-
 	public Enthusiast() {
 		//empty constructor
 	};
@@ -32,14 +28,36 @@ public class Enthusiast {
 	 * ID number
 	 * join date
 	 * */
-	public Enthusiast(String username, String lastName, String firstName, String middleName, String sex, Timestamp dateOfBirth, int password) {
+	public Enthusiast(String username, String lastName, String firstName, String middleName, String sex, Timestamp dateOfBirth) {
 		this.username = username;
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.sex = sex;
 		this.dateOfBirth = dateOfBirth;
-		this.loginDetails = new LoginBuilder(username, password, "enthusiast"); 
+	}
+
+	public Enthusiast(int ID, String username, String lastName, String firstName, String middleName, String sex, String dateOfBirth, String joinDate) {
+		this.ID = ID;
+		this.username = username;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.sex = sex;
+
+		String[] dateTokens = dateOfBirth.split("-");
+		String[] joinPart = joinDate.split(" ");
+		String[] joinTokens = joinPart[0].split("-");
+		this.dateOfBirth = new Timestamp(
+			Integer.parseInt(dateTokens[0]), 
+			Integer.parseInt(dateTokens[1]), 
+			Integer.parseInt(dateTokens[2])
+		);
+		this.joinDate = new Timestamp(
+			Integer.parseInt(joinTokens[0]), 
+			Integer.parseInt(joinTokens[1]), 
+			Integer.parseInt(joinTokens[2])
+		);
 	}
 
 	public void update(Enthusiast other) {
@@ -49,7 +67,6 @@ public class Enthusiast {
 		if(other.getMiddleName() != null) { this.middleName = other.getMiddleName(); }
 		if(other.getDateOfBirth() != null) { this.dateOfBirth = other.getDateOfBirth(); }
 		if(other.getSex() != null) { this.sex = other.getSex(); }
-		if(other.loginDetails.getPassword() != -1) { this.password = other.loginDetails.getPassword(); }
 	}
 
 	public int getID() { return ID; }
@@ -60,13 +77,12 @@ public class Enthusiast {
 	public String getSex() { return sex; }
 	public Timestamp getDateOfBirth() { return dateOfBirth; }
 	public Timestamp getJoinDate() { return joinDate; }
-	public int getPassword() { return loginDetails.getPassword(); } 
 
+	public void setID(int ID) { this.ID = ID; }
 	public void setUsername(String username) { this.username = username; }
 	public void setLastName(String lastName) { this.lastName = lastName; }
 	public void setFirstName(String firstName) { this.firstName = firstName; }
 	public void setMiddleName(String middleName) { this.middleName = middleName; }
 	public void setSex(String sex) { this.sex = sex; }
 	public void setDateOfBirth(Timestamp dateOfBirth) { this.dateOfBirth = dateOfBirth; }
-	public void setPassword(int password) { this.password = password; }
 }

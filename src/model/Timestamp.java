@@ -16,7 +16,7 @@ public class Timestamp {
 	}
 
 	public String getFormattedDate() {
-		return year + "-" + month + "-" + day + " 00:00:00";	
+		return year + "-" + month + "-" + day;	
 	}
 
 	public int getYear() { return year; }

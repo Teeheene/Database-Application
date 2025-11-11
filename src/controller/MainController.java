@@ -9,6 +9,7 @@ public class MainController {
 	private EnthusiastManagement enthusiastModel;
 	private PlayerView playerView;
 	private PlayerManagement playerModel;
+	private PlayerController playerController;
 	
 	public MainController(View view, EnthusiastView enthusiastView, PlayerView playerView) {
 		this.view = view;
@@ -17,6 +18,7 @@ public class MainController {
 
 		enthusiastModel = new EnthusiastManagement();
 		playerModel = new PlayerManagement();
+		playerController = new PlayerController(playerModel, playerView);
 	}
 	
 	public void start() {
@@ -35,6 +37,8 @@ public class MainController {
 					login = true;	
 					break;
 				case "register": 
+					//viewRegisterScreen();
+					//to remove enthusiast only creation
 					enthusiast = enthusiastView.createEnthusiast();
 					enthusiastModel.addEnthusiast(enthusiast);
 					enthusiastView.showEnthusiast(enthusiast);
@@ -47,20 +51,77 @@ public class MainController {
 			if(login) {
 				switch(loginDetails.getType()) {
 					case "enthusiast": 
-						enthusiast = enthusiastModel.verifyLogin(loginDetails);
+						enthusiast = enthusiastModel.searchEnthusiastByID(loginDetails.getID());
 						if(enthusiast != null) { enthusiastProfile(enthusiast); }
 						break;
-					case "player":
-						//please implement player profile
+					case "player": playerController.run();
 						break;
 					case "coach":
 						break;
 					case "manager":
 						break;
+					case "admin":
+						if(loginDetails.getPassword().equals("admin123")) {
+							adminProfile();
+						}
+						break;
 				}
 				login = false;
 			}
 
+		} while(!exit);
+	}
+
+	public void adminProfile() {
+		boolean exit = false;
+		do {
+			String option = view.showAdminProfile();
+			switch(option) {
+				case "enthusiasts":
+					adminCrud("Enthusiast");
+					break;	
+				case "logout":
+					exit = true;
+					break;
+			}
+		} while(!exit);
+	}
+
+	public void adminCrud(String type) {
+		boolean exit = false;
+		Enthusiast enthusiast = new Enthusiast();
+		do {
+			String option = view.showAdminCrud(type);
+			switch(option) {
+				case "create":
+					if(type.equals("Enthusiast")) {
+						enthusiast = enthusiastView.createEnthusiast();
+						enthusiastModel.addEnthusiast(enthusiast);
+						enthusiastView.showEnthusiast(enthusiast);
+					}
+					break;
+				case "view":
+					if(type.equals("Enthusiast")) {
+						enthusiastView.showAllEnthusiast(enthusiastModel.getEnthusiasts());
+					}
+					break;
+				case "update":
+					if(type.equals("Enthusiast")) {
+						//update
+					}
+					break;
+				case "delete":
+					if(type.equals("Enthusiast")) {
+						int ID = enthusiastView.deleteEnthusiast();
+						if(enthusiastView.showDelete(enthusiastModel.searchEnthusiastByID(ID)))
+							enthusiastModel.deleteEnthusiast(ID);
+						exit = true;
+					}
+					break;
+				case "exit":
+					exit = true;
+					break;
+			}
 		} while(!exit);
 	}
 
@@ -70,14 +131,12 @@ public class MainController {
 			String option = view.showEnthusiastProfile(user);
 			switch(option) {
 				case "edit":
-					//passing it to model for a future 
-					//sql implementation update
 					Enthusiast newUser = enthusiastView.showUpdate(); 
 					user = enthusiastModel.updateEnthusiast(user, newUser);
 					break;
 				case "delete": 
 					if(enthusiastView.showDelete(user)) { 
-						enthusiastModel.deleteEnthusiast(user);
+						enthusiastModel.deleteEnthusiast(user.getID());
 						exit = true;
 						break;
 					}
