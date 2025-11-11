@@ -15,6 +15,10 @@ public class Timestamp {
 		System.out.println(year + "/" + month + "/" + day);
 	}
 
+	public String getFormattedDate() {
+		return year + "-" + month + "-" + day + " 00:00:00";	
+	}
+
 	public int getYear() { return year; }
 	public int getMonth() { return month; }
 	public int getDay() { return day; }
