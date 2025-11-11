@@ -46,3 +46,18 @@ CREATE TABLE player (
 	rStatus BOOLEAN,
 	PRIMARY KEY (player_id)
 );
+
+DROP TABLE IF EXISTS coach;
+CREATE TABLE coach (
+	coach_id INT NOT NULL AUTO_INCREMENT,
+	lastname VARCHAR(50) NOT NULL,
+	firstname VARCHAR(50) NOT NULL,
+	middlename VARCHAR(50),
+	sex VARCHAR(10) NOT NULL,
+	date_of_birth TIMESTAMP NOT NULL,
+	start_year INT NOT NULL,
+	end_year INT,
+	years_in_field INT NOT NULL,
+	status BOOLEAN,
+	PRIMARY KEY (coach_id)
+);
