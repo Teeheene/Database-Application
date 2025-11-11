@@ -7,8 +7,9 @@ public class Main {
 		View view = new CLIView();
 		EnthusiastView viewEnthusiast = new CLIEnthusiastView(); 
 		PlayerView viewPlayer = new CLIPlayerView();
+		EngagementView viewEngagement = new CLIEngagementView();
 	
-		MainController app = new MainController(view, viewEnthusiast, viewPlayer); 	
+		MainController app = new MainController(view, viewEnthusiast, viewPlayer, viewEngagement); 	
 
 		app.start();
 	}

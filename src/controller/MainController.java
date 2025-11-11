@@ -10,11 +10,13 @@ public class MainController {
 	private PlayerView playerView;
 	private PlayerManagement playerModel;
 	private PlayerController playerController;
+	private EngagementView engagementView;
 	
-	public MainController(View view, EnthusiastView enthusiastView, PlayerView playerView) {
+	public MainController(View view, EnthusiastView enthusiastView, PlayerView playerView, EngagementView engagementView) {
 		this.view = view;
 		this.enthusiastView = enthusiastView;
 		this.playerView = playerView;
+		this.engagementView = engagementView;
 
 		enthusiastModel = new EnthusiastManagement();
 		playerModel = new PlayerManagement();
@@ -142,12 +144,47 @@ public class MainController {
 					}
 					else 
 						break;
-				case "search":
-					
+				case "check following":
+					break;
+				case "check likes":
+					break;
+				case "engage":
+					if(enthusiastEngagement(user)) {
+						exit = true;
+					}
+					break;
 				case "exit":
 					exit = true;
 					break;
 			}
 		} while(!exit);
+	}
+
+	public boolean enthusiastEngagement(Enthusiast user) {
+		boolean exit = false;
+		do {
+			String option = engagementView.showEngagementPage();	
+			switch(option) {
+				case "scroll up":
+					engagementView.showProfiles("up");
+					break;
+				case "scroll down":
+					engagementView.showProfiles("down");
+					break;
+				case "like":
+					engagementView.engageProfile("like");
+					break;
+				case "follow":
+					engagementView.engageProfile("follow");
+					break;
+				case "profile":
+					exit = true;
+					break;
+				case "exit":
+					return true;
+			}
+		} while(!exit);
+
+		return false;
 	}
 }

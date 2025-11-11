@@ -145,12 +145,14 @@ public class CLIView implements View {
 		System.out.println("OPTIONS");
 		System.out.println("1. Edit");
 		System.out.println("2. Delete");
-		System.out.println("3. Exit");
+		System.out.println("3. Engage");
+		System.out.println("4. Logout");
 
 		switch(getInput(1,3)) {
 			case 1: return "edit";
 			case 2: return "delete";
-			case 3: return "exit";
+			case 3: return "engage";
+			case 4: return "exit";
 		}
 		
 		return null;

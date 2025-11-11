@@ -25,13 +25,24 @@ CREATE TABLE enthusiast (
 
 DROP TABLE IF EXISTS engagement;
 CREATE TABLE engagement (
-	engagement_id INT AUTO_INCREMENT,
+	engagement_id INT NOT NULL AUTO_INCREMENT,
 	engagement_category VARCHAR(10) NOT NULL,
 	engagement_type VARCHAR(10) NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	enthusiast_id INT,
+	enthusiast_id INT NOT NULL,
+	player_id INT,
+	coach_id INT,
+	tournament_id INT,
 	PRIMARY KEY (engagement_id),
-	FOREIGN KEY (enthusiast_id) REFERENCES enthusiast(enthusiast_id)
+	FOREIGN KEY (enthusiast_id) REFERENCES enthusiast(enthusiast_id),
+	FOREIGN KEY (player_id) REFERENCES player(player_id),
+	FOREIGN KEY (coach_id) REFERENCES coach(coach_id),
+	FOREIGN KEY (tournament_id) REFERENCES tournaments(tournament_id)
+	CONSTRAINT chk_category CHECK (
+		(engagement_category = 'player' AND player_id IS NOT NULL AND coach_id IS NULL AND tournament_id IS NULL) OR
+		(engagement_category = 'coach' AND coach_id IS NOT NULL AND player_id IS NULL AND tournament_id IS NULL) OR
+		(engagement_category = 'tournament' AND tournament_id IS NOT NULL AND coach_id IS NULL AND player_id IS NULL)
+	)
 );
 
 DROP TABLE IF EXISTS player;
@@ -66,7 +77,7 @@ CREATE TABLE coach (
 DROP TABLE IF EXISTS tournaments;
 CREATE TABLE tournaments (
 	tournament_id INT AUTO_INCREMENT PRIMARY KEY,	
-    tournament_name VARCHAR(200) NOT NULL,
+   tournament_name VARCHAR(200) NOT NULL,
 	season_year INT,
 	tournament_type VARCHAR(50),
 	start_date DATE,

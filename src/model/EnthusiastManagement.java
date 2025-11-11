@@ -11,16 +11,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class EnthusiastManagement {
-	private ArrayList<Enthusiast> enthusiastList;
-
-	public EnthusiastManagement() {
-		enthusiastList = new ArrayList<Enthusiast>();
-	}
-
-	/* *
-	 * Once MySQL is connected, this in-memory storage
-	 * can be updated. Basic CRUD can be seen below :)
-	 * */
+	public EnthusiastManagement() {}
 
 	public int addEnthusiast(Enthusiast enthusiast) {
 		String sql = "INSERT INTO enthusiast (username, lastname, firstname, middlename, sex, date_of_birth) " 
@@ -112,7 +103,7 @@ public class EnthusiastManagement {
 	}
 		
 	public ArrayList<Enthusiast> getEnthusiasts() {
-		ArrayList<Enthusiast> enthusiastsList = new ArrayList<>();
+		ArrayList<Enthusiast> enthusiastList = new ArrayList<>();
 
 		String sql = "SELECT * FROM enthusiast";
 	
