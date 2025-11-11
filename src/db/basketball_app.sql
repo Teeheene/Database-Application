@@ -10,7 +10,6 @@ CREATE TABLE enthusiast (
    middlename VARCHAR(50),
    sex VARCHAR(10) NOT NULL,
    date_of_birth TIMESTAMP NOT NULL,
-	hashed_password INT, 
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (enthusiast_id)
 );
