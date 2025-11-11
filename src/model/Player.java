@@ -6,7 +6,6 @@ public class Player
     private String lastName;
     private String firstName;
     private String middleName;
-    private int age;
     private String birthday;
     private char gender;
     private double height;
@@ -14,14 +13,12 @@ public class Player
     private boolean rStatus;
     
     //Constructor
-    public Player(int PlayerID, String lastName, String firstName, String middleName,
-                int age, String birthday, char gender, double height, double weight, boolean rStatus){
+    public Player(int PlayerID, String lastName, String firstName, String middleName, String birthday, char gender, double height, double weight, boolean rStatus){
     
     this.PlayerID = PlayerID;
     this.lastName = lastName;
     this.firstName = firstName;
     this.middleName = middleName;
-    this.age = age;
     this.birthday = birthday;
     this.gender = gender;
     this.height = height;
@@ -42,7 +39,22 @@ public class Player
     public String getLastName() { return lastName; }
 	public String getFirstName() { return firstName; }
 	public String getMiddleName() { return middleName; }
-    public int getAge() { return age; }
+    public int getAge() {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE; 
+        
+        try {
+            LocalDate birthDate = LocalDate.parse(this.birthday, formatter);
+            
+            LocalDate currentDate = LocalDate.now();
+            
+
+            return Period.between(birthDate, currentDate).getYears();
+        } catch (Exception e) {
+            System.err.println("Error calculating age for PlayerID " + this.PlayerID + ": " + e.getMessage());
+            return -1; // Return a sentinel value like -1 to indicate an error
+        }
+    }
+	
 	public String getDateofBirth() { return birthday; }
 	public char getGender() { return gender; }
     public double getHeight() { return height; }
@@ -55,4 +67,5 @@ public class Player
 	public void setMiddleName(String middleName) { this.middleName = middleName; }
 	public void setDateOfBirth(String dateOfBirth) { this.birthday = birthday; }
 	public void setSex(char sex) { this.gender = sex; }
+
 }
