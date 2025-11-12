@@ -5,3 +5,6 @@ classes/
 # Ignore OS cruft
 .DS_Store
 Thumbs.db
+
+# Ignore db pw
+src/util/DatabaseConnection.java
