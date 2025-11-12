@@ -1,8 +1,13 @@
 package view;
 
 import java.io.File;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.function.Consumer;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class GUIUtil {
 
@@ -93,5 +98,85 @@ public class GUIUtil {
 		textField.setForeground(Color.BLACK);
 
 		return textField;
+	}
+
+	public static JButton createCenterImageButton(String path, int y)
+	{
+		ImageIcon icon = new ImageIcon(path);
+		JButton button = new JButton(icon);
+
+		//bounds
+		Dimension size = button.getPreferredSize();
+		button.setSize(size);
+		int x = (640 - size.width) /2;
+		button.setLocation(x,y);
+
+		button.setBorderPainted(false);
+		button.setContentAreaFilled(false);
+		button.setFocusPainted(false);
+		button.setOpaque(false);
+	
+		return button;
+	}
+	
+	public static JPanel showScrollingPanel(LinkedHashMap<String, String> information, 
+			Consumer<String> onClick) {
+		int x = -19;
+		int yStart = 0;
+		int yGap = 60;
+		int visibleCount = 5;
+
+		JPanel cp = new JPanel(null);
+		JPanel buttonPanel = new JPanel(null);	
+		ArrayList<JButton> buttonList = new ArrayList<>();
+		cp.setOpaque(false);
+		buttonPanel.setOpaque(false);
+		
+		int i = 0;
+		for(Map.Entry<String, String> entry : information.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue();
+
+			JButton btn = createCenterImageButton("assets/banner.png",115); 
+			btn.setHorizontalTextPosition(SwingConstants.RIGHT);
+			btn.setVerticalTextPosition(SwingConstants.CENTER);
+			btn.setIconTextGap(-640);
+			btn.setMargin(new Insets(0, 10, 0, 10));
+			btn.setText(value);
+			btn.setLocation(x,yStart+i*yGap);
+			btn.setBounds(x, yStart + i * yGap, 720, 54);
+
+			final String btnValue = key + "/" + value;
+			btn.addActionListener(e -> onClick.accept(btnValue));
+			buttonList.add(btn);
+			buttonPanel.add(btn);
+			i++;
+		}
+
+		int panelHeight = information.size() * yGap;
+		buttonPanel.setOpaque(false);
+		buttonPanel.setSize(590,panelHeight);
+		buttonPanel.setLocation(40,115);
+		cp.add(buttonPanel);
+
+		cp.addMouseWheelListener(new MouseWheelListener() {
+			int offset = 0;
+
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) 
+			{
+				int rotation = e.getWheelRotation(); //1 down -1 up
+				offset -= rotation * 20; //so 20 is the offset like when scrolled ykykyk
+
+				int maxOffset = 0;
+				int minOffset = Math.min(0, visibleCount * yGap - panelHeight);
+				offset = Math.max(minOffset, Math.min(maxOffset, offset));
+
+				buttonPanel.setLocation(40,115+offset);
+				cp.repaint();
+			}
+		});
+
+		return cp;
 	}
 }

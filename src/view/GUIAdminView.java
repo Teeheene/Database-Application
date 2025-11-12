@@ -3,6 +3,7 @@ package view;
 import model.*;
 import controller.*;
 
+import java.util.LinkedHashMap;
 import java.time.LocalDate;
 import java.time.DateTimeException;
 import javax.swing.*;
@@ -150,6 +151,27 @@ public class GUIAdminView {
 			}
 		});
 		backBtn.addActionListener(e -> enthusiastDashboardPanel());
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
+	public void viewAllEnthusiastPanel(LinkedHashMap<String, String> information) {
+		cp = new JPanel(null);
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JLabel overlayBg = new JLabel(new ImageIcon("assets/admin/enthusiast/view_all.png"));
+		overlayBg.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		cp.add(overlayBg);
+
+		JPanel scrollingPanel = GUIUtil.showScrollingPanel(information, clicked -> {
+			 String[] parts = clicked.split("/",2);
+			 String key = parts[0]; 
+			 controller.showEnthusiast(Integer.parseInt(key));
+		});
+		scrollingPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		cp.add(scrollingPanel);
 
 		cp.revalidate();
 		cp.repaint();

@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.LinkedHashMap;
 import model.*;
 import view.*;
 
@@ -37,6 +38,8 @@ public class AdminController {
 				view.createEnthusiastPanel();
 				break;
 			case "viewAll":
+				System.out.println("Opening view all...");
+				view.viewAllEnthusiastPanel(getEnthusiastInformation());
 				break;
 			case "update":
 				break;
@@ -52,5 +55,24 @@ public class AdminController {
 
 	public void addEnthusiast(Enthusiast enthusiast) {
 		enthusiastModel.addEnthusiast(enthusiast);
+	}
+
+	public void showEnthusiast(int ID) {
+		System.out.println("User shown!");
+	}
+
+	//admin helper
+	public LinkedHashMap<String, String> getEnthusiastInformation() {
+		LinkedHashMap<String, String> information = new LinkedHashMap<>();
+
+		for(Enthusiast e : enthusiastModel.getEnthusiasts()) {
+			if(e == null) { continue; }
+			String key = String.valueOf(e.getID());
+			String value = e.getSimpleInfo();
+			information.put(key, value);
+			System.out.println(e.getSimpleInfo());
+		}
+
+		return information;
 	}
 }

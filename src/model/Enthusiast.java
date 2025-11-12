@@ -69,6 +69,10 @@ public class Enthusiast {
 		if(other.getSex() != null) { this.sex = other.getSex(); }
 	}
 
+	public String getSimpleInfo() {
+		return "#" + String.valueOf(ID) + " " + username;
+	}
+
 	public int getID() { return ID; }
 	public String getUsername() { return username; }
 	public String getLastName() { return lastName; }
