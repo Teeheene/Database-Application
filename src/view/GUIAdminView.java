@@ -3,6 +3,8 @@ package view;
 import model.*;
 import controller.*;
 
+import java.time.LocalDate;
+import java.time.DateTimeException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -70,6 +72,70 @@ public class GUIAdminView {
 		cp.repaint();
 
 	}
+
+	public void createEnthusiastPanel() {
+		cp = BackgroundPanel.create("assets/admin/enthusiast/create.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+		JTextField usernameField = GUIUtil.createTextField(119,198,261,27);
+		JTextField lastNameField = GUIUtil.createTextField(119,254,261,27);
+		JTextField firstNameField = GUIUtil.createTextField(119,308,261,27);
+		JTextField middleNameField = GUIUtil.createTextField(119,364,261,27);
+		JTextField yearField = GUIUtil.createTextField(445,198,139,27);
+		JTextField monthField = GUIUtil.createTextField(445,253,139,27);
+		JTextField dayField = GUIUtil.createTextField(445,309,139,27);
+		JTextField sexField = GUIUtil.createTextField(445,364,139,27);
+		JButton submitBtn = GUIUtil.createIButton(110,410,486,27);
+		cp.add(usernameField);
+		cp.add(lastNameField);
+		cp.add(firstNameField);
+		cp.add(middleNameField);
+		cp.add(yearField);
+		cp.add(monthField);
+		cp.add(dayField);
+		cp.add(sexField);
+		cp.add(submitBtn);
+
+		submitBtn.addActionListener(e -> {
+			try {
+				String username = usernameField.getText().trim();
+				String lastName = lastNameField.getText().trim();
+				String firstName = firstNameField.getText().trim();
+				String middleName = middleNameField.getText().trim();
+				String sex = sexField.getText().trim();
+
+				int year = Integer.parseInt(yearField.getText().trim());
+      		int month = Integer.parseInt(monthField.getText().trim());
+   			int day = Integer.parseInt(dayField.getText().trim());
+
+				//for validating date of birth
+				LocalDate dateOfBirth = LocalDate.of(year, month, day);
+
+				Enthusiast enthusiast = new Enthusiast(
+					username, 
+					lastName, firstName, middleName, 
+					sex, 
+					new Timestamp(year, month, day)
+				);
+
+				if(middleName.isEmpty()) {
+					enthusiast.setMiddleName(null);
+				}
+
+				controller.addEnthusiast(enthusiast);
+
+
+			} catch (NumberFormatException nfe) {
+				System.out.println("Invalid date input. Please enter numerical values.");
+			} catch (DateTimeException dte) {
+				System.out.println("Invalid date. Please check the day, month and or year.");
+			}
+		});
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
 	public void show() { frame.setVisible(true); }
 	public void hide() { frame.setVisible(false); }
 	public void dispose() { if(frame != null) frame.dispose(); }

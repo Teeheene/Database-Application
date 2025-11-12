@@ -6,10 +6,14 @@ import view.*;
 public class AdminController {
 	private GUIView prevView;
 	private GUIAdminView view;
+
+	private EnthusiastManagement enthusiastModel;
 	
 	public AdminController(GUIView prevView, GUIAdminView view) {
 		this.prevView = prevView;
 		this.view = view;	
+
+		enthusiastModel = new EnthusiastManagement();
 	}	
 
 	public void handleMenu(String option) {
@@ -30,6 +34,7 @@ public class AdminController {
 		switch(option) {
 			case "create":
 				System.out.println("Opening create...");
+				view.createEnthusiastPanel();
 				break;
 			case "viewAll":
 				break;
@@ -43,5 +48,9 @@ public class AdminController {
 				view.dashboardPanel();
 				break;
 		}
+	}
+
+	public void addEnthusiast(Enthusiast enthusiast) {
+		enthusiastModel.addEnthusiast(enthusiast);
 	}
 }
