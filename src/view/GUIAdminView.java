@@ -86,6 +86,7 @@ public class GUIAdminView {
 		JTextField dayField = GUIUtil.createTextField(445,309,139,27);
 		JTextField sexField = GUIUtil.createTextField(445,364,139,27);
 		JButton submitBtn = GUIUtil.createIButton(110,410,486,27);
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
 		cp.add(usernameField);
 		cp.add(lastNameField);
 		cp.add(firstNameField);
@@ -95,6 +96,7 @@ public class GUIAdminView {
 		cp.add(dayField);
 		cp.add(sexField);
 		cp.add(submitBtn);
+		cp.add(backBtn);
 
 		submitBtn.addActionListener(e -> {
 			try {
@@ -118,19 +120,36 @@ public class GUIAdminView {
 					new Timestamp(year, month, day)
 				);
 
+				if(username.isEmpty() || lastName.isEmpty() || 
+					firstName.isEmpty() || sex.isEmpty()) {
+					JOptionPane.showMessageDialog(frame, 
+						"Please fill in all required fields (middle name is optional).");
+   				return; // stop further processing
+				}
+
 				if(middleName.isEmpty()) {
 					enthusiast.setMiddleName(null);
 				}
 
 				controller.addEnthusiast(enthusiast);
 
-
+				usernameField.setText("");
+				lastNameField.setText("");
+				firstNameField.setText("");
+				middleNameField.setText("");
+				yearField.setText("");
+				monthField.setText("");
+				dayField.setText("");
+				sexField.setText("");
 			} catch (NumberFormatException nfe) {
-				System.out.println("Invalid date input. Please enter numerical values.");
+				JOptionPane.showMessageDialog(frame,
+					"Invalid date input. Please enter numerical values.");
 			} catch (DateTimeException dte) {
-				System.out.println("Invalid date. Please check the day, month and or year.");
+				JOptionPane.showMessageDialog(frame,
+					"Invalid date. Please check the day, month and or year.");
 			}
 		});
+		backBtn.addActionListener(e -> enthusiastDashboardPanel());
 
 		cp.revalidate();
 		cp.repaint();
