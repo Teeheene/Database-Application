@@ -3,7 +3,7 @@ package view;
 import model.*;
 
 public interface View {
-	String showMenuScreen();
+	void showMenuScreen();
 	LoginBuilder showLoginScreen();
 	String showEnthusiastProfile(Enthusiast enthusiast);
 	String showAdminProfile();

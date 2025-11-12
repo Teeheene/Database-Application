@@ -5,7 +5,7 @@ import view.*;
 import java.util.ArrayList;
 
 public class MainController {
-	private View view;
+	private GUIView view;
 	private EnthusiastView enthusiastView;
 	private EnthusiastManagement enthusiastModel;
 	private PlayerView playerView;
@@ -14,7 +14,7 @@ public class MainController {
 	private EngagementView engagementView;
 	private EngagementManagement engagementModel;
 	
-	public MainController(View view, EnthusiastView enthusiastView, PlayerView playerView, EngagementView engagementView) {
+	public MainController(GUIView view, EnthusiastView enthusiastView, PlayerView playerView, EngagementView engagementView) {
 		this.view = view;
 		this.enthusiastView = enthusiastView;
 		this.playerView = playerView;
@@ -25,7 +25,26 @@ public class MainController {
 		playerController = new PlayerController(playerModel, playerView);
 		engagementModel = new EngagementManagement();
 	}
+
+	public void start() {
+		view.setupGUI();
+	}
 	
+	public void handleMenu(String option) {
+		switch(option) {
+			case "admin":
+				System.out.println("Admin Login Opening...");
+				break;
+			case "login":
+				System.out.println("Login Opening...");
+				break;
+			case "register":
+				System.out.println("Register Opening...");
+				break;
+		}
+	}
+		
+	/*
 	public void start() {
 		boolean exit = false;
 		boolean login = false;
@@ -33,7 +52,7 @@ public class MainController {
 		LoginBuilder loginDetails = new LoginBuilder();
 		Enthusiast enthusiast = new Enthusiast();
 		
-		do {
+	do {
 			String command = view.showMenuScreen();
 
 			switch(command) {
@@ -76,6 +95,7 @@ public class MainController {
 
 		} while(!exit);
 	}
+	*/
 
 	public void adminProfile() {
 		boolean exit = false;

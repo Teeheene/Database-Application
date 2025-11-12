@@ -12,7 +12,7 @@ public class CLIView implements View {
 	}
 
 	@Override 
-	public String showMenuScreen() {
+	public /*String*/ void showMenuScreen() {
 		System.out.println("_______________________");	
 		System.out.println("BASKETBALL APPLICATION");
 		System.out.println("1. Login");
@@ -20,6 +20,7 @@ public class CLIView implements View {
 		System.out.println("3. Exit");
 		System.out.println("_______________________");	
 
+		/*
 		switch(getInput(1,3)) {
 			case 1: return "login";
 			case 2: return "register";
@@ -27,6 +28,7 @@ public class CLIView implements View {
 		}
 
 		return null;
+		*/
 	}	
 
 	private int getInput(int startRange, int endRange) {
