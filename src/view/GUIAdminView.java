@@ -175,7 +175,7 @@ public class GUIAdminView {
 		
 		cp.add(overlayBg);
 		cp.add(backBtn);
-		cp.add(scrollingPanel);
+			cp.add(scrollingPanel);
 
 		backBtn.addActionListener(e -> enthusiastDashboardPanel());
 
@@ -209,6 +209,73 @@ public class GUIAdminView {
 
 		cp.revalidate();
 		cp.repaint();
+	}
+	
+	public void searchDeleteEnthusiastPanel() {
+		cp = BackgroundPanel.create("assets/admin/enthusiast/search.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JButton submitBtn = GUIUtil.createIButton(568,260,98,27);
+		JTextField field = GUIUtil.createTextField(142,261,367,27);
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		cp.add(submitBtn);
+		cp.add(field);
+		cp.add(backBtn);
+
+		backBtn.addActionListener(e -> enthusiastDashboardPanel());
+		submitBtn.addActionListener(e -> {
+			String input = field.getText().trim();
+			field.setText("");
+
+			try {
+				int id = Integer.parseInt(input);
+				if(!controller.deleteEnthusiastView(id)) {
+					JOptionPane.showMessageDialog(frame,
+						"ID does not exist.");
+				}
+			} catch(NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(frame,
+					"Invalid ID number");
+			}
+		});
+		
+		cp.revalidate();
+		cp.repaint();
+	}
+
+	public void deleteEnthusiastPanel(Enthusiast enthusiast) {
+		cp = BackgroundPanel.create("assets/admin/enthusiast/delete.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JLabel username = GUIUtil.createText(enthusiast.getUsername(),100,199,286,27);
+		JLabel id = GUIUtil.createText(String.valueOf(enthusiast.getID()),410,199,92,27);
+		JLabel sex = GUIUtil.createText(enthusiast.getSex(),526,199,89,27);
+		JLabel fullname = GUIUtil.createText(enthusiast.getFullName(),102,273,515,27);
+		JLabel birthday = GUIUtil.createText(enthusiast.getDateOfBirth()
+				.getDisplayDate(),100,346,245,27);
+		JLabel joinedBy = GUIUtil.createText(enthusiast.getJoinDate()
+				.getDisplayDate(),370,346,245,27); 
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		JButton delBtn = GUIUtil.createIButton(521,440,113,27);
+		cp.add(username);
+		cp.add(id);
+		cp.add(sex);
+		cp.add(fullname);
+		cp.add(birthday);
+		cp.add(joinedBy);
+		cp.add(backBtn);
+		cp.add(delBtn);
+
+		backBtn.addActionListener(e -> enthusiastDashboardPanel());
+		delBtn.addActionListener(e -> {
+			controller.deleteEnthusiast(enthusiast);
+			enthusiastDashboardPanel();
+		});
+
+		cp.revalidate();
+		cp.repaint();	
 	}
 
 	public void show() { frame.setVisible(true); }

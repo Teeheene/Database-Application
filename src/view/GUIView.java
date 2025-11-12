@@ -103,24 +103,4 @@ public class GUIView {
 		//temp
 		return null;
 	};
-
-	//register panel
-	
-
-	//remove ts!!! >>
-	public String showEnthusiastProfile(Enthusiast enthusiast) {
-		//temp
-		return null;
-	};
-
-	public String showAdminProfile() {
-		//temp
-		return null;
-	};
-
-	public String showAdminCrud(String type) {
-		//temp
-		return null;
-	};
-
 }

@@ -44,6 +44,8 @@ public class AdminController {
 			case "update":
 				break;
 			case "delete":
+				System.out.println("Opening search...");
+				view.searchDeleteEnthusiastPanel();
 				break;
 			case "report":
 				break;
@@ -58,9 +60,19 @@ public class AdminController {
 	}
 
 	public void showEnthusiast(int ID) {
-		System.out.println("ts is running naman but ure bobo, heres the key: " + ID);
 		Enthusiast enthusiast = enthusiastModel.searchEnthusiastByID(ID);
 		view.viewEnthusiastPanel(enthusiast);
+	}
+
+	public boolean deleteEnthusiastView(int ID) {
+		Enthusiast enthusiast = enthusiastModel.searchEnthusiastByID(ID);
+		if(enthusiast == null) return false; 
+		view.deleteEnthusiastPanel(enthusiast);
+		return true;
+	}
+	
+	public void deleteEnthusiast(Enthusiast enthusiast) {
+		enthusiastModel.deleteEnthusiast(enthusiast.getID());
 	}
 
 	//admin helper

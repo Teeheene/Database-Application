@@ -12,7 +12,7 @@ public class Player
     private double height;
     private double weight;
     private boolean rStatus;
-    
+
     //Constructor
     public Player(int PlayerID, String lastName, String firstName, String middleName,
                 int age, String birthday, char gender, double height, double weight, boolean rStatus){
