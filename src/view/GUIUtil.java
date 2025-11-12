@@ -8,6 +8,10 @@ public class GUIUtil {
 
 	public static void setGlobalFont()
 	{
+		//for aa or antialiasing (cuz its pixel-y without it)
+		System.setProperty("awt.useSystemAAFontSettings", "on");
+		System.setProperty("swing.aatext", "true");
+
 		try
 		{
 			Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("assets/fonts/canva-sans-medium.otf")).deriveFont(14f);
@@ -46,7 +50,7 @@ public class GUIUtil {
 	}
 
 	/**
-	 * Creates a text field with transparent background and red border styling.
+	 * Creates a text field with transparent background and red border styling.dkjh
 	 * 
 	 * The text field is configured to be non-opaque with black text on a transparent background.
 	 * 

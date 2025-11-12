@@ -3,7 +3,6 @@ package view;
 import model.*;
 import controller.*;
 
-import java.io.File;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
