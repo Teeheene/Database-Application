@@ -9,13 +9,10 @@ public class Tournament {
     private String tournamentType;
     private Timestamp startDate;
     private Timestamp endDate;
-    // not sure with team bracket (attribute type)
-    private String teamBracket;
-    private String fanFavoriteTeam;
 
     // Constructor
-    public Tournament(int tournamentID, String tournamentName, int seasonYear, String tournamentType,
-                      Timestamp startDate, Timestamp endDate, String teamBracket, String fanFavoriteTeam) {
+    public Tournament(int tournamentID, String tournamentName, int seasonYear, 
+                      String tournamentType, Timestamp startDate, Timestamp endDate) {
 
         this.tournamentID = tournamentID;
         this.tournamentName = tournamentName;
@@ -23,8 +20,6 @@ public class Tournament {
         this.tournamentType = tournamentType;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.teamBracket = teamBracket;
-        this.fanFavoriteTeam = fanFavoriteTeam;
 
     }
 
@@ -36,8 +31,6 @@ public class Tournament {
         this.tournamentType = updatedTournament.getTournamentType();
         this.startDate = updatedTournament.getStartDate();
         this.endDate = updatedTournament.getEndDate();
-        this.teamBracket = updatedTournament.getTeamBracket();
-        this.fanFavoriteTeam = updatedTournament.getFanFavoriteTeam();
     }
 
 
@@ -51,8 +44,6 @@ public class Tournament {
     public String getTournamentType() { return tournamentType; }
     public Timestamp getStartDate() { return startDate; }
     public Timestamp getEndDate() { return endDate; }
-    public String getTeamBracket() { return teamBracket; }
-    public String getFanFavoriteTeam() { return fanFavoriteTeam; }
 
     /*
     Setters
@@ -62,8 +53,7 @@ public class Tournament {
     public void setTournamentType(String tournamentType) { this.tournamentType = tournamentType; }
     public void setStartDate(Timestamp startDate) { this.startDate = startDate; }
     public void setEndDate(Timestamp endDate) { this.endDate = endDate; }
-    public void setTeamBracket(String teamBracket) { this.teamBracket = teamBracket; }
-    public void setFanFavoriteTeam(String fanFavoriteTeam) { this.fanFavoriteTeam = fanFavoriteTeam; }
 
 }
+
 
