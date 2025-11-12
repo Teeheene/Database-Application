@@ -53,6 +53,8 @@ public class PlayerController {
     }
 
     private void createPlayer() {
+		 //pls fix yo bugs ToT
+		 /*
         try {
             Player newPlayer = view.getPlayerInput();
             
@@ -68,9 +70,12 @@ public class PlayerController {
         } catch (Exception e) {
             view.displayError("Failed to add player: " + e.getMessage());
         }
+		  */
     }
 
     private void searchPlayer() {
+		 //update this
+		 /*
         try {
             String category = view.getSearchCategory();
             String key = view.getSearchKey();
@@ -80,9 +85,12 @@ public class PlayerController {
         } catch (Exception e) {
             view.displayError("Failed to search player: " + e.getMessage());
         }
+		  */
     }
 
     private void updatePlayer() {
+		 //update this
+		 /*
         try {
             view.displayMessage("Search for the player to update:");
             String category = view.getSearchCategory();
@@ -110,9 +118,12 @@ public class PlayerController {
         } catch (Exception e) {
             view.displayError("Failed to update player: " + e.getMessage());
         }
+		  */
     }
 
     private void deletePlayer() {
+		 //update this
+		 /*
         try {
             view.displayMessage("Search for the player to delete:");
             String category = view.getSearchCategory();
@@ -137,6 +148,7 @@ public class PlayerController {
         } catch (Exception e) {
             view.displayError("Failed to delete player: " + e.getMessage());
         }
+		  */
     }
 
     private void displayAllPlayers() {

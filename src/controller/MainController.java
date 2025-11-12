@@ -115,7 +115,6 @@ public class MainController {
 
 		} while(!exit);
 	}
-	*/
 
 	public void adminProfile() {
 		boolean exit = false;
@@ -240,4 +239,5 @@ public class MainController {
 
 		return false;
 	}
+	*/
 }

@@ -156,6 +156,8 @@ public Player searchPlayer(int playerID) {
     String sql = "SELECT * FROM player WHERE player_id = ?";
     Player player = null;
 
+	 //fix this :D
+	 /*
     try (Connection conn = DatabaseConnection.getConnection();
         PreparedStatement statement = conn.prepareStatement(sql)) {
 
@@ -168,6 +170,7 @@ public Player searchPlayer(int playerID) {
                     rs.getString("firstname"),
                     rs.getString("middlename"),
                     rs.getString("date_of_birth"),                
+						  rs.getInt("age"),
                     rs.getString("sex").charAt(0),              
                     rs.getDouble("height"),
                     rs.getDouble("weight"),
@@ -178,6 +181,7 @@ public Player searchPlayer(int playerID) {
     } catch (SQLException e) {
         e.printStackTrace();
     }
+	 */
 
     return player;
 }
@@ -200,6 +204,8 @@ public ArrayList<Player> getAllPlayers() {
     ArrayList<Player> players = new ArrayList<>();
     String sql = "SELECT * FROM player";
 
+	 //fix this :D
+	 /*
     try (Connection conn = DatabaseConnection.getConnection();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql)) {
@@ -221,6 +227,7 @@ public ArrayList<Player> getAllPlayers() {
     } catch (SQLException e) {
         e.printStackTrace();
     }
+	*/
 
     return players;
 }

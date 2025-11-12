@@ -2,10 +2,6 @@ package model;
 
 import util.*;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 0d3907c7a09af4a393721439a0017e33049e65e2
 public class Engagement {
 	private int ID;
 	private String targetCategory;
