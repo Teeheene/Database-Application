@@ -66,7 +66,7 @@ public class GUIUtil {
 
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
-		button.setBorderPainted(true);
+		button.setBorderPainted(false);
 		button.setFocusPainted(false);
 
 		//debugging
@@ -100,6 +100,14 @@ public class GUIUtil {
 		return textField;
 	}
 
+	public static JLabel createText(String txt, int x, int y, int w, int h)
+	{
+		JLabel label = new JLabel(txt);
+		label.setBounds(x,y,w,h);
+		//label.setBorder(BorderFactory.createLineBorder(Color.RED,2));
+		return label;
+	}
+
 	public static JButton createCenterImageButton(String path, int y)
 	{
 		ImageIcon icon = new ImageIcon(path);
@@ -123,7 +131,7 @@ public class GUIUtil {
 			Consumer<String> onClick) {
 		int x = -19;
 		int yStart = 0;
-		int yGap = 60;
+		int yGap = 70;
 		int visibleCount = 5;
 
 		JPanel cp = new JPanel(null);
@@ -144,7 +152,7 @@ public class GUIUtil {
 			btn.setMargin(new Insets(0, 10, 0, 10));
 			btn.setText(value);
 			btn.setLocation(x,yStart+i*yGap);
-			btn.setBounds(x, yStart + i * yGap, 720, 54);
+			btn.setBounds(x, yStart + i * yGap, 720, 63);
 
 			final String btnValue = key + "/" + value;
 			btn.addActionListener(e -> onClick.accept(btnValue));

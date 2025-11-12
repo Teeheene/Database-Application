@@ -2,6 +2,7 @@ package view;
 
 import model.*;
 import controller.*;
+import util.*;
 
 import java.util.LinkedHashMap;
 import java.time.LocalDate;
@@ -118,7 +119,7 @@ public class GUIAdminView {
 					username, 
 					lastName, firstName, middleName, 
 					sex, 
-					new Timestamp(year, month, day)
+					new CustomTimestamp(year, month, day)
 				);
 
 				if(username.isEmpty() || lastName.isEmpty() || 
@@ -162,16 +163,49 @@ public class GUIAdminView {
 		frame.setContentPane(cp);
 
 		JLabel overlayBg = new JLabel(new ImageIcon("assets/admin/enthusiast/view_all.png"));
-		overlayBg.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-		cp.add(overlayBg);
-
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
 		JPanel scrollingPanel = GUIUtil.showScrollingPanel(information, clicked -> {
 			 String[] parts = clicked.split("/",2);
 			 String key = parts[0]; 
 			 controller.showEnthusiast(Integer.parseInt(key));
 		});
+
+		overlayBg.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		scrollingPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		
+		cp.add(overlayBg);
+		cp.add(backBtn);
 		cp.add(scrollingPanel);
+
+		backBtn.addActionListener(e -> enthusiastDashboardPanel());
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
+	public void viewEnthusiastPanel(Enthusiast enthusiast) {
+		cp = BackgroundPanel.create("assets/admin/enthusiast/view.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JLabel username = GUIUtil.createText(enthusiast.getUsername(),100,199,286,27);
+		JLabel id = GUIUtil.createText(String.valueOf(enthusiast.getID()),410,199,92,27);
+		JLabel sex = GUIUtil.createText(enthusiast.getSex(),526,199,89,27);
+		JLabel fullname = GUIUtil.createText(enthusiast.getFullName(),102,273,515,27);
+		JLabel birthday = GUIUtil.createText(enthusiast.getDateOfBirth()
+				.getDisplayDate(),100,346,245,27);
+		JLabel joinedBy = GUIUtil.createText(enthusiast.getJoinDate()
+				.getDisplayDate(),370,346,245,27); 
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		cp.add(username);
+		cp.add(id);
+		cp.add(sex);
+		cp.add(fullname);
+		cp.add(birthday);
+		cp.add(joinedBy);
+		cp.add(backBtn);
+
+		backBtn.addActionListener(e -> enthusiastDashboardPanel());
 
 		cp.revalidate();
 		cp.repaint();

@@ -1,6 +1,7 @@
 package model;
 
 import view.LoginBuilder;
+import util.*;
 
 /*
  *	Make a builder for enthusiast :D
@@ -12,8 +13,8 @@ public class Enthusiast {
 	private String firstName;
 	private String middleName;
 	private String sex;
-	private Timestamp dateOfBirth;	
-	private Timestamp joinDate;
+	private CustomTimestamp dateOfBirth;	
+	private CustomTimestamp joinDate;
 	//temporary until IDs are implemented for other classes
 
 	public Enthusiast() {
@@ -28,7 +29,7 @@ public class Enthusiast {
 	 * ID number
 	 * join date
 	 * */
-	public Enthusiast(String username, String lastName, String firstName, String middleName, String sex, Timestamp dateOfBirth) {
+	public Enthusiast(String username, String lastName, String firstName, String middleName, String sex, CustomTimestamp dateOfBirth) {
 		this.username = username;
 		this.lastName = lastName;
 		this.firstName = firstName;
@@ -48,12 +49,12 @@ public class Enthusiast {
 		String[] dateTokens = dateOfBirth.split("-");
 		String[] joinPart = joinDate.split(" ");
 		String[] joinTokens = joinPart[0].split("-");
-		this.dateOfBirth = new Timestamp(
+		this.dateOfBirth = new CustomTimestamp(
 			Integer.parseInt(dateTokens[0]), 
 			Integer.parseInt(dateTokens[1]), 
 			Integer.parseInt(dateTokens[2])
 		);
-		this.joinDate = new Timestamp(
+		this.joinDate = new CustomTimestamp(
 			Integer.parseInt(joinTokens[0]), 
 			Integer.parseInt(joinTokens[1]), 
 			Integer.parseInt(joinTokens[2])
@@ -72,6 +73,11 @@ public class Enthusiast {
 	public String getSimpleInfo() {
 		return "#" + String.valueOf(ID) + " " + username;
 	}
+	public String getFullName() {
+		String name = lastName + ", " + firstName;
+		if(middleName != null) name += " " + middleName.charAt(0) + ".";
+		return name;
+	}
 
 	public int getID() { return ID; }
 	public String getUsername() { return username; }
@@ -79,8 +85,8 @@ public class Enthusiast {
 	public String getFirstName() { return firstName; }
 	public String getMiddleName() { return middleName; }
 	public String getSex() { return sex; }
-	public Timestamp getDateOfBirth() { return dateOfBirth; }
-	public Timestamp getJoinDate() { return joinDate; }
+	public CustomTimestamp getDateOfBirth() { return dateOfBirth; }
+	public CustomTimestamp getJoinDate() { return joinDate; }
 
 	public void setID(int ID) { this.ID = ID; }
 	public void setUsername(String username) { this.username = username; }
@@ -88,5 +94,5 @@ public class Enthusiast {
 	public void setFirstName(String firstName) { this.firstName = firstName; }
 	public void setMiddleName(String middleName) { this.middleName = middleName; }
 	public void setSex(String sex) { this.sex = sex; }
-	public void setDateOfBirth(Timestamp dateOfBirth) { this.dateOfBirth = dateOfBirth; }
+	public void setDateOfBirth(CustomTimestamp dateOfBirth) { this.dateOfBirth = dateOfBirth; }
 }

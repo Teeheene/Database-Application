@@ -58,7 +58,9 @@ public class AdminController {
 	}
 
 	public void showEnthusiast(int ID) {
-		System.out.println("User shown!");
+		System.out.println("ts is running naman but ure bobo, heres the key: " + ID);
+		Enthusiast enthusiast = enthusiastModel.searchEnthusiastByID(ID);
+		view.viewEnthusiastPanel(enthusiast);
 	}
 
 	//admin helper
