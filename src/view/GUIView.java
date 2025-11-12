@@ -20,29 +20,8 @@ public class GUIView {
 		this.controller = controller;
 	}
 	
-	public void setupGUI() {
-		GUIUtil.setGlobalFont();
-		frame = new JFrame();
-
-		//null layout for custom placing (i hate layouts!!)
-		cp = BackgroundPanel.create("assets/main_menu/bg.png");
-		frame.setContentPane(cp);
-		cp.setLayout(null);
-
-		frame.pack();
-		frame.setVisible(true);
-
-		Insets insets = frame.getInsets();
-
-		int targetWidth = 720 + insets.left + insets.right;
-		int targetHeight = 480 + insets.top + insets.bottom;
-
-		frame.setSize(targetWidth, targetHeight);
-		frame.setResizable(false);
-		frame.setTitle("BasketGram");
-
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+	public void start() {
+		frame = GUIUtil.setupGUI(frame, cp);
 		menuPanel();
 	}
 
@@ -65,7 +44,7 @@ public class GUIView {
 
 		cp.revalidate();
 		cp.repaint();
-	};
+	}
 
 	//menu
 	// > admin
@@ -115,6 +94,9 @@ public class GUIView {
 		cp.revalidate();
 		cp.repaint();
 	};
+
+	public void show() { frame.setVisible(true); }
+	public void hide() { frame.setVisible(false); }
 
 	//login panel
 	public LoginBuilder showLoginScreen() {

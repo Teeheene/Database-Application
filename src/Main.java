@@ -12,8 +12,7 @@ public class Main {
 		MainController app = new MainController(view, viewEnthusiast, viewPlayer, viewEngagement); 	
 		
 		view.setListeners(app);	
-
-		app.start();
+		view.start();
 	}
 }
 

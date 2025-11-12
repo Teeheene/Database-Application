@@ -31,7 +31,28 @@ public class GUIUtil {
 			e.printStackTrace();
 		}
 	}
+	
+	public static JFrame setupGUI(JFrame frame, Container cp) {
+		setGlobalFont();
+		frame = new JFrame();
 
+		//null layout for custom placing (i hate layouts!!)
+		cp = BackgroundPanel.create("assets/main_menu/bg.jpg"); //temp
+		frame.setContentPane(cp);
+		cp.setLayout(null);
+
+
+		Insets insets = frame.getInsets();
+		int targetWidth = 720 + insets.left + insets.right;
+		int targetHeight = 480 + insets.top + insets.bottom;
+		frame.setSize(targetWidth, targetHeight);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
+		frame.setTitle("BasketGram");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+		return frame;
+	}
 
 	//creates an invsible button for overlayed options
 	public static JButton createIButton(int x, int y, int w, int h) {
@@ -40,7 +61,7 @@ public class GUIUtil {
 
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
-		button.setBorderPainted(false);
+		button.setBorderPainted(true);
 		button.setFocusPainted(false);
 
 		//debugging

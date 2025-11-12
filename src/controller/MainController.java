@@ -13,6 +13,8 @@ public class MainController {
 	private PlayerController playerController;
 	private EngagementView engagementView;
 	private EngagementManagement engagementModel;
+	private GUIAdminView adminView;
+	private AdminController adminController;
 	
 	public MainController(GUIView view, EnthusiastView enthusiastView, PlayerView playerView, EngagementView engagementView) {
 		this.view = view;
@@ -24,10 +26,10 @@ public class MainController {
 		playerModel = new PlayerManagement();
 		playerController = new PlayerController(playerModel, playerView);
 		engagementModel = new EngagementManagement();
-	}
 
-	public void start() {
-		view.setupGUI();
+		//gui onmes
+		this.adminView = new GUIAdminView(); 
+		adminController = new AdminController(view, adminView);	
 	}
 	
 	public void handleMenu(String option) {
@@ -46,13 +48,22 @@ public class MainController {
 	}
 
 	public void handleAdminLogin(String password) {
-		if(password.equals("admin123"))
+		if(password.equals("admin123")) {
 			//start admin controller
 			System.out.println("Succesfully logged in!");
+
+			//setup adminView
+			adminView.setListeners(adminController);
+			adminView.start();
+			
+			//transfer to sub-view (admin profile)
+			view.hide();
+			adminView.show();
+		}
 		else
 			System.out.println("Wrong login credentials.");
 	}
-		
+	
 	/*
 	public void start() {
 		boolean exit = false;
