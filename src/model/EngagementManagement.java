@@ -11,9 +11,43 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class EngagementManagement {
+	public EngagementManagement() {}
 
+	/* Add Engagement to DB 
+	 * 
+	 * @param engagement The built engagement to add
+	 * */
 	public void addEngagement(Engagement engagement) {
-		//add to table via sql	
+		//add if condition depending on the type
+		String sql = "INSERT INTO engagement (engagement_category, engagement_type, enthusiast_id, ";
+		switch(engagement.getTargetCategory()) {
+			case "player":
+				sql += "player_id";
+				break;
+			case "coach":
+				sql += "coach_id";
+				break;
+			case "tournament":
+				sql += "tournament_id";
+				break;
+		}
+
+		sql += ") VALUES(?, ?, ?, ?)";
+
+		try(Connection conn = DatabaseConnection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql)) {
+			statement.setString(1, engagement.getTargetCategory());
+			statement.setString(2, engagement.getType());
+			statement.setInt(3, engagement.getEnthusiastID());
+			statement.setInt(4, engagement.getTargetID());
+
+			int affectedRows = statement.executeUpdate();
+
+			if(affectedRows > 0)
+				System.out.println("You have " + engagement.getType() + " this " + engagement.getTargetCategory());
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void deleteEngagement(String type) {
