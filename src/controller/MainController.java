@@ -34,6 +34,7 @@ public class MainController {
 		switch(option) {
 			case "admin":
 				System.out.println("Admin Login Opening...");
+				view.adminLoginPanel();
 				break;
 			case "login":
 				System.out.println("Login Opening...");
@@ -42,6 +43,14 @@ public class MainController {
 				System.out.println("Register Opening...");
 				break;
 		}
+	}
+
+	public void handleAdminLogin(String password) {
+		if(password.equals("admin123"))
+			//start admin controller
+			System.out.println("Succesfully logged in!");
+		else
+			System.out.println("Wrong login credentials.");
 	}
 		
 	/*

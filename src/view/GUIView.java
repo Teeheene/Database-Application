@@ -3,13 +3,14 @@ package view;
 import model.*;
 import controller.*;
 
+import java.io.File;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class GUIView {
 	private JFrame frame;
 	private Container cp;
-	private JLabel promptLabel;
 
 	private MainController controller;
 
@@ -21,8 +22,8 @@ public class GUIView {
 	}
 	
 	public void setupGUI() {
+		GUIUtil.setGlobalFont();
 		frame = new JFrame();
-		promptLabel = new JLabel();
 
 		//null layout for custom placing (i hate layouts!!)
 		cp = BackgroundPanel.create("assets/main_menu/bg.png");
@@ -43,11 +44,11 @@ public class GUIView {
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		showMenuScreen();
+		menuPanel();
 	}
 
 	//menu panel
-	public void showMenuScreen() {
+	public void menuPanel() {
 		cp = BackgroundPanel.create("assets/main_menu/bg.png");
 		cp.setLayout(null);
 		frame.setContentPane(cp);
@@ -72,6 +73,49 @@ public class GUIView {
 	// > login
 	// > register
 
+	//admin login panel
+	public void adminLoginPanel() {
+		cp = BackgroundPanel.create("assets/admin/login.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JButton adminBtn = GUIUtil.createIButton(441,0,86,53);
+		JButton loginBtn = GUIUtil.createIButton(527,0,76,53);
+		JButton registerBtn = GUIUtil.createIButton(603,0,104,53);
+		JButton submitBtn = GUIUtil.createIButton(568,260,98,27);
+		JTextField field = GUIUtil.createTextField(184,261,364,27);
+
+		cp.add(adminBtn);
+		cp.add(loginBtn);
+		cp.add(registerBtn);
+		cp.add(submitBtn);
+		cp.add(field);
+
+		adminBtn.addActionListener(e -> controller.handleMenu("admin"));
+		loginBtn.addActionListener(e -> controller.handleMenu("login"));
+		registerBtn.addActionListener(e -> controller.handleMenu("register"));
+		submitBtn.addActionListener(e -> {
+			String input = field.getText();
+			field.setText("");
+			controller.handleAdminLogin(input);
+		});
+		
+		//field when 'enter' pressed, accepts input to password
+		field.requestFocusInWindow();
+		field.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					String input = field.getText();
+					field.setText("");
+					controller.handleAdminLogin(input);	
+				}
+			}
+		});
+	
+		cp.revalidate();
+		cp.repaint();
+	};
 
 	//login panel
 	public LoginBuilder showLoginScreen() {
