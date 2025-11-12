@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import util.*;
 import model.*;
+import util.*;
 
 public class CLIEnthusiastView implements EnthusiastView {
 	Scanner input = new Scanner(System.in);

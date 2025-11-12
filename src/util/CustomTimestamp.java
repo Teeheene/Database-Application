@@ -15,6 +15,7 @@ public class CustomTimestamp {
 		System.out.println(year + "/" + month + "/" + day);
 	}
 
+<<<<<<< HEAD
 
 	public String getDisplayDate() {
 		 String monthName = "";
@@ -38,6 +39,9 @@ public class CustomTimestamp {
 	}
 
 	public String getFormattedDate() {
+=======
+	public String toStringDate() {
+>>>>>>> 0d3907c7a09af4a393721439a0017e33049e65e2
 		return year + "-" + month + "-" + day;	
 	}
 

@@ -8,4 +8,5 @@ public interface View {
 	String showEnthusiastProfile(Enthusiast enthusiast);
 	String showAdminProfile();
 	String showAdminCrud(String type);
+	int showAdminUpdate();
 }

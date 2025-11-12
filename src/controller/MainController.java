@@ -102,7 +102,7 @@ public class MainController {
 						break;
 					case "coach":
 						break;
-					case "manager":
+					case "tournament":
 						break;
 					case "admin":
 						if(loginDetails.getPassword().equals("admin123")) {
@@ -125,6 +125,9 @@ public class MainController {
 				case "enthusiasts":
 					adminCrud("Enthusiast");
 					break;	
+				case "players":
+					adminCrud("Players");
+					break;
 				case "logout":
 					exit = true;
 					break;
@@ -152,7 +155,11 @@ public class MainController {
 					break;
 				case "update":
 					if(type.equals("Enthusiast")) {
-						//update
+						enthusiastView.showAllEnthusiast(enthusiastModel.getEnthusiasts());
+						int ID = view.showAdminUpdate();
+						Enthusiast newUser = enthusiastView.showUpdate();
+						Enthusiast user = enthusiastModel.searchEnthusiastByID(ID);
+						enthusiastView.showEnthusiast(enthusiastModel.updateEnthusiast(user, newUser));
 					}
 					break;
 				case "delete":

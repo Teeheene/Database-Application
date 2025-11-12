@@ -13,12 +13,18 @@ import java.sql.Statement;
 public class EnthusiastManagement {
 	public EnthusiastManagement() {}
 
+	/* Add Enthusiast into DB
+	 *
+	 * @param enthusiast The built enthusiast to add
+	 * @return An int to get the auto incremented ID 
+	 * */
 	public int addEnthusiast(Enthusiast enthusiast) {
 		String sql = "INSERT INTO enthusiast (username, lastname, firstname, middlename, sex, date_of_birth) " 
 			+ "VALUES (?, ?, ?, ?, ?, ?)";
 
 		try(Connection conn = DatabaseConnection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			//plug the required ? values 
 			statement.setString(1, enthusiast.getUsername());
 			statement.setString(2, enthusiast.getLastName());
 			statement.setString(3, enthusiast.getFirstName());
@@ -26,13 +32,14 @@ public class EnthusiastManagement {
 			statement.setString(5, enthusiast.getSex());
 			statement.setDate(6, Date.valueOf(enthusiast
 						.getDateOfBirth()
-						.getFormattedDate()));
+						.toStringDate()));
 
 			int affectedRows = statement.executeUpdate();
 			
 			if(affectedRows > 0)
 				System.out.println("Enthusiast added.");
 
+			//for finding the new id to return
 			try(ResultSet generatedKey = statement.getGeneratedKeys()) {
 				if(generatedKey.next()) {
 					int newID = generatedKey.getInt(1);
@@ -48,6 +55,10 @@ public class EnthusiastManagement {
 		return 0;
 	}
 
+	/* Delete Enthusiast from DB
+	 *
+	 * @param enthusiastID The ID of the enthusiast to be deleted from DB
+	 * */
 	public void deleteEnthusiast(int enthusiastID) {
 		String sql = "DELETE FROM enthusiast WHERE enthusiast_id = ?";
 
@@ -65,7 +76,16 @@ public class EnthusiastManagement {
 		}
 	}
 
+	/* Update Enthusiast in DB
+	 *
+	 * @param oldEnthusiast The reference to the original Enthusiast
+	 * @param updatedEnthusiast The reference to the updated Enthusiast
+	 * @return The newly updated enthusiast 
+	 * */
 	public Enthusiast updateEnthusiast(Enthusiast oldEnthusiast, Enthusiast updatedEnthusiast) {
+		//Puts the old enthusiast into a reference of it
+		//using the implemented update function, it changes all the
+		//values accordingly
 		Enthusiast enthusiastReference = 
 			searchEnthusiastByID(oldEnthusiast.getID());
 		enthusiastReference.update(updatedEnthusiast);
@@ -88,7 +108,7 @@ public class EnthusiastManagement {
 			statement.setString(5, enthusiastReference.getSex());
 			statement.setDate(6, Date.valueOf(enthusiastReference
 						.getDateOfBirth()
-						.getFormattedDate()));
+						.toStringDate()));
 			statement.setInt(7, enthusiastReference.getID());
 
 			int rowsAffected = statement.executeUpdate();
@@ -101,7 +121,11 @@ public class EnthusiastManagement {
 		}
 		return enthusiastReference;
 	}
-		
+	
+	/* Gets Enthusiasts from DB
+	 *
+	 * @return ArrayList of enthusiasts found
+	 * */
 	public ArrayList<Enthusiast> getEnthusiasts() {
 		ArrayList<Enthusiast> enthusiastList = new ArrayList<>();
 
@@ -129,8 +153,11 @@ public class EnthusiastManagement {
 
 		return enthusiastList;
 	}
-
-
+	
+	/* Get an Enthusiast from DB using the primary key, ID
+	 *
+	 * @return The found Enthusiast or null depending if its found or not 
+	 * */
 	public Enthusiast searchEnthusiastByID(int ID) {
 		String sql = "SELECT * FROM enthusiast WHERE enthusiast_id = ?";
 		Enthusiast enthusiast = null;

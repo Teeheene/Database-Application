@@ -10,7 +10,10 @@ javac -Xmaxerrs 10000 -Xmaxwarns 500 -Xlint \
 	-cp "$JAR_PATH:src/classes" \
 	-d src/classes \
 	src/*.java src/model/*.java src/view/*.java src/controller/*.java src/util/*.java
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0d3907c7a09af4a393721439a0017e33049e65e2
 
 # Run main if compiling is successful 
 if [ $? -eq 0 ]; then
