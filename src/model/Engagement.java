@@ -1,12 +1,14 @@
 package model;
 
+import util.*;
+
 public class Engagement {
 	private int ID;
 	private String targetCategory;
 	private String type;
 	private int enthusiastID;
 	private int targetID;
-	private Timestamp createdAt;
+	private CustomTimestamp createdAt;
 	//temporary until IDs are implemented for other classes
 
 	public Engagement() {
@@ -25,7 +27,7 @@ public class Engagement {
 	public String getType() { return type; }
 	public int getEnthusiastID() { return enthusiastID; }
 	public int getTargetID() { return targetID; }
-	public Timestamp getCreatedAt() { return createdAt; }
+	public CustomTimestamp getCreatedAt() { return createdAt; }
 
 	public void setID(int ID) { this.ID = ID; }
 	public void setTargetCategory(String targetCategory) { this.targetCategory = targetCategory; }

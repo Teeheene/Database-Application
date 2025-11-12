@@ -11,7 +11,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class EngagementManagement {
-	public void addEngagement() {}
+
+	public void addEngagement(Engagement engagement) {
+		
+	}
 
 	public void deleteEngagement(String type) {}
 

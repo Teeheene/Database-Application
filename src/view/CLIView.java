@@ -137,6 +137,18 @@ public class CLIView implements View {
 		return null;
 	}
 
+	@Override 
+	public int showAdminUpdate() {
+		int ID;
+		System.out.println("");
+		System.out.println("_______________________");	
+		System.out.println("OPTIONS");
+		System.out.print("Enter ID to Update: ");
+		ID = input.nextInt();	
+		input.nextLine();
+		return ID;
+	}
+
 	@Override
 	public String showEnthusiastProfile(Enthusiast enthusiast) {
 		enthusiastView.showEnthusiast(enthusiast);
@@ -148,7 +160,7 @@ public class CLIView implements View {
 		System.out.println("3. Engage");
 		System.out.println("4. Logout");
 
-		switch(getInput(1,3)) {
+		switch(getInput(1,4)) {
 			case 1: return "edit";
 			case 2: return "delete";
 			case 3: return "engage";

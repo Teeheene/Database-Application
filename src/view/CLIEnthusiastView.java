@@ -3,6 +3,7 @@ package view;
 import java.util.Scanner;
 import java.util.ArrayList;
 import model.*;
+import util.*;
 
 public class CLIEnthusiastView implements EnthusiastView {
 	Scanner input = new Scanner(System.in);
@@ -34,7 +35,7 @@ public class CLIEnthusiastView implements EnthusiastView {
 			username, 
 			lastName, firstName, middleName, 
 			sex, 
-			new Timestamp(birthYear, birthMonth, birthDay)
+			new CustomTimestamp(birthYear, birthMonth, birthDay)
 		);
 
 		if(middleName.isEmpty()) {
@@ -100,7 +101,7 @@ public class CLIEnthusiastView implements EnthusiastView {
 			int birthMonth = input.nextInt();
 			System.out.print("Day of Birth: ");
 			int birthDay = input.nextInt();
-			enthusiast.setDateOfBirth(new Timestamp(birthYear, birthMonth, birthDay)); }
+			enthusiast.setDateOfBirth(new CustomTimestamp(birthYear, birthMonth, birthDay)); }
 		System.out.print("Sex: ");
 		String sex = input.nextLine();
 		if(!sex.equalsIgnoreCase("same")) { enthusiast.setSex(sex); }

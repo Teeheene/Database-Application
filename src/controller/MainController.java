@@ -112,7 +112,11 @@ public class MainController {
 					break;
 				case "update":
 					if(type.equals("Enthusiast")) {
-						//update
+						enthusiastView.showAllEnthusiast(enthusiastModel.getEnthusiasts());
+						int ID = view.showAdminUpdate();
+						Enthusiast newUser = enthusiastView.showUpdate();
+						Enthusiast user = enthusiastModel.searchEnthusiastByID(ID);
+						enthusiastView.showEnthusiast(enthusiastModel.updateEnthusiast(user, newUser));
 					}
 					break;
 				case "delete":

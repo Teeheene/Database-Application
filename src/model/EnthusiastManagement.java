@@ -26,7 +26,7 @@ public class EnthusiastManagement {
 			statement.setString(5, enthusiast.getSex());
 			statement.setDate(6, Date.valueOf(enthusiast
 						.getDateOfBirth()
-						.getFormattedDate()));
+						.toStringDate()));
 
 			int affectedRows = statement.executeUpdate();
 			
@@ -88,7 +88,7 @@ public class EnthusiastManagement {
 			statement.setString(5, enthusiastReference.getSex());
 			statement.setDate(6, Date.valueOf(enthusiastReference
 						.getDateOfBirth()
-						.getFormattedDate()));
+						.toStringDate()));
 			statement.setInt(7, enthusiastReference.getID());
 
 			int rowsAffected = statement.executeUpdate();

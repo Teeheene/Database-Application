@@ -8,7 +8,7 @@ public class DatabaseConnection {
 	//adjust accordingly
 	private static final String URL = "jdbc:mysql://localhost:3306/basketball_app";
 	private static final String USER = "root";
-	private static final String PASSWORD = "password";
+	private static final String PASSWORD = "3612383";
 
 	public static Connection getConnection() {
 		try {

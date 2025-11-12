@@ -1,11 +1,11 @@
 package util;
 
-public class Timestamp {
+public class CustomTimestamp {
 	private int year;
 	private int month;
 	private int day;
 	
-	public Timestamp(int year, int month, int day) {
+	public CustomTimestamp(int year, int month, int day) {
 		this.year = year;
 		this.month = month; 
 		this.day = day;
@@ -15,7 +15,7 @@ public class Timestamp {
 		System.out.println(year + "/" + month + "/" + day);
 	}
 
-	public String getFormattedDate() {
+	public String toStringDate() {
 		return year + "-" + month + "-" + day;	
 	}
 
