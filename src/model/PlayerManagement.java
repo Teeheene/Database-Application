@@ -1,6 +1,6 @@
 package model;
 
-import helper.*;
+import util.*;
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -225,4 +225,5 @@ public ArrayList<Player> getAllPlayers() {
     return players;
 }
 }
+
 
