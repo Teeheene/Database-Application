@@ -63,7 +63,7 @@ public class MainController {
 						break;
 					case "coach":
 						break;
-					case "manager":
+					case "tournament":
 						break;
 					case "admin":
 						if(loginDetails.getPassword().equals("admin123")) {
@@ -85,6 +85,9 @@ public class MainController {
 				case "enthusiasts":
 					adminCrud("Enthusiast");
 					break;	
+				case "players":
+					adminCrud("Players");
+					break;
 				case "logout":
 					exit = true;
 					break;

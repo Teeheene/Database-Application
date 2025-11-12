@@ -130,7 +130,6 @@ public class EnthusiastManagement {
 		return enthusiastList;
 	}
 
-
 	public Enthusiast searchEnthusiastByID(int ID) {
 		String sql = "SELECT * FROM enthusiast WHERE enthusiast_id = ?";
 		Enthusiast enthusiast = null;
