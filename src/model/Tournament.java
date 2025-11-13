@@ -3,7 +3,6 @@ package model;
 import util.*;
 
 public class Tournament {
-
     private int tournamentID;
     private String tournamentName;
     private int seasonYear;
