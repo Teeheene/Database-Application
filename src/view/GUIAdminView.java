@@ -162,7 +162,7 @@ public class GUIAdminView {
 	}
 
 	public void viewAllEnthusiastPanel(LinkedHashMap<String, String> information) {
-		cp = new JPanel(null);
+		cp = BackgroundPanel.create("assets/admin/enthusiast/view_all_bg.png");
 		cp.setLayout(null);
 		frame.setContentPane(cp);
 
@@ -175,12 +175,12 @@ public class GUIAdminView {
 				controller.showEnthusiast(Integer.parseInt(key));
 			});
 
-		overlayBg.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		overlayBg.setBounds(0, 0, 720, 480);
 		scrollingPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		
 		cp.add(overlayBg);
 		cp.add(backBtn);
-			cp.add(scrollingPanel);
+		cp.add(scrollingPanel);
 
 		backBtn.addActionListener(e -> enthusiastDashboardPanel());
 

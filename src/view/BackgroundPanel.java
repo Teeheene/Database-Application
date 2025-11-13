@@ -33,11 +33,13 @@ public class BackgroundPanel extends JPanel {
         return panel;
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (background != null) {
-            g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-        }
-    }
+   @Override
+	protected void paintComponent(Graphics g) {
+   	super.paintComponent(g);
+		if (background != null) {
+			int x = 0;
+			int y = 0;
+			g.drawImage(background, x, y, background.getWidth(this), background.getHeight(this), this);
+      }
+	}
 }
