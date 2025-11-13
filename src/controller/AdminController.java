@@ -42,6 +42,8 @@ public class AdminController {
 				view.viewAllEnthusiastPanel(getEnthusiastInformation());
 				break;
 			case "update":
+				System.out.println("Opening update...");
+				view.searchUpdateEnthusiastPanel();
 				break;
 			case "delete":
 				System.out.println("Opening search...");
@@ -64,6 +66,18 @@ public class AdminController {
 		view.viewEnthusiastPanel(enthusiast);
 	}
 
+	public boolean updateEnthusiastView(int ID) {
+		Enthusiast enthusiast = enthusiastModel.searchEnthusiastByID(ID);
+		if(enthusiast == null) return false; 
+		view.updateEnthusiastPanel(enthusiast);
+		return true;
+	}
+	
+	public void updateEnthusiast(Enthusiast updatedEnthusiast) {
+		Enthusiast enthusiast = enthusiastModel.updateEnthusiast(updatedEnthusiast);
+		view.viewEnthusiastPanel(enthusiast);
+	}
+		
 	public boolean deleteEnthusiastView(int ID) {
 		Enthusiast enthusiast = enthusiastModel.searchEnthusiastByID(ID);
 		if(enthusiast == null) return false; 

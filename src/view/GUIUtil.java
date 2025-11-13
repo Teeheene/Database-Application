@@ -148,7 +148,7 @@ public class GUIUtil {
 			JButton btn = createCenterImageButton("assets/banner.png",115); 
 			btn.setHorizontalTextPosition(SwingConstants.RIGHT);
 			btn.setVerticalTextPosition(SwingConstants.CENTER);
-			btn.setIconTextGap(-640);
+			btn.setIconTextGap(-620);
 			btn.setMargin(new Insets(0, 10, 0, 10));
 			btn.setText(value);
 			btn.setLocation(x,yStart+i*yGap);

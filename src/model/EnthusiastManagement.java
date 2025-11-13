@@ -82,14 +82,7 @@ public class EnthusiastManagement {
 	 * @param updatedEnthusiast The reference to the updated Enthusiast
 	 * @return The newly updated enthusiast 
 	 * */
-	public Enthusiast updateEnthusiast(Enthusiast oldEnthusiast, Enthusiast updatedEnthusiast) {
-		//Puts the old enthusiast into a reference of it
-		//using the implemented update function, it changes all the
-		//values accordingly
-		Enthusiast enthusiastReference = 
-			searchEnthusiastByID(oldEnthusiast.getID());
-		enthusiastReference.update(updatedEnthusiast);
-
+	public Enthusiast updateEnthusiast(Enthusiast enthusiastReference) {
 		String sql = "UPDATE enthusiast SET " +
 			"username = ?, " +
 			"lastname = ?, " + 
