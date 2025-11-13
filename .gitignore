@@ -7,4 +7,4 @@ classes/
 Thumbs.db
 
 # Ignore db pw
-src/util/DatabaseConnection.java
+src/util/*.java
