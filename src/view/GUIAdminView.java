@@ -168,11 +168,12 @@ public class GUIAdminView {
 
 		JLabel overlayBg = new JLabel(new ImageIcon("assets/admin/enthusiast/view_all.png"));
 		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
-		JPanel scrollingPanel = GUIUtil.showScrollingPanel(information, clicked -> {
-			 String[] parts = clicked.split("/",2);
-			 String key = parts[0]; 
-			 controller.showEnthusiast(Integer.parseInt(key));
-		});
+		JPanel scrollingPanel = GUIUtil.showScrollingPanel(information, -19, 0, 70, 5,
+			clicked -> {
+				String[] parts = clicked.split("/",2);
+				String key = parts[0]; 
+				controller.showEnthusiast(Integer.parseInt(key));
+			});
 
 		overlayBg.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		scrollingPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());

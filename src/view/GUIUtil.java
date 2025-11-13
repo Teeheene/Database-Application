@@ -128,12 +128,9 @@ public class GUIUtil {
 	}
 	
 	public static JPanel showScrollingPanel(LinkedHashMap<String, String> information, 
+			int x, int yStart, int yGap, int visibleCount, 
 			Consumer<String> onClick) {
-		int x = -19;
-		int yStart = 0;
-		int yGap = 70;
-		int visibleCount = 5;
-
+		
 		JPanel cp = new JPanel(null);
 		JPanel buttonPanel = new JPanel(null);	
 		ArrayList<JButton> buttonList = new ArrayList<>();
