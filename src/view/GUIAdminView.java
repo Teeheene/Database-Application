@@ -162,7 +162,7 @@ public class GUIAdminView {
 	}
 
 	public void viewAllEnthusiastPanel(LinkedHashMap<String, String> information) {
-		cp = new JPanel(null);
+		cp = BackgroundPanel.create("assets/admin/enthusiast/view_all_bg.png");
 		cp.setLayout(null);
 		frame.setContentPane(cp);
 

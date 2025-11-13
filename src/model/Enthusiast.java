@@ -76,7 +76,7 @@ public class Enthusiast {
 	}
 	public String getFullName() {
 		String name = lastName + ", " + firstName;
-		if(middleName != null) name += " " + middleName.charAt(0) + ".";
+		if(middleName != null) name += " " + middleName;
 		return name;
 	}
 
