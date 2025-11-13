@@ -43,19 +43,25 @@ public class GUIUtil {
 
 		//null layout for custom placing (i hate layouts!!)
 		cp = BackgroundPanel.create("assets/main_menu/bg.jpg"); //temp
-		frame.setContentPane(cp);
 		cp.setLayout(null);
+		cp.setPreferredSize(new Dimension(720,480));
 
+		frame.setContentPane(cp);
+		frame.pack();
+		frame.setVisible(true);
 
+		/*
 		Insets insets = frame.getInsets();
 		int targetWidth = 720 + insets.left + insets.right;
 		int targetHeight = 480 + insets.top + insets.bottom;
 		frame.setSize(targetWidth, targetHeight);
-		frame.setResizable(false);
+		*/
+		frame.setResizable(true);
 		frame.setLocationRelativeTo(null);
 		frame.setTitle("BasketGram");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+		System.out.println("Content pane size: " + cp.getWidth() + "x" + cp.getHeight());
+		System.out.println("Insets: " + frame.getInsets());
 		return frame;
 	}
 
