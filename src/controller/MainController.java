@@ -6,30 +6,31 @@ import java.util.ArrayList;
 
 public class MainController {
 	private GUIView view;
-	private EnthusiastView enthusiastView;
+	//admin
+	private GUIAdminView adminView;
+	private AdminController adminController;
+	//enthusiast
+	private GUIEnthusiastView enthusiastView;
+	private EnthusiastController enthusiastController;
 	private EnthusiastManagement enthusiastModel;
+	//player
 	private PlayerView playerView;
 	private PlayerManagement playerModel;
 	private PlayerController playerController;
-	private EngagementView engagementView;
-	private EngagementManagement engagementModel;
-	private GUIAdminView adminView;
-	private AdminController adminController;
-	
-	public MainController(GUIView view, EnthusiastView enthusiastView, PlayerView playerView, EngagementView engagementView) {
+
+	public MainController(GUIView view, PlayerView playerView) {
+		//gui inits
 		this.view = view;
-		this.enthusiastView = enthusiastView;
-		this.playerView = playerView;
-		this.engagementView = engagementView;
 
-		enthusiastModel = new EnthusiastManagement();
-		playerModel = new PlayerManagement();
-		playerController = new PlayerController(playerModel, playerView);
-		engagementModel = new EngagementManagement();
-
-		//gui onmes
 		this.adminView = new GUIAdminView(); 
 		adminController = new AdminController(view, adminView);	
+
+		this.enthusiastView = new GUIEnthusiastView();
+		enthusiastController = new EnthusiastController(view, enthusiastView);
+		enthusiastModel = new EnthusiastManagement();
+		
+		playerModel = new PlayerManagement();
+		playerController = new PlayerController(playerModel, playerView);
 	}
 	
 	public void handleMenu(String option) {
@@ -64,7 +65,11 @@ public class MainController {
 		Enthusiast enthusiast = enthusiastModel.searchEnthusiastByID(ID);
 		if(enthusiast == null) return false;
 
-		System.out.println("Hello " + enthusiast.getUsername() + "!");
+		enthusiastView.setListeners(enthusiastController);
+		enthusiastView.start();
+		enthusiastView.profilePanel(enthusiast);
+		view.hide();
+		enthusiastView.show();
 
 		return true;
 	}

@@ -64,6 +64,8 @@ public class EngagementManagement {
 
 	public ArrayList<Object> getFeed() {	
 		//sql to select * from all tables;
+		//maybe merge the tables and then return
+		//a feed where its ordered by most recent
 		return null;
 	}
 }
