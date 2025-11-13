@@ -1,52 +1,151 @@
 package model;
 
+import util.*;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class TournamentManagement {
 
-    private ArrayList<Tournament> tournamentList;
-
     // Constructor
-    public TournamentManagement () {
-        tournamentList = new ArrayList<Tournament>();
+    public TournamentManagement () { }
+
+    // add tournament
+    public int addTournament (Tournament tournament) {
+
+        String sql = "INSERT INTO tournament (tournament_name, season_year, tournament_type, start_date, end_date) " +
+                "VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connect = DatabaseConnection.getConnection();
+            PreparedStatement statement = connect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            statement.setString(1, tournament.getTournamentName());
+            statement.setInt(2, tournament.getSeasonYear());
+            statement.setString(3, tournament.getTournamentType());
+            statement.setDate(4, Date.valueOf(tournament.getStartDate().toStringDate()));
+            statement.setDate(5, Date.valueOf(tournament.getEndDate().toStringDate()));
+
+            int rows = statement.executeUpdate();
+            if (rows > 0) System.out.println("Tournament added successfully.");
+
+            // finding new id to return
+            try(ResultSet generatedKey = statement.getGeneratedKeys()) {
+                if(generatedKey.next()) {
+                    int newID = generatedKey.getInt(1);
+                    return newID;
+                } else {
+                    throw new SQLException("Failed Creating Tournament");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
-    public void addTournament (Tournament tournament) {
-        tournamentList.add(tournament);
+    // delete tournament
+    public void deleteTournament(int tournamentID) {
+
+        String sql = "DELETE FROM tournament WHERE tournament_id = ?";
+
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, tournamentID);
+
+            int rowsDeleted = statement.executeUpdate();
+            if(rowsDeleted > 0)
+                System.out.println("Tournament deleted");
+            else
+                System.out.println("Failed to delete");
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void deleteTournament (Tournament tournament) {
-        tournamentList.remove(tournament);
-    }
-
+    // update tournament
     public Tournament updateTournament (Tournament oldTournament, Tournament updatedTournament) {
-        Tournament tournamentReference = searchTournament("id", String.valueOf(oldTournament.getTournamentID()));
-        if (tournamentReference != null) {
-            tournamentReference.update(updatedTournament);
+
+        Tournament tournamentReference = searchTournamentByID(oldTournament.getTournamentID());
+        tournamentReference.update(updatedTournament);
+
+        String sql = "UPDATE tournament SET " +
+                "tournament_name = ?, " +
+                "season_year = ?, " +
+                "tournament_type = ?, " +
+                "start_date = ?, " +
+                "end_date = ? " +
+                "WHERE tournament_id = ?";
+
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, tournamentReference.getTournamentName());
+            statement.setInt(2, tournamentReference.getSeasonYear());
+            statement.setString(3, tournamentReference.getTournamentType());
+            statement.setDate(4, Date.valueOf(tournamentReference.getStartDate().toStringDate()));
+            statement.setDate(5, Date.valueOf(tournamentReference.getEndDate().toStringDate()));
+            statement.setInt(6, enthusiastReference.getTournamentID());
+
+            int rowsAffected = statement.executeUpdate();
+            if(rowsAffected > 0)
+                System.out.println("Tournament updated");
+            else
+                System.out.println("Failed to update");
+        } catch(SQLException e) {
+            e.printStackTrace();
         }
         return tournamentReference;
     }
 
-    public Tournament searchTournament (String category, String key) {
-        for (Tournament tournament : tournamentList) {
-            if (tournament == null) continue;
+    // get all tournament
+    public ArrayList<Tournament> getTournament() {
 
-            switch (category.toLowerCase()) {
-                case "id":
-                    if (String.valueOf(tournament.getTournamentID()).equalsIgnoreCase(key))
-                        return tournament;
-                    break;
-                case "name":
-                    if (tournament.getTournamentName().equalsIgnoreCase(key))
-                        return tournament;
-                    break;
-                case "type":
-                    if (tournament.getTournamentType().equalsIgnoreCase(key))
-                        return tournament;
-                    break;
+        ArrayList<Tournament> tournamentList = new ArrayList<>();
+
+        String sql = "SELECT * FROM tournament";
+
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                Tournament tournament = new Tournament(
+                    rs.getInt("tournament_id"),
+                    rs.getString("tournament_name"),
+                    rs.getInt("season_year"),
+                    rs.getString("tournament_type"),
+                    rs.getString("start_date"),
+                    rs.getString("end_date")
+                );
+                tournamentList.add(tournament);
             }
+        } catch(SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+        return tournamentList;
     }
 
+    // search for tournament
+    public Tournament searchTournamentByID (int tournamentID) {
+
+        String sql = "SELECT * FROM tournament WHERE tournament_id = ?";
+        Tournament tournament = null;
+
+        try(Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, tournamentID);
+
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()) {
+                tournament = new Tournament(
+                    rs.getInt("tournament_id"),
+                    rs.getString("tournament_name"),
+                    rs.getInt("season_year"),
+                    rs.getString("tournament_type"),
+                    rs.getString("start_date"),
+                    rs.getString("end_date"),
+                );
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return tournament;
+    }
 }
