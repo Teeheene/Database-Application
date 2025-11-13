@@ -14,13 +14,13 @@ public class Coach {
     private boolean inGameStatus;
     private ArrayList<Player> team;
 
-    public Coach(int coachID, String firstName, String middleName, String lastName,
+    public Coach(int coachID, String lastName, String firstName, String middleName,
                  String birthday, char gender, int startYear, int endYear,
                  boolean inGameStatus) {
         this.coachID = coachID;
+        this.lastName = lastName;
         this.firstName = firstName;
         this.middleName = middleName;
-        this.lastName = lastName;
         this.birthday = birthday;
         this.gender = gender;
         this.startYear = startYear;
