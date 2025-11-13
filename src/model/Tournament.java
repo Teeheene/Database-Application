@@ -11,6 +11,9 @@ public class Tournament {
     private CustomTimestamp startDate;
     private CustomTimestamp endDate;
 
+    // Default constructor
+    public Tournament () {}
+
     // Constructor
     public Tournament(int tournamentID, String tournamentName, int seasonYear, 
                       String tournamentType, CustomTimestamp startDate, CustomTimestamp endDate) {
@@ -21,19 +24,18 @@ public class Tournament {
         this.tournamentType = tournamentType;
         this.startDate = startDate;
         this.endDate = endDate;
-
     }
 
     /*
-    Update method -- NEED TO FIX
+    Update method
      */
-    public void update(Tournament updatedTournament) {
-        this.tournamentName = updatedTournament.getTournamentName();
-        this.tournamentType = updatedTournament.getTournamentType();
-        this.startDate = updatedTournament.getStartDate();
-        this.endDate = updatedTournament.getEndDate();
+    public void update(Tournament other) {
+        if (other.getTournamentName() != null) { this.tournamentName = other.getTournamentName(); }
+        if (other.getTournamentType() != null) { this.tournamentType = other.getTournamentType(); }
+        if (other.getStartDate() != null) { this.startDate = other.getStartDate(); }
+        if (other.getEndDate() != null) { this.endDate = other.getEndDate(); }
+        if (other.getSeasonYear() > 0) { this.seasonYear = other.getSeasonYear(); }
     }
-
 
     /*
     Getters
