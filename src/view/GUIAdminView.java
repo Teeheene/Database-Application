@@ -115,7 +115,7 @@ public class GUIAdminView {
 				if(username.isEmpty() || lastName.isEmpty() || 
 					firstName.isEmpty() || sex.isEmpty()) {
 					JOptionPane.showMessageDialog(frame, 
-						"Please fill in all required fields (middle name is optional).");
+						"Required Fields! Fill in all the required fields (middle name is optional).");
    				return; // stop further processing
 				}
 
@@ -149,10 +149,10 @@ public class GUIAdminView {
 				sexField.setText("");
 			} catch (NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(frame,
-					"Invalid date input. Please enter numerical values.");
+					"Invalid Date. Please enter numerical values.");
 			} catch (DateTimeException dte) {
 				JOptionPane.showMessageDialog(frame,
-					"Invalid date. Please check the day, month and or year.");
+					"Invalid Date. Please check the day, month and or year.");
 			}
 		});
 		backBtn.addActionListener(e -> enthusiastDashboardPanel());
@@ -168,7 +168,7 @@ public class GUIAdminView {
 
 		JLabel overlayBg = new JLabel(new ImageIcon("assets/admin/enthusiast/view_all.png"));
 		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
-		JPanel scrollingPanel = GUIUtil.showScrollingPanel(information, -19, 0, 70, 5,
+		JPanel scrollingPanel = GUIUtil.showScrollingPanel(information, -19, -3, 57, 6,
 			clicked -> {
 				String[] parts = clicked.split("/",2);
 				String key = parts[0]; 
@@ -241,7 +241,7 @@ public class GUIAdminView {
 				}
 			} catch(NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(frame,
-					"Invalid ID number");
+					"Invalid ID number.");
 			}
 		});
 		
@@ -366,7 +366,7 @@ public class GUIAdminView {
 						enthusiast.setDateOfBirth(new CustomTimestamp(year, month, day));
 					} catch(DateTimeParseException dtpe) {
 						JOptionPane.showMessageDialog(frame, 
-							"Invalid Date! Please input it as MM/DD/YYYY");
+							"Invalid Date. Please input it as MM/DD/YYYY");
 						return;
 					}
 					break;
@@ -405,8 +405,8 @@ public class GUIAdminView {
 				}
 			} catch(NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(frame,
-					"Invalid ID number");
-			}
+					"Invalid ID number.");
+				}
 		});
 		
 		cp.revalidate();
@@ -447,6 +447,25 @@ public class GUIAdminView {
 		cp.repaint();	
 	}
 
+	public void viewReportEnthusiastPanel() {
+		cp = BackgroundPanel.create("assets/admin/enthusiast/report.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+		
+		JButton generateBtn = GUIUtil.createIButton(259,249,200,27);
+		JButton generatePdfBtn = GUIUtil.createIButton(259,286,200,27);
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		
+		cp.add(generateBtn);
+		cp.add(generatePdfBtn);
+		cp.add(backBtn);
+
+		backBtn.addActionListener(e -> enthusiastDashboardPanel());
+
+		cp.revalidate();
+		cp.repaint();
+	}
+	
 	//ENTHUSIASTS DASHBOARD!!!!!!!
 
 	public void show() { frame.setVisible(true); }

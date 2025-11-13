@@ -72,7 +72,8 @@ public class Enthusiast {
 	}
 
 	public String getSimpleInfo() {
-		return "ID#" + String.valueOf(ID) + " " + username;
+		return "[ID " + String.valueOf(ID) + "] " + lastName + ", " + firstName 
+			+ " \"" + username + "\"";
 	}
 	public String getFullName() {
 		String name = lastName + ", " + firstName;

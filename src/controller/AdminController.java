@@ -50,6 +50,8 @@ public class AdminController {
 				view.searchDeleteEnthusiastPanel();
 				break;
 			case "report":
+				System.out.println("Opening report...");
+				view.viewReportEnthusiastPanel();
 				break;
 			case "exit":
 				view.dashboardPanel();

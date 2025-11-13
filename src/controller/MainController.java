@@ -35,33 +35,38 @@ public class MainController {
 	public void handleMenu(String option) {
 		switch(option) {
 			case "admin":
-				System.out.println("Admin Login Opening...");
 				view.adminLoginPanel();
 				break;
 			case "login":
-				System.out.println("Login Opening...");
+				view.loginPanel();
 				break;
 			case "register":
-				System.out.println("Register Opening...");
 				break;
 		}
 	}
 
-	public void handleAdminLogin(String password) {
+	public boolean handleAdminLogin(String password) {
 		if(password.equals("admin123")) {
-			//start admin controller
-			System.out.println("Succesfully logged in!");
-
-			//setup adminView
 			adminView.setListeners(adminController);
 			adminView.start();
 			
 			//transfer to sub-view (admin profile)
 			view.hide();
 			adminView.show();
+		} else {
+			return false;
 		}
-		else
-			System.out.println("Wrong login credentials.");
+
+		return true;
+	}
+
+	public boolean handleEnthusiastLogin(int ID) {
+		Enthusiast enthusiast = enthusiastModel.searchEnthusiastByID(ID);
+		if(enthusiast == null) return false;
+
+		System.out.println("Hello " + enthusiast.getUsername() + "!");
+
+		return true;
 	}
 	
 	/*
