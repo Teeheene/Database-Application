@@ -6,7 +6,6 @@ public class Coach {
     private String firstName;
     private String middleName;
     private String lastName;
-    private int age;
     private String birthday;
     private char gender;
     private int startYear;
@@ -16,13 +15,12 @@ public class Coach {
     private ArrayList<Player> team;
 
     public Coach(int coachID, String firstName, String middleName, String lastName,
-                 int age, String birthday, char gender, int startYear, int endYear,
+                 String birthday, char gender, int startYear, int endYear,
                  boolean inGameStatus) {
         this.coachID = coachID;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
-        this.age = age;
         this.birthday = birthday;
         this.gender = gender;
         this.startYear = startYear;
@@ -50,7 +48,6 @@ public class Coach {
     public String getFirstName() { return firstName; }
     public String getMiddleName() { return middleName; }
     public String getLastName() { return lastName; }
-    public int getAge() { return age; }
     public String getBirthday() { return birthday; }
     public char getGender() { return gender; }
     public int getStartYear() { return startYear; }
