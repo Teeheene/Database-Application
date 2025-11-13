@@ -53,9 +53,9 @@ CREATE TABLE coach (
 );
 
 DROP TABLE IF EXISTS tournaments;
-CREATE TABLE tournaments (
+CREATE TABLE tournament (
 	tournament_id INT AUTO_INCREMENT PRIMARY KEY,	
-   tournament_name VARCHAR(200) NOT NULL,
+    tournament_name VARCHAR(200) NOT NULL,
 	season_year INT,
 	tournament_type VARCHAR(50),
 	start_date DATE,
