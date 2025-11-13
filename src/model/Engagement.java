@@ -15,11 +15,20 @@ public class Engagement {
 		//empty constructor
 	};
 
-	public Engagement(String targetCategory, String type, int enthusiastID, int targetID) {
+	public Engagement(int ID, String targetCategory, String type, int enthusiastID, int targetID, String createdAt) {
+		this.ID = ID;
 		this.targetCategory = targetCategory;
 		this.type = type;
 		this.enthusiastID = enthusiastID;
 		this.targetID = targetID;
+		
+		String[] joinPart = joinDate.split(" ");
+		String[] joinTokens = joinPart[0].split("-");
+		this.createdAt = new CustomTimestamp(
+			Integer.parseInt(joinTokens[0]), 
+			Integer.parseInt(joinTokens[1]), 
+			Integer.parseInt(joinTokens[2])
+		);
 	}
 
 	public int getID() { return ID; }

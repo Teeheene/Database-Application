@@ -54,19 +54,153 @@ public class EngagementManagement {
 		//sql again
 	}
 
-	public void getFollows(int enthusiastID) {
-		//sql to get all follows of enthusiast id
+	public void getEngagementListByType(int enthusiastID, String type) {
+		ArrayList<Engagement> engagementList = new ArrayList<>();
+
+		String sql = 
+			"SELECT *" + 
+			"FROM enthusiast AS e" +
+			"JOIN engagement AS g" + 
+				"ON e.enthusiast_id = g.enthusiast_id" +
+			"WHERE g.core_id = ?" +
+			"AND g.type = ?;";
+		
+		try(Connection conn = DatabaseConnection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql)) {
+			statement.setInt(1, enthusiastID);
+			statement.setString(2, type);
+
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				engagement = new Engagement(
+					rs.getInt("engagement_id"),
+					rs.getString("engagement_category"),
+					rs.getString("engagement_type"),
+					rs.getInt("enthusiast_id"),
+					switch(rs.getString(engagement_category)) {
+						case "player":
+							rs.getInt("player_id");
+							break;
+						case "coach":
+							rs.getInt("coach_id");
+							break;
+						case "tournament":
+							rs.getInt("tournament_id");
+							break;
+					},
+					rs.getString("created_at");
+				);
+				engagementList.add(engagement);
+			} 		
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+
+		return engagementList;
 	}
 
-	public void getLikes(int enthusiastID) {
-		//sql to get all likes of enthusiast id
+	public void getEngagement(int enthusiastID, String type) {
+		ArrayList<Engagement> engagementList = new ArrayList<>();
+
+		String sql = 
+			"SELECT *" + 
+			"FROM enthusiast AS e" +
+			"JOIN engagement AS g" + 
+				"ON e.enthusiast_id = g.enthusiast_id" +
+			"WHERE g.core_id = ?" +
+			"AND g.type = ?;";
+		
+		try(Connection conn = DatabaseConnection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql)) {
+			statement.setInt(1, enthusiastID);
+			statement.setString(2, type);
+
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				engagement = new Engagement(
+					rs.getInt("engagement_id"),
+					rs.getString("engagement_category"),
+					rs.getString("engagement_type"),
+					rs.getInt("enthusiast_id"),
+					switch(rs.getString(engagement_category)) {
+						case "player":
+							rs.getInt("player_id");
+							break;
+						case "coach":
+							rs.getInt("coach_id");
+							break;
+						case "tournament":
+							rs.getInt("tournament_id");
+							break;
+					},
+					rs.getString("created_at");
+				);
+				engagementList.add(engagement);
+			} 		
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+
+		return engagementList;
 	}
 
-	public ArrayList<Object> getFeed() {	
-		//sql to select * from all tables;
-		//maybe merge the tables and then return
-		//a feed where its ordered by most recent
-		return null;
+	//THE TARGET
+	//THE TOTAL LIKES
+	//THE TOTAL FOLLOWS
+	public ArrayList<Object> getFeed(String orderColumn, String orderDir) {	
+		ArrayList<Object> feed = new ArrayList<>;
+
+		//verifying/whitlist for ordercolumns
+		Set<String> allowedCols = Set.of("created_at");
+		Set<String> allowedDir = Set.of("ASC", "DESC");
+
+		if (!allowedCols.contains(orderColumn.toLowerCase())) orderColumn = "created_at";
+		if (!allowedDir.contains(orderDir.toUpperCase())) orderDir = "DESC";
+
+		//select everyone!! muhehehee
+		//and then that table will be used
+		//to order them by MOST recent!
+		String sql = """
+			CREATE TABLE IF NOT EXISTS all_ids AS
+         SELECT player_id AS id, 'player' AS source, created_at
+			FROM player
+         UNION ALL
+         SELECT coach_id AS id, 'coach' AS source, created_at
+         FROM coach
+         UNION ALL
+         SELECT tournament_id AS id, 'tournament' AS source, created_at
+         FROM tournaments
+         ORDER BY %s %s 
+			""".formatted(orderColumn, orderDir);
+
+		//get the stuff and stuff
+		//it in the ykyk the array list
+		//thats the feed for enthusiast
+		try(Connection conn = DatabaseConnection.getConnection();
+			Statement statement = conn.createStatement()) {
+			statement.executeUpdate(sql);
+			System.out.println("Successfully created table");
+
+			ResultSet rs = statement.executeQuery("SELECT * FROM all_ids"); 
+			while(rs.next()) {
+				String source = rs.getString("source");
+				int id = rs.getInt("id");
+				
+				/*waiting for groupmate crud*/
+				switch(source) {
+					case "player":
+						break;
+					case "coach":
+						break;
+					case "tournament":
+						break;
+				}
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+
+		return feed;
 	}
 }
 
