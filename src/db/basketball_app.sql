@@ -86,7 +86,7 @@ CREATE TABLE engagement (
 
 DROP TABLE IF EXISTS team;
 CREATE TABLE team (
-    team_ID INT AUTO_INCREMENT,
+    team_ID INT NOT NULL AUTO_INCREMENT,
     coach_id INT, 
 	team_name VARCHAR(50) NOT NULL,
 	number_of_players INT,
