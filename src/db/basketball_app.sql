@@ -6,7 +6,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS enthusiast;
 DROP TABLE IF EXISTS engagement;
 DROP TABLE IF EXISTS player;
-DROP TABLE IF EXISTS tournaments;
+DROP TABLE IF EXISTS tournament;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -52,7 +52,7 @@ CREATE TABLE coach (
 	PRIMARY KEY (coach_id)
 );
 
-DROP TABLE IF EXISTS tournaments;
+DROP TABLE IF EXISTS tournament;
 CREATE TABLE tournament (
 	tournament_id INT AUTO_INCREMENT PRIMARY KEY,	
     tournament_name VARCHAR(200) NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE engagement (
 	FOREIGN KEY (enthusiast_id) REFERENCES enthusiast(enthusiast_id),
 	FOREIGN KEY (player_id) REFERENCES player(player_id),
 	FOREIGN KEY (coach_id) REFERENCES coach(coach_id),
-	FOREIGN KEY (tournament_id) REFERENCES tournaments(tournament_id),
+	FOREIGN KEY (tournament_id) REFERENCES tournament(tournament_id),
 	CONSTRAINT chk_category CHECK (
 		(engagement_category = 'player' AND player_id IS NOT NULL) OR
 		(engagement_category = 'coach' AND coach_id IS NOT NULL) OR
