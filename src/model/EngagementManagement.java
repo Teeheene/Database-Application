@@ -3,6 +3,8 @@ package model;
 import util.*;
 import view.LoginBuilder; 
 import java.util.ArrayList;
+import java.util.Set;
+import java.lang.String;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -54,7 +56,7 @@ public class EngagementManagement {
 		//sql again
 	}
 
-	public void getEngagementListByType(int enthusiastID, String type) {
+	public ArrayList<Engagement> getEngagementListByType(int enthusiastID, String type) {
 		ArrayList<Engagement> engagementList = new ArrayList<>();
 
 		String sql = 
@@ -72,23 +74,27 @@ public class EngagementManagement {
 
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()) {
+				Engagement engagement;
+				int id = -1;
+				switch(rs.getString("engagement_category")) {
+					case "player":
+						id = rs.getInt("player_id");
+						break;
+					case "coach":
+						id = rs.getInt("coach_id");
+						break;
+					case "tournament":
+						id = rs.getInt("tournament_id");
+						break;
+				}
+
 				engagement = new Engagement(
 					rs.getInt("engagement_id"),
 					rs.getString("engagement_category"),
 					rs.getString("engagement_type"),
 					rs.getInt("enthusiast_id"),
-					switch(rs.getString(engagement_category)) {
-						case "player":
-							rs.getInt("player_id");
-							break;
-						case "coach":
-							rs.getInt("coach_id");
-							break;
-						case "tournament":
-							rs.getInt("tournament_id");
-							break;
-					},
-					rs.getString("created_at");
+					id,
+					rs.getString("created_at")
 				);
 				engagementList.add(engagement);
 			} 		
@@ -99,7 +105,7 @@ public class EngagementManagement {
 		return engagementList;
 	}
 
-	public void getEngagement(int enthusiastID, String type) {
+	public ArrayList<Engagement> getEngagement(int enthusiastID, String type) {
 		ArrayList<Engagement> engagementList = new ArrayList<>();
 
 		String sql = 
@@ -117,23 +123,27 @@ public class EngagementManagement {
 
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()) {
+				Engagement engagement;
+				int id = -1; 
+				switch(rs.getString("engagement_category")) {
+					case "player":
+						id = rs.getInt("player_id");
+						break;
+					case "coach":
+						id = rs.getInt("coach_id");
+						break;
+					case "tournament":
+						id = rs.getInt("tournament_id");
+						break;
+				}
+
 				engagement = new Engagement(
 					rs.getInt("engagement_id"),
 					rs.getString("engagement_category"),
 					rs.getString("engagement_type"),
 					rs.getInt("enthusiast_id"),
-					switch(rs.getString(engagement_category)) {
-						case "player":
-							rs.getInt("player_id");
-							break;
-						case "coach":
-							rs.getInt("coach_id");
-							break;
-						case "tournament":
-							rs.getInt("tournament_id");
-							break;
-					},
-					rs.getString("created_at");
+					id,
+					rs.getString("created_at")
 				);
 				engagementList.add(engagement);
 			} 		
@@ -148,7 +158,7 @@ public class EngagementManagement {
 	//THE TOTAL LIKES
 	//THE TOTAL FOLLOWS
 	public ArrayList<Object> getFeed(String orderColumn, String orderDir) {	
-		ArrayList<Object> feed = new ArrayList<>;
+		ArrayList<Object> feed = new ArrayList<>();
 
 		//verifying/whitlist for ordercolumns
 		Set<String> allowedCols = Set.of("created_at");
@@ -160,18 +170,22 @@ public class EngagementManagement {
 		//select everyone!! muhehehee
 		//and then that table will be used
 		//to order them by MOST recent!
-		String sql = """
-			CREATE TABLE IF NOT EXISTS all_ids AS
-         SELECT player_id AS id, 'player' AS source, created_at
-			FROM player
-         UNION ALL
-         SELECT coach_id AS id, 'coach' AS source, created_at
-         FROM coach
-         UNION ALL
-         SELECT tournament_id AS id, 'tournament' AS source, created_at
-         FROM tournaments
-         ORDER BY %s %s 
-			""".formatted(orderColumn, orderDir);
+		String sql = 
+			"CREATE TABLE IF NOT EXISTS all_ids AS" +
+         "SELECT player_id AS id, 'player' AS source, created_at" +
+			"FROM player" +
+         "UNION ALL" +
+         "SELECT coach_id AS id, 'coach' AS source, created_at" +
+         "FROM coach" +
+         "UNION ALL" +
+         "SELECT tournament_id AS id, 'tournament' AS source, created_at" +
+         "FROM tournaments";
+		
+		sql += String.format(
+         "ORDER BY %s %s",
+			orderColumn,
+			orderDir
+		);
 
 		//get the stuff and stuff
 		//it in the ykyk the array list

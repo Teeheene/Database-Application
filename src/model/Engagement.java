@@ -22,7 +22,7 @@ public class Engagement {
 		this.enthusiastID = enthusiastID;
 		this.targetID = targetID;
 		
-		String[] joinPart = joinDate.split(" ");
+		String[] joinPart = createdAt.split(" ");
 		String[] joinTokens = joinPart[0].split("-");
 		this.createdAt = new CustomTimestamp(
 			Integer.parseInt(joinTokens[0]), 

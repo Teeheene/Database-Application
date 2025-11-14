@@ -64,6 +64,9 @@ public class TournamentManagement {
     // update tournament
     public Tournament updateTournament (Tournament oldTournament, Tournament updatedTournament) {
 
+		 /*
+		  * please fix ts
+		  *
         Tournament tournamentReference = searchTournamentByID(oldTournament.getTournamentID());
         tournamentReference.update(updatedTournament);
 
@@ -82,7 +85,7 @@ public class TournamentManagement {
             statement.setString(3, tournamentReference.getTournamentType());
             statement.setDate(4, Date.valueOf(tournamentReference.getStartDate().toStringDate()));
             statement.setDate(5, Date.valueOf(tournamentReference.getEndDate().toStringDate()));
-            statement.setInt(6, enthusiastReference.getTournamentID());
+            //statement.setInt(6, enthusiastReference.getTournamentID());
 
             int rowsAffected = statement.executeUpdate();
             if(rowsAffected > 0)
@@ -93,11 +96,18 @@ public class TournamentManagement {
             e.printStackTrace();
         }
         return tournamentReference;
+		  */
+
+		 //temp
+		 return null;
     }
 
     // get all tournament
     public ArrayList<Tournament> getTournament() {
 
+		 /*
+		  * Fix please!!!
+		  *
         ArrayList<Tournament> tournamentList = new ArrayList<>();
 
         String sql = "SELECT * FROM tournament";
@@ -140,12 +150,16 @@ public class TournamentManagement {
                     rs.getInt("season_year"),
                     rs.getString("tournament_type"),
                     rs.getString("start_date"),
-                    rs.getString("end_date"),
+                    rs.getString("end_date")
                 );
             }
         } catch(SQLException e) {
             e.printStackTrace();
         }
         return tournament;
+	 	*/
+
+		 //temp
+		 return null;
     }
 }

@@ -66,8 +66,8 @@ public class MainController {
 		if(enthusiast == null) return false;
 
 		enthusiastView.setListeners(enthusiastController);
-		enthusiastView.start();
-		enthusiastView.profilePanel(enthusiast);
+		enthusiastView.start(enthusiast);
+		enthusiastView.profilePanel();
 		view.hide();
 		enthusiastView.show();
 
