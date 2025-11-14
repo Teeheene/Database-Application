@@ -77,11 +77,7 @@ public class EngagementManagement {
 		try(Connection conn = DatabaseConnection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql)) {
 			statement.setInt(1, engagementID);
-			if(statement.executeUpdate() > 0) {
-				System.out.println("Engagement is now toggled");
-			} else {
-				System.out.println("No engagement found with this ID");
-			}
+			statement.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}

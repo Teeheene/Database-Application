@@ -75,6 +75,7 @@ public class GUIEnthusiastView {
 		updateBtn.addActionListener(e -> updatePanel());
 		deleteBtn.addActionListener(e -> deletePanel());
 		followingBtn.addActionListener(e -> followingPanel());
+		likesBtn.addActionListener(e -> likesPanel());
 
 		cp.revalidate();
 		cp.repaint();
@@ -83,6 +84,58 @@ public class GUIEnthusiastView {
 	public void engagePanel() {
 
 	}
+
+	public void likesPanel() {
+		cp = BackgroundPanel.create("assets/login/enthusiast/likes_bg.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		//get information from controller
+		LinkedHashMap<String, String> information = controller.handleLikes(enthusiast);
+
+		JLabel overlayBg = new JLabel(new ImageIcon("assets/login/enthusiast/likes.png"));
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		JButton engageBtn = GUIUtil.createIButton(423,0,97,53);
+		JButton profileBtn = GUIUtil.createIButton(521,0,93,53);
+		JButton logoutBtn = GUIUtil.createIButton(614,0,93,53);
+		JPanel scrollingPanel = GUIUtil.showScrollingPanel(information, -19, -3, 57, 6,
+			clicked -> {
+				String[] parts = clicked.split("/",2);
+				String key = parts[0];
+				String value = parts[1];
+
+				int choice = JOptionPane.showConfirmDialog(
+						frame,
+						"Do you want to unlike?",
+						"Unfollow",
+						JOptionPane.YES_NO_OPTION
+						);
+				if(choice == JOptionPane.YES_OPTION) {
+					controller.handleToggle(Integer.parseInt(key));						
+					JOptionPane.showMessageDialog(null, "Unliked.");
+					profilePanel();
+				}
+			});
+			overlayBg.setBounds(0, 0, 720, 480);
+		scrollingPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		
+		cp.add(overlayBg);
+		cp.add(backBtn);
+		cp.add(engageBtn);
+		cp.add(profileBtn);
+		cp.add(logoutBtn);
+		cp.add(scrollingPanel);
+
+		backBtn.addActionListener(e -> profilePanel());
+		profileBtn.addActionListener(e -> profilePanel());
+		logoutBtn.addActionListener(e -> controller.handleLogout());
+
+
+		cp.revalidate();
+		cp.repaint();	
+	}
+
+
 
 	public void followingPanel() {
 		cp = BackgroundPanel.create("assets/login/enthusiast/following_bg.png");
@@ -94,19 +147,41 @@ public class GUIEnthusiastView {
 
 		JLabel overlayBg = new JLabel(new ImageIcon("assets/login/enthusiast/following.png"));
 		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		JButton engageBtn = GUIUtil.createIButton(423,0,97,53);
+		JButton profileBtn = GUIUtil.createIButton(521,0,93,53);
+		JButton logoutBtn = GUIUtil.createIButton(614,0,93,53);
 		JPanel scrollingPanel = GUIUtil.showScrollingPanel(information, -19, -3, 57, 6,
 			clicked -> {
-				System.out.println("yahoo!");
-			});
+				String[] parts = clicked.split("/",2);
+				String key = parts[0];
+				String value = parts[1];
 
-		overlayBg.setBounds(0, 0, 720, 480);
+				int choice = JOptionPane.showConfirmDialog(
+						frame,
+						"Do you want to unfollow?",
+						"Unfollow",
+						JOptionPane.YES_NO_OPTION
+						);
+				if(choice == JOptionPane.YES_OPTION) {
+					controller.handleToggle(Integer.parseInt(key));						
+					JOptionPane.showMessageDialog(null, "Unfollowed.");
+					profilePanel();
+				}
+			});
+			overlayBg.setBounds(0, 0, 720, 480);
 		scrollingPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
 		
 		cp.add(overlayBg);
 		cp.add(backBtn);
+		cp.add(engageBtn);
+		cp.add(profileBtn);
+		cp.add(logoutBtn);
 		cp.add(scrollingPanel);
 
 		backBtn.addActionListener(e -> profilePanel());
+		profileBtn.addActionListener(e -> profilePanel());
+		logoutBtn.addActionListener(e -> controller.handleLogout());
+
 
 		cp.revalidate();
 		cp.repaint();	

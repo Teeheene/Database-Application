@@ -32,9 +32,27 @@ public class EnthusiastController {
 		return information;
 	}
 
+	public LinkedHashMap<String, String> handleLikes(Enthusiast enthusiast) {
+		LinkedHashMap<String, String> information = new LinkedHashMap<>();
+
+		for(Engagement e : engagementModel.getEngagement(enthusiast.getID(), "like")) {
+			if(e == null) { continue; }
+			String key = String.valueOf(e.getID());
+			String value = String.valueOf(e.getSimpleInfo());
+			information.put(key, value);
+			System.out.println(e.getSimpleInfo());
+		}
+
+		return information;
+	}
+
 	public void handleUpdate(Enthusiast updatedEnthusiast) {
 		Enthusiast enthusiast = model.updateEnthusiast(updatedEnthusiast);
 		view.passUpdatedEnthusiast(enthusiast);
+	}
+
+	public void handleToggle(int engagementId) {
+		engagementModel.toggleEngagementStatus(engagementId);
 	}
 
 	public void handleDelete(Enthusiast enthusiast) {
