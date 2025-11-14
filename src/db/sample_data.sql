@@ -38,7 +38,7 @@ VALUES
 ('Villanueva', 'Arnold', 'D.', 'Male', '1977-06-25', 2004, NULL, 21, TRUE),
 ('Delos Reyes', 'Erika', 'B.', 'Female', '1984-08-16', 2011, NULL, 14, TRUE),
 ('Navarro', 'Greg', 'C.', 'Male', '1976-03-11', 2002, 2019, 17, FALSE);
-INSERT INTO tournaments (tournament_name, season_year, tournament_type, start_date, end_date)
+INSERT INTO tournament (tournament_name, season_year, tournament_type, start_date, end_date)
 VALUES
 ('Metro Manila Basketball Cup', 2023, 'Regional', '2023-03-10', '2023-06-25'),
 ('Philippine Invitational League', 2022, 'National', '2022-04-15', '2022-08-30'),
