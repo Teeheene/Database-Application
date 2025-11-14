@@ -10,14 +10,12 @@ public class Tournament {
     private CustomTimestamp startDate;
     private CustomTimestamp endDate;
 
-    // Default constructor
-    public Tournament () {}
+    // Empty constructor
+    public Tournament() {}
 
-    // Constructor
-    public Tournament(int tournamentID, String tournamentName, int seasonYear, 
-                      String tournamentType, CustomTimestamp startDate, CustomTimestamp endDate) {
-
-        this.tournamentID = tournamentID;
+    // Constructor for new tournament
+    public Tournament(String tournamentName, int seasonYear, String tournamentType,
+                      CustomTimestamp startDate, CustomTimestamp endDate) {
         this.tournamentName = tournamentName;
         this.seasonYear = seasonYear;
         this.tournamentType = tournamentType;
@@ -25,9 +23,35 @@ public class Tournament {
         this.endDate = endDate;
     }
 
-    /*
-    Update method
-     */
+    // Constructor for existing tournament
+    public Tournament(int tournamentID, String tournamentName, int seasonYear,
+                      String tournamentType, String startDate, String endDate) {
+        this.tournamentID = tournamentID;
+        this.tournamentName = tournamentName;
+        this.seasonYear = seasonYear;
+        this.tournamentType = tournamentType;
+
+        // Parse date strings (YYYY-MM-DD format from database)
+        if (startDate != null && !startDate.isEmpty()) {
+            String[] startTokens = startDate.split("-");
+            this.startDate = new CustomTimestamp(
+                    Integer.parseInt(startTokens[0]),
+                    Integer.parseInt(startTokens[1]),
+                    Integer.parseInt(startTokens[2])
+            );
+        }
+
+        if (endDate != null && !endDate.isEmpty()) {
+            String[] endTokens = endDate.split("-");
+            this.endDate = new CustomTimestamp(
+                    Integer.parseInt(endTokens[0]),
+                    Integer.parseInt(endTokens[1]),
+                    Integer.parseInt(endTokens[2])
+            );
+        }
+    }
+
+    // Update method
     public void update(Tournament other) {
         if (other.getTournamentName() != null) { this.tournamentName = other.getTournamentName(); }
         if (other.getTournamentType() != null) { this.tournamentType = other.getTournamentType(); }
@@ -36,9 +60,7 @@ public class Tournament {
         if (other.getSeasonYear() > 0) { this.seasonYear = other.getSeasonYear(); }
     }
 
-    /*
-    Getters
-     */
+    // Getters
     public int getTournamentID() { return tournamentID; }
     public String getTournamentName() { return tournamentName; }
     public int getSeasonYear() { return seasonYear; }
@@ -46,16 +68,11 @@ public class Tournament {
     public CustomTimestamp getStartDate() { return startDate; }
     public CustomTimestamp getEndDate() { return endDate; }
 
-    /*
-    Setters
-     */
+    // Setters
     public void setTournamentID(int tournamentID) { this.tournamentID = tournamentID; }
     public void setTournamentName(String tournamentName) { this.tournamentName = tournamentName; }
     public void setSeasonYear(int seasonYear) { this.seasonYear = seasonYear; }
     public void setTournamentType(String tournamentType) { this.tournamentType = tournamentType; }
     public void setStartDate(CustomTimestamp startDate) { this.startDate = startDate; }
     public void setEndDate(CustomTimestamp endDate) { this.endDate = endDate; }
-
 }
-
-
