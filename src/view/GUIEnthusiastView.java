@@ -69,14 +69,19 @@ public class GUIEnthusiastView {
 		cp.add(followingBtn);
 		cp.add(likesBtn);
 
-		
+		//engageBtn.addActionListener(e -> engagePanel());
 		profileBtn.addActionListener(e -> profilePanel());
 		logoutBtn.addActionListener(e -> controller.handleLogout());
 		updateBtn.addActionListener(e -> updatePanel());
 		deleteBtn.addActionListener(e -> deletePanel());
 
+
 		cp.revalidate();
 		cp.repaint();
+	}
+
+	public void engagePanel() {
+
 	}
 
 	public void updatePanel() {

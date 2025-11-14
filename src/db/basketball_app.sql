@@ -63,6 +63,7 @@ CREATE TABLE tournament (
 );
 
 DROP TABLE IF EXISTS engagement;
+
 CREATE TABLE engagement (
 	engagement_id INT NOT NULL AUTO_INCREMENT,
 	engagement_category VARCHAR(10) NOT NULL,
