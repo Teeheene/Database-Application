@@ -83,3 +83,15 @@ CREATE TABLE engagement (
 		(engagement_category = 'tournament' AND tournament_id IS NOT NULL)
 	)
 );
+
+DROP TABLE IF EXISTS team;
+CREATE TABLE team (
+    team_ID INT AUTO_INCREMENT,
+    coach_id INT, 
+	team_name VARCHAR(50) NOT NULL,
+	number_of_players INT,
+    registry_status BOOLEAN,
+    tCreated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY(team_ID),
+FOREIGN KEY(coach_id) REFERENCES coach(coach_id)
+);
