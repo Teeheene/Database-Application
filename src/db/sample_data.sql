@@ -50,3 +50,18 @@ VALUES
 ('All-Star Invitational', 2025, 'Exhibition', '2025-03-05', '2025-03-15'),
 ('Community Basketball Fest', 2023, 'Friendly', '2023-08-01', '2023-08-25'),
 ('Legends Reunion Tournament', 2024, 'Exhibition', '2024-11-10', '2024-11-20');
+
+
+INSERT INTO team (team_ID, coach_id, team_name, number_of_players, registry_status, tCreated_at)
+VALUES
+(1, 1, 'Green Archers', 15, TRUE, '2024-01-10 09:15:00'),
+(2, 2, 'Blue Eagles', 14, TRUE, '2024-02-05 13:30:00'),
+(3, 3, 'Red Warriors', 13, FALSE, '2024-03-12 16:45:00'),
+(4, 1, 'Golden Tigers', 16, TRUE, '2024-04-01 10:00:00'),
+(5, 4, 'Maroon Falcons', 12, TRUE, '2024-04-15 11:20:00'),
+(6, 2, 'Silver Knights', 11, FALSE, '2024-05-02 08:40:00'),
+(7, 5, 'Black Panthers', 15, TRUE, '2024-06-18 14:55:00'),
+(8, 3, 'White Wolves', 14, TRUE, '2024-07-09 17:10:00'),
+(9, 4, 'Crimson Foxes', 13, FALSE, '2024-08-21 12:05:00'),
+(10, 5, 'Iron Sharks', 16, TRUE, '2024-09-30 19:25:00');
+
