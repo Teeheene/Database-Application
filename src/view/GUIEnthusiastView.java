@@ -74,7 +74,7 @@ public class GUIEnthusiastView {
 		logoutBtn.addActionListener(e -> controller.handleLogout());
 		updateBtn.addActionListener(e -> updatePanel());
 		deleteBtn.addActionListener(e -> deletePanel());
-
+		followingBtn.addActionListener(e -> followingPanel());
 
 		cp.revalidate();
 		cp.repaint();
@@ -82,6 +82,34 @@ public class GUIEnthusiastView {
 
 	public void engagePanel() {
 
+	}
+
+	public void followingPanel() {
+		cp = BackgroundPanel.create("assets/login/enthusiast/following_bg.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		//get information from controller
+		LinkedHashMap<String, String> information = controller.handleFollowing(enthusiast);
+
+		JLabel overlayBg = new JLabel(new ImageIcon("assets/login/enthusiast/following.png"));
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		JPanel scrollingPanel = GUIUtil.showScrollingPanel(information, -19, -3, 57, 6,
+			clicked -> {
+				System.out.println("yahoo!");
+			});
+
+		overlayBg.setBounds(0, 0, 720, 480);
+		scrollingPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+		
+		cp.add(overlayBg);
+		cp.add(backBtn);
+		cp.add(scrollingPanel);
+
+		backBtn.addActionListener(e -> profilePanel());
+
+		cp.revalidate();
+		cp.repaint();	
 	}
 
 	public void updatePanel() {

@@ -8,7 +8,7 @@ public class Game {
     /* draft */
     private int gameID;
     private int tournamentID;
-    private int ArrayList<Integer> competingTeamIDs;
+    private ArrayList<Integer> competingTeamIDs;
     private int winningTeamID;
     private int losingTeamID;
     private int scoreRatio;

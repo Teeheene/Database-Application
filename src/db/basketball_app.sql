@@ -63,26 +63,42 @@ CREATE TABLE tournament (
 );
 
 DROP TABLE IF EXISTS engagement;
-
 CREATE TABLE engagement (
 	engagement_id INT NOT NULL AUTO_INCREMENT,
-	engagement_category VARCHAR(10) NOT NULL,
 	engagement_type VARCHAR(10) NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	enthusiast_id INT NOT NULL,
-	player_id INT,
-	coach_id INT,
-	tournament_id INT,
+	status INT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (engagement_id),
-	FOREIGN KEY (enthusiast_id) REFERENCES enthusiast(enthusiast_id),
-	FOREIGN KEY (player_id) REFERENCES player(player_id),
-	FOREIGN KEY (coach_id) REFERENCES coach(coach_id),
-	FOREIGN KEY (tournament_id) REFERENCES tournament(tournament_id),
-	CONSTRAINT chk_category CHECK (
-		(engagement_category = 'player' AND player_id IS NOT NULL) OR
-		(engagement_category = 'coach' AND coach_id IS NOT NULL) OR
-		(engagement_category = 'tournament' AND tournament_id IS NOT NULL)
-	)
+	FOREIGN KEY (enthusiast_id) REFERENCES enthusiast(enthusiast_id)
+);
+
+-- subtype engagement tables
+DROP TABLE IF EXISTS engagement_player;
+CREATE TABLE engagement_player (
+	engagement_id INT NOT NULL,
+	player_id INT NOT NULL,
+	PRIMARY KEY (engagement_id),
+	FOREIGN KEY (engagement_id) REFERENCES engagement(engagement_id),
+	FOREIGN KEY (player_id) REFERENCES player(player_id) 
+);
+
+DROP TABLE IF EXISTS engagement_coach;
+CREATE TABLE engagement_coach (
+	engagement_id INT NOT NULL,
+	coach_id INT NOT NULL,
+	PRIMARY KEY (engagement_id),
+	FOREIGN KEY (engagement_id) REFERENCES engagement(engagement_id),
+	FOREIGN KEY (coach_id) REFERENCES coach(coach_id) 
+);
+
+DROP TABLE IF EXISTS engagement_tournament;
+CREATE TABLE engagement_tournament (
+	engagement_id INT NOT NULL,
+	tournament_id INT NOT NULL,
+	PRIMARY KEY (engagement_id),
+	FOREIGN KEY (engagement_id) REFERENCES engagement(engagement_id),
+	FOREIGN KEY (tournament_id) REFERENCES tournament(tournament_id) 
 );
 
 DROP TABLE IF EXISTS team;

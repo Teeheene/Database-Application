@@ -117,10 +117,12 @@ public class TournamentManagement {
 
         String sql = "SELECT * FROM tournament";
 
+			  /*
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet rs = statement.executeQuery()) {
 
+				fix please
             while (rs.next()) {
 
                 Tournament tournament = new Tournament(
@@ -140,6 +142,9 @@ public class TournamentManagement {
         }
 
         return tournamentList;
+				*/
+
+			return null;
     }
 
 
@@ -155,6 +160,7 @@ public class TournamentManagement {
             statement.setInt(1, tournamentID);
 
             ResultSet rs = statement.executeQuery();
+				/* fix
 
             if (rs.next()) {
                 tournament = new Tournament(
@@ -166,6 +172,7 @@ public class TournamentManagement {
                         new CustomTimestamp(rs.getDate("end_date"))
                 );
             }
+				*/
 
         } catch (SQLException e) {
             e.printStackTrace();

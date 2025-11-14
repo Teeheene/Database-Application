@@ -31,6 +31,10 @@ public class Engagement {
 		);
 	}
 
+	public String getSimpleInfo() {
+		return targetCategory + " [ID " + String.valueOf(targetID) + "] since " + createdAt.toStringDate();
+	}
+
 	public int getID() { return ID; }
 	public String getTargetCategory() { return targetCategory; }
 	public String getType() { return type; }

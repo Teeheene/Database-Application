@@ -60,8 +60,6 @@ public class GUIUtil {
 		frame.setLocationRelativeTo(null);
 		frame.setTitle("BasketGram");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		System.out.println("Content pane size: " + cp.getWidth() + "x" + cp.getHeight());
-		System.out.println("Insets: " + frame.getInsets());
 		return frame;
 	}
 
@@ -72,7 +70,7 @@ public class GUIUtil {
 
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
-		button.setBorderPainted(false);
+		button.setBorderPainted(true);
 		button.setFocusPainted(false);
 
 		//debugging
