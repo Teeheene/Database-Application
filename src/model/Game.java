@@ -5,29 +5,46 @@ import java.util.*;
 
 public class Game {
 
-    /* draft */
     private int gameID;
     private int tournamentID;
-    private ArrayList<Integer> competingTeamIDs;
+    private int competingTeamA_ID;
+    private int competingTeamB_ID;
     private int winningTeamID;
     private int losingTeamID;
-    private int scoreRatio;
-    private String gameStatus; // boolean? or string
+    private String scoreRatio;
+    private String gameStatus;
     private CustomTimestamp startDate;
     private CustomTimestamp endDate;
 
     // constructor
-    public Game (int gameID, int tournamentID, int competingTeamIDs, int winningTeamID, int losingTeamID,
+    public Game (int gameID, int tournamentID, int competingTeamA_ID, int competingTeamB_ID, int winningTeamID, int losingTeamID,
                  int scoreRatio, String gameStatus, CustomTimestamp startDate, CustomTimestamp endDate) {
         this.gameID = gameID;
         this.tournamentID = tournamentID;
-        this.competingTeamIDs = new ArrayList<Integer>();
+        this.competingTeamA_ID = competingTeamA_ID;
+        this.competingTeamB_ID =competingTeamB_ID;
         this.winningTeamID = winningTeamID;
         this.losingTeamID = losingTeamID;
         this.scoreRatio = scoreRatio;
         this.gameStatus = gameStatus;
-        this.startDate = startDate;
-        this.endDate = endDate;
+
+        if (startDate != null && !startDate.isEmpty()) {
+            String[] startTokens = startDate.split("-");
+            this.startDate = new CustomTimestamp(
+                    Integer.parseInt(startTokens[0]),
+                    Integer.parseInt(startTokens[1]),
+                    Integer.parseInt(startTokens[2])
+            );
+        }
+
+        if (endDate != null && !endDate.isEmpty()) {
+            String[] endTokens = endDate.split("-");
+            this.endDate = new CustomTimestamp(
+                    Integer.parseInt(endTokens[0]),
+                    Integer.parseInt(endTokens[1]),
+                    Integer.parseInt(endTokens[2])
+            );
+        }
     }
 
 
@@ -36,10 +53,11 @@ public class Game {
     */
     public int getGameID() { return gameID; }
     public int getTournamentID() { return tournamentID; }
-    public ArrayList<Integer> getCompetingTeamIDs() { return competingTeamIDs; }
+    public int getCompetingTeamA_ID() {return competingTeamA_ID;}
+    public int getCompetingTeamB_ID() {return competingTeamB_ID;}
     public int getWinningTeamID() { return winningTeamID; }
     public int getLosingTeamID() { return losingTeamID; }
-    public int getScoreRatio() { return scoreRatio; }
+    public String getScoreRatio() { return scoreRatio; }
     public String getGameStatus() { return gameStatus; }
     public CustomTimestamp getStartDate() { return startDate; }
     public CustomTimestamp getEndDate() { return endDate; }
@@ -49,9 +67,11 @@ public class Game {
     */
     public void setGameID(int gameID) { this.gameID = gameID; }
     public void setTournamentID(int tournamentID) { this.tournamentID = tournamentID; }
+    public void setCompetingTeamA_ID(int competingTeamA_ID) {this.competingTeamA_ID = competingTeamA_ID;}
+    public void setCompetingTeamB_ID(int competingTeamB_ID) {this.competingTeamB_ID = competingTeamB_ID;}
     public void setWinningTeamID(int winningTeamID) { this.winningTeamID = winningTeamID; }
     public void setLosingTeamID(int losingTeamID) { this.losingTeamID = losingTeamID; }
-    public void setScoreRatio(int scoreRatio) { this.scoreRatio = scoreRatio; }
+    public void setScoreRatio(String scoreRatio) { this.scoreRatio = scoreRatio; }
     public void setGameStatus(String gameStatus) { this.gameStatus = gameStatus; }
     public void setStartDate(CustomTimestamp startDate) { this.startDate = startDate; }
     public void setEndDate(CustomTimestamp endDate) { this.endDate = endDate; }
