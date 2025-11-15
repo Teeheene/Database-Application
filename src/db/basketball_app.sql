@@ -112,3 +112,25 @@ CREATE TABLE team (
 PRIMARY KEY(team_ID),
 FOREIGN KEY(coach_id) REFERENCES coach(coach_id)
 );
+
+DROP TABLE IF EXISTS game;
+CREATE TABLE game (
+    game_id INT NOT NULL AUTO_INCREMENT,
+    tournament_id INT,
+    competing_teamA_id INT,
+    competing_teamB_id INT,
+    winning_team_id INT,
+    losing_team_id INT,
+    score_ratio VARCHAR(10),
+    game_status VARCHAR(20),
+    start_date DATE,
+    end_date DATE,
+    PRIMARY KEY (game_id),
+    FOREIGN KEY (tournament_id) REFERENCES tournament(tournament_id),
+    -- Note: waiting for competing team id
+    -- FOREIGN KEY (competing_teamA_id) REFERENCES competing_team(competing_team_id),
+    -- FOREIGN KEY (competing_teamB_id) REFERENCES competing_team(competing_team_id),
+    FOREIGN KEY (winning_team_id) REFERENCES team(team_id),
+    FOREIGN KEY (losing_team_id) REFERENCES team(team_id)
+);
+
