@@ -12,7 +12,7 @@ public class Game {
     private int winningTeamID;
     private int losingTeamID;
     private int scoreRatio;
-    private String gameStatus;
+    private String gameStatus; // boolean? or string
     private CustomTimestamp startDate;
     private CustomTimestamp endDate;
 
