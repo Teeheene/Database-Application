@@ -1,7 +1,9 @@
 package model;
 
-import util.*;
 import java.util.ArrayList;
+
+import util.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,7 +15,7 @@ import java.sql.Statement;
  * <p>
  * This includes adding, deleting, updating, searching, and retrieving all players.
  * <br>
- * Each method uses JDBC to interact with the database through {@link helper.DatabaseConnection}.
+ * Each method uses JDBC to interact with the database through {@link util.DatabaseConnection}.
  * </p>
  */
 public class PlayerManagement {
@@ -46,7 +48,7 @@ public class PlayerManagement {
 			statement.setString(2, player.getLastName());
 			statement.setString(3, player.getFirstName());
 			statement.setString(4, player.getMiddleName());
-			statement.setDate(5, Date.valueOf(player.getDateofBirth()));
+			statement.setDate(5, Date.valueOf(player.getDateOfBirth()));
 			statement.setString(6, String.valueOf(player.getGender()));
 			statement.setDouble(7, player.getHeight());
 			statement.setDouble(8, player.getWeight());
@@ -121,7 +123,7 @@ public class PlayerManagement {
         statement.setString(1, newPlayer.getLastName());
         statement.setString(2, newPlayer.getFirstName());
         statement.setString(3, newPlayer.getMiddleName());
-        statement.setDate(4, Date.valueOf(newPlayer.getDateofBirth()));
+        statement.setDate(4, Date.valueOf(newPlayer.getDateOfBirth()));
         statement.setString(5, String.valueOf(newPlayer.getGender()));
         statement.setDouble(6, newPlayer.getHeight());
         statement.setDouble(7, newPlayer.getWeight());
@@ -156,8 +158,6 @@ public Player searchPlayer(int playerID) {
     String sql = "SELECT * FROM player WHERE player_id = ?";
     Player player = null;
 
-	 //fix this :D
-	 /*
     try (Connection conn = DatabaseConnection.getConnection();
         PreparedStatement statement = conn.prepareStatement(sql)) {
 
@@ -170,7 +170,6 @@ public Player searchPlayer(int playerID) {
                     rs.getString("firstname"),
                     rs.getString("middlename"),
                     rs.getString("date_of_birth"),                
-						  rs.getInt("age"),
                     rs.getString("sex").charAt(0),              
                     rs.getDouble("height"),
                     rs.getDouble("weight"),
@@ -181,7 +180,6 @@ public Player searchPlayer(int playerID) {
     } catch (SQLException e) {
         e.printStackTrace();
     }
-	 */
 
     return player;
 }
@@ -204,8 +202,6 @@ public ArrayList<Player> getAllPlayers() {
     ArrayList<Player> players = new ArrayList<>();
     String sql = "SELECT * FROM player";
 
-	 //fix this :D
-	 /*
     try (Connection conn = DatabaseConnection.getConnection();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql)) {
@@ -227,10 +223,8 @@ public ArrayList<Player> getAllPlayers() {
     } catch (SQLException e) {
         e.printStackTrace();
     }
-	*/
 
     return players;
 }
 }
-
 
