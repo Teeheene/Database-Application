@@ -6,6 +6,8 @@ import java.util.*;
 public class GameBracket {
 
     /* draft */
+
+	/* FIX BUGS PLS
     private int bracketID;
     private int tournamentID;
     private ArrayList<Integer> competingTeamIDs;
@@ -49,4 +51,5 @@ public class GameBracket {
     public void setGameIDs(ArrayList<Integer> gameIDs) {this.gameIDs = gameIDs;}
     public void setGamesRemainingCount(int gamesRemainingCount) {this.gamesRemainingCount = gamesRemainingCount;}
     public void setCreatedAt(CustomTimestamp createdAt) {this.createdAt = createdAt;}
+	 */
 }

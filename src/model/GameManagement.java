@@ -14,6 +14,8 @@ public class GameManagement {
     // constructor
     public GameManagement() {
     }
+	 //PLEASE FIX BUGS B4 PUSHING  
+	 /*
 
     // add game (draft)
     public int addGame(Game game) {
@@ -175,4 +177,5 @@ public class GameManagement {
 
         return game;
     }
+	*/
 }

@@ -11,6 +11,7 @@ import java.sql.Statement;
 
 public class GameBracketManagement {
 
+	/*
     // constructor
     public GameBracketManagement () {}
 
@@ -39,4 +40,5 @@ public class GameBracketManagement {
 
     }
 
+	 */
 }

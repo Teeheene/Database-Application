@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Game {
 
+	/*
     private int gameID;
     private int tournamentID;
     private int competingTeamA_ID;
@@ -48,9 +49,7 @@ public class Game {
     }
 
 
-    /*
-    Getters
-    */
+    //Getters
     public int getGameID() { return gameID; }
     public int getTournamentID() { return tournamentID; }
     public int getCompetingTeamA_ID() {return competingTeamA_ID;}
@@ -62,9 +61,7 @@ public class Game {
     public CustomTimestamp getStartDate() { return startDate; }
     public CustomTimestamp getEndDate() { return endDate; }
 
-    /*
-    Setters
-    */
+    //Setters
     public void setGameID(int gameID) { this.gameID = gameID; }
     public void setTournamentID(int tournamentID) { this.tournamentID = tournamentID; }
     public void setCompetingTeamA_ID(int competingTeamA_ID) {this.competingTeamA_ID = competingTeamA_ID;}
@@ -76,4 +73,5 @@ public class Game {
     public void setStartDate(CustomTimestamp startDate) { this.startDate = startDate; }
     public void setEndDate(CustomTimestamp endDate) { this.endDate = endDate; }
 
+	 */
 }
