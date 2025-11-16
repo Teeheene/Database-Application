@@ -25,11 +25,11 @@ VALUES
 -- ======================================
 -- Sample Coaches
 -- ======================================
-INSERT INTO coach (lastname, firstname, middlename, sex, date_of_birth, start_year, end_year, years_in_field, status)
+INSERT INTO coach (lastname, firstname, middlename, sex, date_of_birth, start_year, end_year, status)
 VALUES
-('Miller', 'Tom', NULL, 'Male', '1975-03-12', 2000, NULL, 25, 1),
-('Davis', 'Sarah', NULL, 'Female', '1980-08-30', 2005, NULL, 20, 1),
-('Garcia', 'Luis', NULL, 'Male', '1978-11-09', 2002, NULL, 23, 1);
+('Miller', 'Tom', NULL, 'Male', '1975-03-12', 2000, NULL, 1),
+('Davis', 'Sarah', NULL, 'Female', '1980-08-30', 2005, NULL, 1),
+('Garcia', 'Luis', NULL, 'Male', '1978-11-09', 2002, NULL, 1);
 
 -- ======================================
 -- Sample Tournaments

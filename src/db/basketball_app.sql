@@ -47,7 +47,6 @@ CREATE TABLE coach (
 	date_of_birth DATE NOT NULL,
 	start_year INT NOT NULL,
 	end_year INT,
-	years_in_field INT NOT NULL,
 	status BOOLEAN,
 	PRIMARY KEY (coach_id)
 );
