@@ -3,80 +3,295 @@ use basketball_app;
 -- ======================================
 -- Sample Enthusiasts
 -- ======================================
-INSERT INTO enthusiast (username, lastname, firstname, middlename, sex, date_of_birth)
-VALUES
-('hoopster1', 'Reyes', 'Juan', 'Santos', 'Male', '1995-04-12'),
-('hoopfan2', 'Garcia', 'Maria', 'L', 'Female', '1998-09-30'),
-('bballman3', 'Lopez', 'Carlos', NULL, 'Male', '2000-01-15'),
-('shootqueen4', 'Dela Cruz', 'Ana', NULL, 'Female', '1997-06-21'),
-('dribbleking5', 'Martinez', 'Luis', 'R', 'Male', '1996-03-10');
+INSERT INTO enthusiast (username, lastname, firstname, middlename, sex, date_of_birth) VALUES
+('SmOhn23','Smith','John','Alexander','Male','1990-01-05'),
+('Basketballer3030','Doe','Jane','Beatrice','Female','1992-02-10'),
+('Owo 7070','Brown','Charlie','Christopher','Male','1988-03-15'),
+('fanBall 6767','Johnson','Emily','Danielle','Female','1995-04-20'),
+('DavisMichE','Davis','Michael','Edward','Male','1993-05-25'),
+('Miller_Kobe67','Miller','Sarah','Felicity','Female','1991-06-30'),
+('Wavid','Wilson','David','Gregory','Male','1989-07-18'),
+('TaylorSwiftBall','Taylor','Laura','Helena','Female','1994-08-22'),
+('AnderFan','Anderson','Kevin','Isaiah','Male','1996-09-12'),
+('Kobe142','Thomas','Olivia','Julianne','Female','1997-10-27');
 
 -- ======================================
 -- Sample Players
 -- ======================================
-INSERT INTO player (lastname, firstname, middlename, sex, date_of_birth, height, weight, rStatus)
-VALUES
-('Smith', 'James', NULL, 'Male', '1998-02-20', 198, 95, 1),
-('Johnson', 'Michael', NULL, 'Male', '1997-05-14', 200, 98, 1),
-('Williams', 'Kevin', NULL, 'Male', '1999-08-03', 195, 90, 1),
-('Brown', 'Chris', NULL, 'Male', '2000-11-22', 202, 102, 1),
-('Jones', 'Anthony', NULL, 'Male', '1996-07-18', 197, 93, 1);
+INSERT INTO player (lastname, firstname, middlename, sex, date_of_birth, height, weight, rStatus) VALUES
+('Allen','Mark','Andrew','Male','1990-01-01',180,75,1),
+('Baker','Luke','Benjamin','Male','1991-02-02',182,78,1),
+('Carter','Nina','Celeste','Female','1992-03-03',170,60,1),
+('Diaz','Oscar','Dominic','Male','1993-04-04',185,82,0),
+('Evans','Paula','Elaine','Female','1994-05-05',168,58,1),
+('Frost','Quinn','Francisco','Male','1995-06-06',188,85,1),
+('Gray','Rita','Gabrielle','Female','1996-07-07',165,55,0),
+('Hall','Sam','Harrison','Male','1997-08-08',190,90,1),
+('Irwin','Tina','Isabelle','Female','1998-09-09',167,57,1),
+('Jones','Umar','Jeremiah','Male','1999-10-10',178,72,0);
 
 -- ======================================
 -- Sample Coaches
 -- ======================================
-INSERT INTO coach (lastname, firstname, middlename, sex, date_of_birth, start_year, end_year, years_in_field, status)
-VALUES
-('Miller', 'Tom', NULL, 'Male', '1975-03-12', 2000, NULL, 25, 1),
-('Davis', 'Sarah', NULL, 'Female', '1980-08-30', 2005, NULL, 20, 1),
-('Garcia', 'Luis', NULL, 'Male', '1978-11-09', 2002, NULL, 23, 1);
+INSERT INTO coach (lastname, firstname, middlename, sex, date_of_birth, start_year, end_year, years_in_field, status) VALUES
+('King','Adam','Anthony','Male','1970-01-01',1995,NULL,30,1),
+('Lewis','Bella','Catherine','Female','1975-02-02',2000,NULL,24,1),
+('Moore','Carl','Douglas','Male','1972-03-03',1998,NULL,26,1),
+('Nelson','Diana','Evelyn','Female','1978-04-04',2002,NULL,22,1),
+('Owens','Ethan','Frederick','Male','1980-05-05',2005,NULL,19,1),
+('Parker','Fiona','Grace','Female','1982-06-06',2007,NULL,17,1),
+('Quinn','George','Howard','Male','1974-07-07',1999,NULL,25,1),
+('Reed','Hannah','Isadora','Female','1985-08-08',2010,NULL,14,1),
+('Stone','Ian','Jonathan','Male','1977-09-09',2001,NULL,23,1),
+('Turner','Julia','Katherine','Female','1983-10-10',2008,2025,16,1);
 
 -- ======================================
 -- Sample Tournaments
 -- ======================================
-INSERT INTO tournament (tournament_name, season_year, tournament_type, start_date, end_date)
-VALUES
-('Summer Slam', 2025, 'League', '2025-06-01', '2025-06-30'),
-('Winter Cup', 2025, 'Cup', '2025-12-01', '2025-12-15');
+INSERT INTO tournament (tournament_name, season_year, tournament_type, start_date, end_date) VALUES
+('Metro Cup',2020,'Open','2020-01-10','2020-02-10'),
+('City League',2021,'Regional','2021-03-05','2021-04-01'),
+('National Series',2022,'National','2022-05-12','2022-06-20'),
+('Summer Invitational',2023,'Invitational','2023-07-01','2023-07-30'),
+('Winter Classic',2019,'Seasonal','2019-11-10','2019-12-05'),
+('Championship Cup',2018,'Major','2018-08-15','2018-09-15'),
+('Rookie Cup',2024,'Amateur','2024-02-01','2024-02-20'),
+('Legends Tournament',2020,'Veteran','2020-09-01','2020-09-28'),
+('Basketball Masters',2021,'Major','2021-06-10','2021-07-05'),
+('Regional Clash',2023,'Regional','2023-10-01','2023-10-25');
 
 -- ======================================
 -- Sample Engagements
 -- ======================================
-INSERT INTO engagement (engagement_type, enthusiast_id, status)
-VALUES
-('like', 1, 1),
-('follow', 2, 1),
-('like', 3, 1),
-('follow', 4, 1),
-('like', 5, 1),
-('like', 1, 1),
-('follow', 2, 1),
-('like', 3, 1),
-('follow', 4, 1),
-('like', 5, 1);
+INSERT INTO engagement (engagement_type, enthusiast_id, status) VALUES
+('follow',1,1),
+('like',1,1),
+('follow',1,1),
+('like',1,1),
+('follow',1,1),
+('like',1,1),
+('follow',1,1),
+('like',1,1),
+('follow',1,1),
+('like',1,1),
+
+('follow',2,1),
+('like',2,1),
+('follow',2,1),
+('like',2,1),
+('follow',2,1),
+('like',2,1),
+('follow',2,1),
+('like',2,1),
+('follow',2,1),
+('like',2,1),
+
+('follow',3,1),
+('like',3,1),
+('follow',3,1),
+('like',3,1),
+('follow',3,1),
+('like',3,1),
+('follow',3,1),
+('like',3,1),
+('follow',3,1),
+('like',3,1),
+
+('follow',4,1),
+('like',4,1),
+('follow',4,1),
+('like',4,1),
+('follow',4,1),
+('like',4,1),
+('follow',4,1),
+('like',4,1),
+('follow',4,1),
+('like',4,1),
+
+('follow',5,1),
+('like',5,1),
+('follow',5,1),
+('like',5,1),
+('follow',5,1),
+('like',5,1),
+('follow',5,1),
+('like',5,1),
+('follow',5,1),
+('like',5,1),
+
+('follow',6,1),
+('like',6,1),
+('follow',6,1),
+('like',6,1),
+('follow',6,1),
+('like',6,1),
+('follow',6,1),
+('like',6,1),
+('follow',6,1),
+('like',6,1),
+
+('follow',7,1),
+('like',7,1),
+('follow',7,1),
+('like',7,1),
+('follow',7,1),
+('like',7,1),
+('follow',7,1),
+('like',7,1),
+('follow',7,1),
+('like',7,1),
+
+('follow',8,1),
+('like',8,1),
+('follow',8,1),
+('like',8,1),
+('follow',8,1),
+('like',8,1),
+('follow',8,1),
+('like',8,1),
+('follow',8,1),
+('like',8,1),
+
+('follow',9,1),
+('like',9,1),
+('follow',9,1),
+('like',9,1),
+('follow',9,1),
+('like',9,1),
+('follow',9,1),
+('like',9,1),
+('follow',9,1),
+('like',9,1),
+
+('follow',10,1),
+('like',10,1),
+('follow',10,1),
+('like',10,1),
+('follow',10,1),
+('like',10,1),
+('follow',10,1),
+('like',10,1),
+('follow',10,1),
+('like',10,1);
 
 -- ======================================
 -- Engagement Subtypes
 -- ======================================
 -- Player engagements
-INSERT INTO engagement_player (engagement_id, player_id)
-VALUES
-(1, 1),
-(3, 2),
-(5, 3),
-(6, 4),
-(9, 5);
+INSERT INTO engagement_player (engagement_id, player_id) VALUES
+(1,1),
+(4,2),
+(7,3),
+(10,4),
+(13,5),
+(16,6),
+(19,7),
+(22,8),
+(25,9),
+(28,10),
+
+(31,1),
+(34,2),
+(37,3),
+(40,4),
+(43,5),
+(46,6),
+(49,7),
+(52,8),
+(55,9),
+(58,10),
+
+(61,1),
+(64,2),
+(67,3),
+(70,4),
+(73,5),
+(76,6),
+(79,7),
+(82,8),
+(85,9),
+(88,10),
+
+(91,1),
+(94,2),
+(97,3),
+(100,4);
 
 -- Coach engagements
-INSERT INTO engagement_coach (engagement_id, coach_id)
-VALUES
-(2, 1),
-(4, 2),
-(7, 3);
+INSERT INTO engagement_coach (engagement_id, coach_id) VALUES
+(2,1),
+(5,2),
+(8,3),
+(11,4),
+(14,5),
+(17,6),
+(20,7),
+(23,8),
+(26,9),
+(29,10),
+
+(32,1),
+(35,2),
+(38,3),
+(41,4),
+(44,5),
+(47,6),
+(50,7),
+(53,8),
+(56,9),
+(59,10),
+
+(62,1),
+(65,2),
+(68,3),
+(71,4),
+(74,5),
+(77,6),
+(80,7),
+(83,8),
+(86,9),
+(89,10),
+
+(92,1),
+(95,2),
+(98,3);
 
 -- Tournament engagements
-INSERT INTO engagement_tournament (engagement_id, tournament_id)
-VALUES
-(8, 1),
-(10, 2);
+INSERT INTO engagement_tournament (engagement_id, tournament_id) VALUES
+(3,1),
+(6,2),
+(9,3),
+(12,4),
+(15,5),
+(18,6),
+(21,7),
+(24,8),
+(27,9),
+(30,10),
+
+(33,1),
+(36,2),
+(39,3),
+(42,4),
+(45,5),
+(48,6),
+(51,7),
+(54,8),
+(57,9),
+(60,10),
+
+(63,1),
+(66,2),
+(69,3),
+(72,4),
+(75,5),
+(78,6),
+(81,7),
+(84,8),
+(87,9),
+(90,10),
+
+(93,1),
+(96,2),
+(99,3);
 

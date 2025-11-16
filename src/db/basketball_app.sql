@@ -4,9 +4,15 @@ USE basketball_app;
 SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS enthusiast;
-DROP TABLE IF EXISTS engagement;
 DROP TABLE IF EXISTS player;
 DROP TABLE IF EXISTS tournament;
+DROP TABLE IF EXISTS coach;
+DROP TABLE IF EXISTS engagement;
+DROP TABLE IF EXISTS engagement_player;
+DROP TABLE IF EXISTS engagement_coach;
+DROP TABLE IF EXISTS engagement_tournament;
+DROP TABLE IF EXISTS team;
+DROP TABLE IF EXISTS game;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
