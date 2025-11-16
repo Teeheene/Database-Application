@@ -134,7 +134,7 @@ public class CLIPlayerView implements PlayerView {
         System.out.println("Player ID: " + player.getPlayerID());
         System.out.println("Name: " + player.getFirstName() + " " + 
                           player.getMiddleName() + " " + player.getLastName());
-        System.out.println("Age: " + player.getAge());
+        //System.out.println("Age: " + player.getAge());
         System.out.println("Birthday: " + player.getDateofBirth());
         System.out.println("Gender: " + player.getGender());
         System.out.println("Height: " + player.getHeight() + " cm");

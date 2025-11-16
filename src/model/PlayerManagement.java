@@ -1,7 +1,9 @@
 package model;
 
-import util.*;
 import java.util.ArrayList;
+
+import util.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -13,7 +15,7 @@ import java.sql.Statement;
  * <p>
  * This includes adding, deleting, updating, searching, and retrieving all players.
  * <br>
- * Each method uses JDBC to interact with the database through {@link helper.DatabaseConnection}.
+ * Each method uses JDBC to interact with the database through {@link util.DatabaseConnection}.
  * </p>
  */
 public class PlayerManagement {
@@ -200,8 +202,6 @@ public ArrayList<Player> getAllPlayers() {
     ArrayList<Player> players = new ArrayList<>();
     String sql = "SELECT * FROM player";
 
-	 //fix this :D
-	 /*
     try (Connection conn = DatabaseConnection.getConnection();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql)) {
@@ -213,7 +213,7 @@ public ArrayList<Player> getAllPlayers() {
                 rs.getString("firstname"),
                 rs.getString("middlename"),
                 rs.getString("date_of_birth"),
-                rs.getString("sex").charAt(0),
+                rs.getString("sex"),
                 rs.getDouble("height"),
                 rs.getDouble("weight"),
                 rs.getBoolean("rStatus")
@@ -223,10 +223,8 @@ public ArrayList<Player> getAllPlayers() {
     } catch (SQLException e) {
         e.printStackTrace();
     }
-	*/
 
     return players;
 }
 }
-
 

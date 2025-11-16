@@ -1,7 +1,6 @@
 package model;
 
 import util.*;
-
 public class Player
 {
 
@@ -9,13 +8,12 @@ public class Player
     private String lastName;
     private String firstName;
     private String middleName;
-    private int age;
     private CustomTimestamp birthday;
     private String gender;
     private double height;
     private double weight;
     private boolean rStatus;
-
+    
     //Constructor
     public Player(int PlayerID, String lastName, String firstName, String middleName,
                 String birthday, String gender, double height, double weight, boolean rStatus){
@@ -24,7 +22,6 @@ public class Player
 		 this.lastName = lastName;
 		 this.firstName = firstName;
 		 this.middleName = middleName;
-		 this.age = age;
 		 this.gender = gender;
 		 this.height = height;
 		 this.weight = weight;
@@ -44,7 +41,7 @@ public class Player
         if(other.getMiddleName() != null){this.middleName= other.getMiddleName();}
         if(other.getDateofBirth() != null) { this.birthday = other.getDateofBirth(); }
 		if(other.getGender() != null){ this.gender = other.getGender(); }
-        this.rStatus = other.getStatus();
+       this.rStatus = other.getStatus();
     }
 	
 	public String toHtmlString() {
@@ -63,12 +60,24 @@ public class Player
     public String getLastName() { return lastName; }
 	public String getFirstName() { return firstName; }
 	public String getMiddleName() { return middleName; }
-    public int getAge() { return age; }
 	public CustomTimestamp getDateofBirth() { return birthday; }
 	public String getGender() { return gender; }
-    public double getHeight() { return height; }
+   public double getHeight() { return height; }
 	public double getWeight() { return weight; }
 	public boolean getStatus() { return rStatus; }
+    public String getFullName() {
+        StringBuilder fullName = new StringBuilder();
+        if (firstName != null && !firstName.isEmpty()) {
+            fullName.append(firstName).append(" ");
+        }
+        if (middleName != null && !middleName.isEmpty()) {
+            fullName.append(middleName).append(" ");
+        }
+        if (lastName != null && !lastName.isEmpty()) {
+            fullName.append(lastName);
+        }
+        return fullName.toString().trim();
+    }
 
     //Setters
     public void setLastName(String lastName) { this.lastName = lastName; }
