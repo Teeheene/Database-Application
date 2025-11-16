@@ -5,6 +5,8 @@ import controller.*;
 import util.*;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.DateTimeException;
 import java.time.format.DateTimeFormatter;
@@ -69,9 +71,10 @@ public class GUIEnthusiastView {
 		cp.add(followingBtn);
 		cp.add(likesBtn);
 
-		//engageBtn.addActionListener(e -> engagePanel());
+		engageBtn.addActionListener(e -> engagePanel());
 		profileBtn.addActionListener(e -> profilePanel());
 		logoutBtn.addActionListener(e -> controller.handleLogout());
+
 		updateBtn.addActionListener(e -> updatePanel());
 		deleteBtn.addActionListener(e -> deletePanel());
 		followingBtn.addActionListener(e -> followingPanel());
@@ -82,7 +85,151 @@ public class GUIEnthusiastView {
 	}
 
 	public void engagePanel() {
+		cp = BackgroundPanel.create("assets/login/enthusiast/engage_bg.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
 
+		//get information from controller
+		LinkedHashMap<String, String> feed = controller.handleFeed(); 	
+		ArrayList<Engagement> engagement = controller.getEngagements(enthusiast.getID());
+
+		JLabel overlayBg = new JLabel(new ImageIcon("assets/login/enthusiast/engage.png"));
+		overlayBg.setBounds(0, 0, 720, 480);
+
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		JButton engageBtn = GUIUtil.createIButton(423,0,97,53);
+		JButton profileBtn = GUIUtil.createIButton(521,0,93,53);
+		JButton logoutBtn = GUIUtil.createIButton(614,0,93,53);
+		
+		cp.add(overlayBg);
+		cp.add(backBtn);
+		cp.add(engageBtn);
+		cp.add(profileBtn);
+		cp.add(logoutBtn);
+		
+		/*
+		 * The idea is that the value contains the objects simple information
+		 * in string form. The key should contain whatever information required
+		 * by controller to update/ toggle the follow or like made by the enthusiast 
+		 * mainly
+		 * 	enthusiastID (given)
+		 * 	targetID 
+		 * 	category (given)
+		 * 	type (given)
+		 * */
+
+		JPanel feedPanel = new JPanel(null);	
+		int index = 0;
+		int gap = 156;
+		int y = 121; 
+		for(Map.Entry<String, String> entry : feed.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue(); 
+			
+			String[] keyParts = key.split("-");	
+			String category = keyParts[0];
+			String userStr = keyParts[1];
+			int id = Integer.parseInt(keyParts[2]);
+			
+			//creates the post
+			JPanel post = new JPanel(null);
+			post.setOpaque(false);
+	
+			JLabel postBg = new JLabel(new ImageIcon("assets/login/enthusiast/banner.png"));
+			postBg.setBounds(0,0,593,148);
+			postBg.setOpaque(false);
+
+			boolean liked = false;
+			String imagePath = "assets/login/enthusiast/";
+			for(Engagement e : engagement) {
+				if(e.getTargetID() == id && e.getType().equals("like")) {
+					liked = true;
+					break;
+				}
+			}
+			imagePath += liked ? "liked.png" : "like.png";
+
+			JLabel likeBtnBg = new JLabel(new ImageIcon(imagePath));
+			JButton likeBtn = GUIUtil.createIButton(505,26,27,25);
+			likeBtnBg.setBounds(505,26,60,60);
+			likeBtnBg.setOpaque(false);
+
+			boolean followed = false;
+			imagePath = "assets/login/enthusiast/";
+			for(Engagement e : engagement) {
+				if(e.getTargetID() == id && e.getType().equals("follow")) {
+					followed = true;
+					break;
+				}
+			}
+			imagePath += followed ? "followed.png" : "follow.png";
+
+			JLabel followBtnBg = new JLabel(new ImageIcon(imagePath));
+			JButton followBtn = GUIUtil.createIButton(540,26,33,25);
+			followBtnBg.setBounds(540,26,60,60);
+			followBtnBg.setOpaque(false);
+
+			JLabel user = GUIUtil.createText(userStr,78,28,408,20);
+			JLabel info = GUIUtil.createText(value,29,73,534,62);
+
+			likeBtn.addActionListener(e -> {
+				if(controller.handleEngagement(id, enthusiast.getID(), category, "like")) {
+					likeBtnBg.setIcon(new ImageIcon("assets/login/enthusiast/liked.png"));
+				} else {
+					likeBtnBg.setIcon(new ImageIcon("assets/login/enthusiast/like.png"));
+				}
+			});
+			followBtn.addActionListener(e -> {
+				if(controller.handleEngagement(id, enthusiast.getID(), category, "follow")) {
+					followBtnBg.setIcon(new ImageIcon("assets/login/enthusiast/followed.png"));
+				} else {
+					followBtnBg.setIcon(new ImageIcon("assets/login/enthusiast/follow.png"));
+				}
+			});
+
+			//add to post
+			post.add(user);
+			post.add(info);
+			post.add(likeBtn);
+			post.add(followBtn);
+			post.add(likeBtnBg);
+			post.add(followBtnBg);
+			post.add(postBg);
+
+			post.setBounds(63,y+index*gap,593,148);
+			feedPanel.add(post);
+			index++;
+		}
+			
+		int totalHeight = y+feed.size() * gap;
+		feedPanel.setBounds(0,0,720,totalHeight);
+		feedPanel.setOpaque(false);
+		cp.add(feedPanel);
+
+		cp.addMouseWheelListener(new MouseWheelListener() {
+			int offset = 0;
+
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) 
+			{
+				int rotation = e.getWheelRotation(); //1 down -1 up
+				offset -= rotation * 30; //so 20 is the offset like when scrolled ykykyk
+
+				int maxOffset = 0;
+				int minOffset = 370 - totalHeight;
+				offset = Math.max(minOffset, Math.min(maxOffset, offset));
+
+				feedPanel.setLocation(0,offset);
+				cp.repaint();
+			}
+		});
+
+		backBtn.addActionListener(e -> profilePanel());
+		profileBtn.addActionListener(e -> profilePanel());
+		logoutBtn.addActionListener(e -> controller.handleLogout());
+
+		cp.revalidate();
+		cp.repaint();	
 	}
 
 	public void likesPanel() {

@@ -9,9 +9,9 @@ public class PlayerController {
     private PlayerManagement model;
     private PlayerView view;
 
-    public PlayerController(PlayerManagement model, PlayerView view) {
+    public PlayerController(PlayerManagement model/*, PlayerView view*/) {
         this.model = model;
-        this.view = view;
+        //this.view = view;
     }
 
     public void run() {

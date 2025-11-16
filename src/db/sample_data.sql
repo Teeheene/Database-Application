@@ -1,8 +1,5 @@
 use basketball_app;
 
--- ======================================
--- Sample Enthusiasts
--- ======================================
 INSERT INTO enthusiast (username, lastname, firstname, middlename, sex, date_of_birth) VALUES
 ('SmOhn23','Smith','John','Alexander','Male','1990-01-05'),
 ('Basketballer3030','Doe','Jane','Beatrice','Female','1992-02-10'),
@@ -15,9 +12,6 @@ INSERT INTO enthusiast (username, lastname, firstname, middlename, sex, date_of_
 ('AnderFan','Anderson','Kevin','Isaiah','Male','1996-09-12'),
 ('Kobe142','Thomas','Olivia','Julianne','Female','1997-10-27');
 
--- ======================================
--- Sample Players
--- ======================================
 INSERT INTO player (lastname, firstname, middlename, sex, date_of_birth, height, weight, rStatus) VALUES
 ('Allen','Mark','Andrew','Male','1990-01-01',180,75,1),
 ('Baker','Luke','Benjamin','Male','1991-02-02',182,78,1),
@@ -30,32 +24,18 @@ INSERT INTO player (lastname, firstname, middlename, sex, date_of_birth, height,
 ('Irwin','Tina','Isabelle','Female','1998-09-09',167,57,1),
 ('Jones','Umar','Jeremiah','Male','1999-10-10',178,72,0);
 
--- ======================================
--- Sample Coaches
--- ======================================
-<<<<<<< HEAD
-INSERT INTO coach (lastname, firstname, middlename, sex, date_of_birth, start_year, end_year, years_in_field, status) VALUES
-('King','Adam','Anthony','Male','1970-01-01',1995,NULL,30,1),
-('Lewis','Bella','Catherine','Female','1975-02-02',2000,NULL,24,1),
-('Moore','Carl','Douglas','Male','1972-03-03',1998,NULL,26,1),
-('Nelson','Diana','Evelyn','Female','1978-04-04',2002,NULL,22,1),
-('Owens','Ethan','Frederick','Male','1980-05-05',2005,NULL,19,1),
-('Parker','Fiona','Grace','Female','1982-06-06',2007,NULL,17,1),
-('Quinn','George','Howard','Male','1974-07-07',1999,NULL,25,1),
-('Reed','Hannah','Isadora','Female','1985-08-08',2010,NULL,14,1),
-('Stone','Ian','Jonathan','Male','1977-09-09',2001,NULL,23,1),
-('Turner','Julia','Katherine','Female','1983-10-10',2008,2025,16,1);
-=======
-INSERT INTO coach (lastname, firstname, middlename, sex, date_of_birth, start_year, end_year, status)
-VALUES
-('Miller', 'Tom', NULL, 'Male', '1975-03-12', 2000, NULL, 1),
-('Davis', 'Sarah', NULL, 'Female', '1980-08-30', 2005, NULL, 1),
-('Garcia', 'Luis', NULL, 'Male', '1978-11-09', 2002, NULL, 1);
->>>>>>> edecf8afb47afa6f10dc1d0ef1875a83fc4e6a12
+INSERT INTO coach (lastname, firstname, middlename, sex, date_of_birth, start_year, end_year, status) VALUES
+('King','Adam','Anthony','Male','1970-01-01',1995,NULL,true),
+('Lewis','Bella','Catherine','Female','1975-02-02',2000,NULL,true),
+('Moore','Carl','Douglas','Male','1972-03-03',1998,NULL,true),
+('Nelson','Diana','Evelyn','Female','1978-04-04',2002,NULL,true),
+('Owens','Ethan','Frederick','Male','1980-05-05',2005,NULL,true),
+('Parker','Fiona','Grace','Female','1982-06-06',2007,NULL,true),
+('Quinn','George','Howard','Male','1974-07-07',1999,NULL,true),
+('Reed','Hannah','Isadora','Female','1985-08-08',2010,NULL,true),
+('Stone','Ian','Jonathan','Male','1977-09-09',2001,NULL,true),
+('Turner','Julia','Katherine','Female','1983-10-10',2008,2025,true);
 
--- ======================================
--- Sample Tournaments
--- ======================================
 INSERT INTO tournament (tournament_name, season_year, tournament_type, start_date, end_date) VALUES
 ('Metro Cup',2020,'Open','2020-01-10','2020-02-10'),
 ('City League',2021,'Regional','2021-03-05','2021-04-01'),
@@ -68,9 +48,6 @@ INSERT INTO tournament (tournament_name, season_year, tournament_type, start_dat
 ('Basketball Masters',2021,'Major','2021-06-10','2021-07-05'),
 ('Regional Clash',2023,'Regional','2023-10-01','2023-10-25');
 
--- ======================================
--- Sample Engagements
--- ======================================
 INSERT INTO engagement (engagement_type, enthusiast_id, status) VALUES
 ('follow',1,1),
 ('like',1,1),
@@ -182,10 +159,6 @@ INSERT INTO engagement (engagement_type, enthusiast_id, status) VALUES
 ('follow',10,1),
 ('like',10,1);
 
--- ======================================
--- Engagement Subtypes
--- ======================================
--- Player engagements
 INSERT INTO engagement_player (engagement_id, player_id) VALUES
 (1,1),
 (4,2),
@@ -225,7 +198,6 @@ INSERT INTO engagement_player (engagement_id, player_id) VALUES
 (97,3),
 (100,4);
 
--- Coach engagements
 INSERT INTO engagement_coach (engagement_id, coach_id) VALUES
 (2,1),
 (5,2),
@@ -264,7 +236,6 @@ INSERT INTO engagement_coach (engagement_id, coach_id) VALUES
 (95,2),
 (98,3);
 
--- Tournament engagements
 INSERT INTO engagement_tournament (engagement_id, tournament_id) VALUES
 (3,1),
 (6,2),

@@ -71,43 +71,56 @@ public class EngagementManagement {
 		}
 	}
 
-	public void toggleEngagementStatus(int engagementID) {
+	public boolean toggleEngagementStatus(int engagementID) {
 		String sql = "UPDATE engagement SET status = CASE WHEN status = 1 THEN 0 ELSE 1 END WHERE engagement_id = ?";
+		String checkSql = "SELECT status FROM engagement WHERE engagement_id = ?";
 		
 		try(Connection conn = DatabaseConnection.getConnection();
-			PreparedStatement statement = conn.prepareStatement(sql)) {
+			PreparedStatement statement = conn.prepareStatement(sql);
+			PreparedStatement checkStatement = conn.prepareStatement(checkSql)) {
+
 			statement.setInt(1, engagementID);
 			statement.executeUpdate();
+
+			checkStatement.setInt(1, engagementID);
+			ResultSet rs = checkStatement.executeQuery();
+			if(rs.next()) {
+				int newStatus = rs.getInt("status");
+				return newStatus == 1;
+			}
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
+
+		return false;
 	}
 
-	/*
+	/* Checks if engagement exists already
+	 *
 	 * @return engagement id
 	 */
 	public int searchEngagement(int enthusiastID, int targetID, String category, String type) {
 		String playerSql = 
-			"SELECT e.engagement_id" +		
-			"FROM engagement e" +
-			"JOIN engagement_player ep ON e.engagement_id = ep.engagement_id" +
-			"WHERE e.enthusiast_id = ?" +
-				"AND ep.player_id = ?" +
-				"AND e.engagement_type = ?";
+			"SELECT e.engagement_id " +		
+			"FROM engagement e " +
+			"JOIN engagement_player ep ON e.engagement_id = ep.engagement_id " +
+			"WHERE e.enthusiast_id = ? " +
+				"AND ep.player_id = ? " +
+				"AND e.engagement_type = ? ";
 		String coachSql = 
-			"SELECT e.engagement_id" +		
-			"FROM engagement e" +
-			"JOIN engagement_coach ec ON e.engagement_id = ec.engagement_id" +
-			"WHERE e.enthusiast_id = ?" +
-				"AND ec.coach_id = ?" + 
-				"AND e.engagement_type = ?";
+			"SELECT e.engagement_id " +		
+			"FROM engagement e " +
+			"JOIN engagement_coach ec ON e.engagement_id = ec.engagement_id " +
+			"WHERE e.enthusiast_id = ? " +
+				"AND ec.coach_id = ? " + 
+				"AND e.engagement_type = ? ";
 		String tournamentSql = 
-			"SELECT e.engagement_id" +		
-			"FROM engagement e" +
-			"JOIN engagement_tournament et ON e.engagement_id = et.engagement_id" +
-			"WHERE e.enthusiast_id = ?" +
-				"AND et.tournament_id = ?" +
-				"AND e.engagement_type = ?";
+			"SELECT e.engagement_id " +		
+			"FROM engagement e " +
+			"JOIN engagement_tournament et ON e.engagement_id = et.engagement_id " +
+			"WHERE e.enthusiast_id = ? " +
+				"AND et.tournament_id = ? " +
+				"AND e.engagement_type = ? ";
 
 		String sql = "";
 		switch(category) {
@@ -128,6 +141,7 @@ public class EngagementManagement {
 			PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			statement.setInt(1, enthusiastID);
 			statement.setInt(2, targetID);
+			statement.setString(3, type);
 			ResultSet rs = statement.executeQuery();
 
 			if(rs.next()) {
@@ -142,20 +156,20 @@ public class EngagementManagement {
 		}
 	}
 
-	public void deleteEngagement(String type) {
-		//sql again
-	}
-
+	/* gets the engagement list 
+	 * 
+	 * returns engagement
+	 * */
 	public ArrayList<Engagement> getEngagementListByType(int enthusiastID, String type) {
 		ArrayList<Engagement> engagementList = new ArrayList<>();
 
 		String sql = 
-			"SELECT *" + 
-			"FROM enthusiast AS e" +
-			"JOIN engagement AS g" + 
-				"ON e.enthusiast_id = g.enthusiast_id" +
-			"WHERE g.core_id = ?" +
-			"AND g.type = ?;";
+			"SELECT * " + 
+			"FROM enthusiast AS e " +
+			"JOIN engagement AS g " + 
+				"ON e.enthusiast_id = g.enthusiast_id " +
+			"WHERE g.core_id = ? " +
+			"AND g.type = ?; ";
 		
 		try(Connection conn = DatabaseConnection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql)) {
@@ -250,35 +264,23 @@ public class EngagementManagement {
 	//THE TARGET
 	//THE TOTAL LIKES
 	//THE TOTAL FOLLOWS
-	public ArrayList<Object> getFeed(String orderColumn, String orderDir) {	
+	public ArrayList<Object> getFeed() {	
 		ArrayList<Object> feed = new ArrayList<>();
-
-		//verifying/whitlist for ordercolumns
-		Set<String> allowedCols = Set.of("created_at");
-		Set<String> allowedDir = Set.of("ASC", "DESC");
-
-		if (!allowedCols.contains(orderColumn.toLowerCase())) orderColumn = "created_at";
-		if (!allowedDir.contains(orderDir.toUpperCase())) orderDir = "DESC";
 
 		//select everyone!! muhehehee
 		//and then that table will be used
 		//to order them by MOST recent!
 		String sql = 
-			"CREATE TABLE IF NOT EXISTS all_ids AS" +
-         "SELECT player_id AS id, 'player' AS source, created_at" +
-			"FROM player" +
-         "UNION ALL" +
-         "SELECT coach_id AS id, 'coach' AS source, created_at" +
-         "FROM coach" +
-         "UNION ALL" +
-         "SELECT tournament_id AS id, 'tournament' AS source, created_at" +
-         "FROM tournaments";
-		
-		sql += String.format(
-         "ORDER BY %s %s",
-			orderColumn,
-			orderDir
-		);
+			"CREATE TABLE IF NOT EXISTS all_ids AS " +
+         "SELECT player_id AS id, 'player' AS source, created_at " +
+			"FROM player " +
+         "UNION ALL " +
+         "SELECT coach_id AS id, 'coach' AS source, created_at " +
+         "FROM coach " +
+         "UNION ALL " +
+         "SELECT tournament_id AS id, 'tournament' AS source, created_at " +
+         "FROM tournament " +
+         "ORDER BY created_at DESC ";
 
 		//get the stuff and stuff
 		//it in the ykyk the array list
@@ -294,12 +296,17 @@ public class EngagementManagement {
 				int id = rs.getInt("id");
 				
 				/*waiting for groupmate crud*/
+				Object o;
 				switch(source) {
 					case "player":
+						o = new PlayerManagement().searchPlayer(id); 
+						feed.add(o);
 						break;
 					case "coach":
 						break;
 					case "tournament":
+						o = new TournamentManagement().searchTournamentByID(id);
+						feed.add(o);
 						break;
 				}
 			}

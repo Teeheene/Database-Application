@@ -14,11 +14,10 @@ public class MainController {
 	private EnthusiastController enthusiastController;
 	private EnthusiastManagement enthusiastModel;
 	//player
-	private PlayerView playerView;
 	private PlayerManagement playerModel;
 	private PlayerController playerController;
 
-	public MainController(GUIView view, PlayerView playerView) {
+	public MainController(GUIView view) {
 		//gui inits
 		this.view = view;
 
@@ -30,7 +29,7 @@ public class MainController {
 		enthusiastModel = new EnthusiastManagement();
 		
 		playerModel = new PlayerManagement();
-		playerController = new PlayerController(playerModel, playerView);
+		playerController = new PlayerController(playerModel);
 	}
 	
 	public void handleMenu(String option) {

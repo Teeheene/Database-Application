@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 
 public class CoachManagement {
+	/*
     public CoachManagement() {
     }
 
@@ -101,6 +102,7 @@ public class CoachManagement {
         String sql = "SELECT * FROM coach WHERE coach_id = ?";
         Coach coach = null;
 
+	 */
         /*try {
             Connection conn = DatabaseConnection.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -115,6 +117,6 @@ public class CoachManagement {
             e.printStackTrace();
         }*/
 
-        return coach;
-    }
+    //    return coach;
+    //}
 }

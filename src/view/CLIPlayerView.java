@@ -67,8 +67,9 @@ public class CLIPlayerView implements PlayerView {
         System.out.print("Registration Status (true/false): ");
         boolean rStatus = Boolean.parseBoolean(scanner.nextLine());
 
-        return new Player(playerID, lastName, firstName, middleName, 
-                         age, birthday, gender, height, weight, rStatus);
+       // return new Player(playerID, lastName, firstName, middleName, 
+       //                  age, birthday, gender, height, weight, rStatus);
+		 return null;
     }
 
     @Override
@@ -95,6 +96,7 @@ public class CLIPlayerView implements PlayerView {
         String statusInput = scanner.nextLine();
         boolean rStatus = statusInput.isEmpty() ? false : Boolean.parseBoolean(statusInput);
 
+		  /*
         return new Player(0, 
                          lastName.isEmpty() ? null : lastName,
                          firstName.isEmpty() ? null : firstName,
@@ -102,6 +104,8 @@ public class CLIPlayerView implements PlayerView {
                          0, 
                          birthday.isEmpty() ? null : birthday,
                          gender, 0, 0, rStatus);
+								*/
+		  return null;
     }
 
     @Override

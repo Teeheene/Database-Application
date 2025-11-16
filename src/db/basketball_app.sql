@@ -40,6 +40,7 @@ CREATE TABLE player (
    height INT,
 	weight INT,
 	rStatus BOOLEAN,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (player_id)
 );
 
@@ -54,6 +55,7 @@ CREATE TABLE coach (
 	start_year INT NOT NULL,
 	end_year INT,
 	status BOOLEAN,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (coach_id)
 );
 
@@ -64,7 +66,8 @@ CREATE TABLE tournament (
 	season_year INT,
 	tournament_type VARCHAR(50),
 	start_date DATE,
-	end_date DATE
+	end_date DATE,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 DROP TABLE IF EXISTS engagement;

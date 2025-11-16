@@ -59,6 +59,12 @@ public class Tournament {
         if (other.getEndDate() != null) { this.endDate = other.getEndDate(); }
         if (other.getSeasonYear() > 0) { this.seasonYear = other.getSeasonYear(); }
     }
+	
+	public String toHtmlString() {
+		String info = "<html>#Season" + seasonYear + " #" + tournamentType +"<br>Tournament Status: " + startDate.toStringDate() + "-" + endDate.toStringDate();  
+
+		return info;
+	}
 
     // Getters
     public int getTournamentID() { return tournamentID; }

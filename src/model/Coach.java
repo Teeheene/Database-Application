@@ -41,6 +41,18 @@ public class Coach {
         if(player != null)
             team.add(player);
     }
+	
+	public String toHtmlString() {
+		String info = "<html>I’m born on " + birthday + " and I am a " + gender + " coach. #";
+		if(inGameStatus) {
+			info += "ActiveCoach";
+		} else {
+			info += "Inactive";
+		}
+		info += "Coaching Experience: " + startYear + "-" + endYear + "</html>";
+
+		return info;
+	}
 
     public int getCoachID() { return coachID; }
     public String getFirstName() { return firstName; }

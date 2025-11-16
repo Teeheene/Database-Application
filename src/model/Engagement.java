@@ -31,6 +31,13 @@ public class Engagement {
 		);
 	}
 
+	public Engagement(String targetCategory, String type, int enthusiastID, int targetID) {
+		this.targetCategory = targetCategory;
+		this.type = type;
+		this.enthusiastID = enthusiastID;
+		this.targetID = targetID;
+	}
+
 	public String getSimpleInfo() {
 		return targetCategory + " [ID " + String.valueOf(targetID) + "] since " + createdAt.toStringDate();
 	}
