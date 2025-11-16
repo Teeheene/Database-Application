@@ -10,7 +10,6 @@ public class Coach {
     private char gender;
     private int startYear;
     private int endYear;
-    private int yearsInField;
     private boolean inGameStatus;
     private ArrayList<Player> team;
 
@@ -25,7 +24,6 @@ public class Coach {
         this.gender = gender;
         this.startYear = startYear;
         this.endYear = endYear;
-        this.yearsInField = this.endYear - this.startYear;
         this.inGameStatus = inGameStatus;
         this.team = new ArrayList<>();
     }
@@ -52,7 +50,6 @@ public class Coach {
     public char getGender() { return gender; }
     public int getStartYear() { return startYear; }
     public int getEndYear() { return endYear; }
-    public int getYearsInField() { return yearsInField; }
     public boolean isInGameStatus() { return inGameStatus; }
 
     public void setFirstName(String firstName) { this.firstName = firstName; }

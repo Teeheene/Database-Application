@@ -33,6 +33,7 @@ INSERT INTO player (lastname, firstname, middlename, sex, date_of_birth, height,
 -- ======================================
 -- Sample Coaches
 -- ======================================
+<<<<<<< HEAD
 INSERT INTO coach (lastname, firstname, middlename, sex, date_of_birth, start_year, end_year, years_in_field, status) VALUES
 ('King','Adam','Anthony','Male','1970-01-01',1995,NULL,30,1),
 ('Lewis','Bella','Catherine','Female','1975-02-02',2000,NULL,24,1),
@@ -44,6 +45,13 @@ INSERT INTO coach (lastname, firstname, middlename, sex, date_of_birth, start_ye
 ('Reed','Hannah','Isadora','Female','1985-08-08',2010,NULL,14,1),
 ('Stone','Ian','Jonathan','Male','1977-09-09',2001,NULL,23,1),
 ('Turner','Julia','Katherine','Female','1983-10-10',2008,2025,16,1);
+=======
+INSERT INTO coach (lastname, firstname, middlename, sex, date_of_birth, start_year, end_year, status)
+VALUES
+('Miller', 'Tom', NULL, 'Male', '1975-03-12', 2000, NULL, 1),
+('Davis', 'Sarah', NULL, 'Female', '1980-08-30', 2005, NULL, 1),
+('Garcia', 'Luis', NULL, 'Male', '1978-11-09', 2002, NULL, 1);
+>>>>>>> edecf8afb47afa6f10dc1d0ef1875a83fc4e6a12
 
 -- ======================================
 -- Sample Tournaments
