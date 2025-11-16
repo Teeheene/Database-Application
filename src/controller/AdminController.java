@@ -9,7 +9,8 @@ public class AdminController {
 	private GUIAdminView view;
 
 	private EnthusiastManagement enthusiastModel;
-	
+
+	public AdminController() {}
 	public AdminController(GUIView prevView, GUIAdminView view) {
 		this.prevView = prevView;
 		this.view = view;	

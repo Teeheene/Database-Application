@@ -41,6 +41,7 @@ public class MainController {
 				view.loginPanel();
 				break;
 			case "register":
+				view.registerPanel();
 				break;
 		}
 	}
@@ -71,6 +72,10 @@ public class MainController {
 		enthusiastView.show();
 
 		return true;
+	}
+
+	public void handleEnthusiastRegister(Enthusiast enthusiast) {
+		enthusiastModel.addEnthusiast(enthusiast);
 	}
 	
 	/*
