@@ -71,7 +71,7 @@ public class GUIEnthusiastView {
 		cp.add(followingBtn);
 		cp.add(likesBtn);
 
-		engageBtn.addActionListener(e -> engagePanel());
+		engageBtn.addActionListener(e -> engagePanel(false, ""));
 		profileBtn.addActionListener(e -> profilePanel());
 		logoutBtn.addActionListener(e -> controller.handleLogout());
 
@@ -84,7 +84,7 @@ public class GUIEnthusiastView {
 		cp.repaint();
 	}
 
-	public void engagePanel() {
+	public void engagePanel(boolean search, String keyword) {
 		cp = BackgroundPanel.create("assets/login/enthusiast/engage_bg.png");
 		cp.setLayout(null);
 		frame.setContentPane(cp);
@@ -96,12 +96,16 @@ public class GUIEnthusiastView {
 		JLabel overlayBg = new JLabel(new ImageIcon("assets/login/enthusiast/engage.png"));
 		overlayBg.setBounds(0, 0, 720, 480);
 
+		JButton submitBtn = GUIUtil.createIButton(598,66,88,27);
+		JTextField field = GUIUtil.createTextField(63,67,514,27);
+
 		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
 		JButton engageBtn = GUIUtil.createIButton(423,0,97,53);
 		JButton profileBtn = GUIUtil.createIButton(521,0,93,53);
 		JButton logoutBtn = GUIUtil.createIButton(614,0,93,53);
 		
-		cp.add(overlayBg);
+		cp.add(field);
+		cp.add(submitBtn);
 		cp.add(backBtn);
 		cp.add(engageBtn);
 		cp.add(profileBtn);
@@ -125,7 +129,12 @@ public class GUIEnthusiastView {
 		for(Map.Entry<String, String> entry : feed.entrySet()) {
 			String key = entry.getKey();
 			String value = entry.getValue(); 
-			
+
+			if(search && !keyword.isEmpty()) {
+				if(!value.toLowerCase().contains(keyword.toLowerCase()) &&
+						!key.toLowerCase().contains(keyword.toLowerCase())) { continue;}
+			}
+
 			String[] keyParts = key.split("-");	
 			String category = keyParts[0];
 			String userStr = keyParts[1];
@@ -200,7 +209,15 @@ public class GUIEnthusiastView {
 			feedPanel.add(post);
 			index++;
 		}
+
+		submitBtn.addActionListener(e -> {
+			String input = field.getText().trim();
+			field.setText("");
+			engagePanel(true, input);
+		});
 			
+		cp.add(overlayBg);
+
 		int totalHeight = y+feed.size() * gap;
 		feedPanel.setBounds(0,0,720,totalHeight);
 		feedPanel.setOpaque(false);
