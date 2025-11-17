@@ -151,7 +151,8 @@ public class GUIEnthusiastView {
 			boolean liked = false;
 			String imagePath = "assets/login/enthusiast/";
 			for(Engagement e : engagement) {
-				if(e.getTargetID() == id && e.getType().equals("like")) {
+				if(e.getTargetID() == id && e.getType().equals("like")
+						&& e.getTargetCategory().equalsIgnoreCase(category)) {
 					liked = true;
 					break;
 				}
@@ -166,7 +167,8 @@ public class GUIEnthusiastView {
 			boolean followed = false;
 			imagePath = "assets/login/enthusiast/";
 			for(Engagement e : engagement) {
-				if(e.getTargetID() == id && e.getType().equals("follow")) {
+				if(e.getTargetID() == id && e.getType().equals("follow")
+						&& e.getTargetCategory().equalsIgnoreCase(category)) {
 					followed = true;
 					break;
 				}

@@ -69,18 +69,21 @@ public class EnthusiastController {
 			switch(e.getTargetCategory()) {
 				case "player":
 					Player p = new PlayerManagement().searchPlayer(e.getTargetID()); 
-					value = "[player#" + p.getPlayerID() + "] " + p.getLastName() + ", " + p.getFirstName() + " ";  		
+					value = "[player] " + p.getLastName() + ", " + p.getFirstName() + " ";  		
 					if(!p.getMiddleName().isEmpty() || p.getMiddleName() != null) {
 						value += p.getMiddleName();
 					}
 					break;
 				case "coach":
 					Coach c = new CoachManagement().searchCoach(e.getTargetID()); 
-					value = c.toHtmlString();		
+					value = "[coach] " + c.getLastName() + ", " + c.getFirstName() + " ";  		
+					if(!c.getMiddleName().isEmpty() || c.getMiddleName() != null) {
+						value += c.getMiddleName();
+					}	
 					break;
 				case "tournament":
 					Tournament t = new TournamentManagement().searchTournamentByID(e.getTargetID()); 
-					value = t.toHtmlString();		
+					value = "[tournament] Season " + t.getSeasonYear() + " " + t.getTournamentType(); 
 					break;
 			}
 
@@ -96,8 +99,30 @@ public class EnthusiastController {
 
 		for(Engagement e : engagementModel.getEngagement(enthusiast.getID(), "like")) {
 			if(e == null) { continue; }
+			String value = "";
+
+			switch(e.getTargetCategory()) {
+				case "player":
+					Player p = new PlayerManagement().searchPlayer(e.getTargetID()); 
+					value = "[player] " + p.getLastName() + ", " + p.getFirstName() + " ";  		
+					if(!p.getMiddleName().isEmpty() || p.getMiddleName() != null) {
+						value += p.getMiddleName();
+					}
+					break;
+				case "coach":
+					Coach c = new CoachManagement().searchCoach(e.getTargetID()); 
+					value = "[coach] " + c.getLastName() + ", " + c.getFirstName() + " ";  		
+					if(!c.getMiddleName().isEmpty() || c.getMiddleName() != null) {
+						value += c.getMiddleName();
+					}	
+					break;
+				case "tournament":
+					Tournament t = new TournamentManagement().searchTournamentByID(e.getTargetID()); 
+					value = "[tournament] Season " + t.getSeasonYear() + " " + t.getTournamentType(); 
+					break;
+			}
+
 			String key = String.valueOf(e.getID());
-			String value = String.valueOf(e.getSimpleInfo());
 			information.put(key, value);
 			System.out.println(e.getSimpleInfo());
 		}
