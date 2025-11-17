@@ -143,6 +143,41 @@ public class EnthusiastManagement {
 
 		return enthusiastList;
 	}
+
+		
+	/* Gets Enthusiasts from DB
+	 *
+	 * @return ArrayList of enthusiasts found
+	 * */
+	public ArrayList<Enthusiast> getActiveEnthusiasts() {
+		ArrayList<Enthusiast> enthusiastList = new ArrayList<>();
+
+		String sql = "SELECT * FROM enthusiast WHERE status = true";
+	
+		try(Connection conn = DatabaseConnection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql)) {
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()) {
+				Enthusiast enthusiast = new Enthusiast(
+					rs.getInt("enthusiast_id"),
+					rs.getString("username"),
+					rs.getString("lastname"),
+					rs.getString("firstname"),
+					rs.getString("middlename"),
+					rs.getString("sex"),
+					rs.getString("date_of_birth"),
+					rs.getString("created_at"),
+					rs.getBoolean("status")
+				);
+				enthusiastList.add(enthusiast);
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+
+		return enthusiastList;
+	}
+
 	
 	/* Get an Enthusiast from DB using the primary key, ID
 	 *

@@ -129,7 +129,7 @@ public class AdminController {
 	}
 
 	public String[][] generateEnthusiastReport() {
-		ArrayList<Enthusiast> enthusiasts = enthusiastModel.getEnthusiasts();
+		ArrayList<Enthusiast> enthusiasts = enthusiastModel.getActiveEnthusiasts();
 		String data[][] = new String[enthusiasts.size()][9];
 		int i;
 		for(i = 0; i < enthusiasts.size(); i++) {

@@ -641,10 +641,16 @@ public class GUIAdminView {
 
 
 		JScrollPane scroll = new JScrollPane(table);
+		scroll.setBounds(129,309,1663,690);
 		scroll.setOpaque(false);
 		scroll.getViewport().setOpaque(false);
+		scroll.getVerticalScrollBar().setOpaque(false);
+		scroll.getHorizontalScrollBar().setOpaque(false);
 		scroll.setBorder(BorderFactory.createEmptyBorder());
-		scroll.setBounds(129,309,1663,690);
+
+		scroll.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
+		scroll.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+
 
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getColumnModel().getColumn(0).setPreferredWidth(97);
@@ -655,7 +661,7 @@ public class GUIAdminView {
 		table.getColumnModel().getColumn(5).setPreferredWidth(170);
 		table.getColumnModel().getColumn(6).setPreferredWidth(190);
 		table.getColumnModel().getColumn(7).setPreferredWidth(170);
-		table.getColumnModel().getColumn(8).setPreferredWidth(207);
+		table.getColumnModel().getColumn(8).setPreferredWidth(199);
 		table.setRowHeight(40);
 
 		reportsCp.add(scroll);

@@ -155,59 +155,6 @@ public class EngagementManagement {
 			return -1;
 		}
 	}
-
-	/* gets the engagement list 
-	 * 
-	 * returns engagement
-	 * */
-	public ArrayList<Engagement> getEngagementListByType(int enthusiastID, String type) {
-		ArrayList<Engagement> engagementList = new ArrayList<>();
-
-		String sql = 
-			"SELECT * " + 
-			"FROM enthusiast AS e " +
-			"JOIN engagement AS g " + 
-				"ON e.enthusiast_id = g.enthusiast_id " +
-			"WHERE g.core_id = ? " +
-			"AND g.type = ?; ";
-		
-		try(Connection conn = DatabaseConnection.getConnection();
-			PreparedStatement statement = conn.prepareStatement(sql)) {
-			statement.setInt(1, enthusiastID);
-			statement.setString(2, type);
-			ResultSet rs = statement.executeQuery();
-			while(rs.next()) {
-				Engagement engagement;
-				int id = -1;
-				switch(rs.getString("engagement_category")) {
-					case "player":
-						id = rs.getInt("player_id");
-						break;
-					case "coach":
-						id = rs.getInt("coach_id");
-						break;
-					case "tournament":
-						id = rs.getInt("tournament_id");
-						break;
-				}
-
-				engagement = new Engagement(
-					rs.getInt("engagement_id"),
-					rs.getString("engagement_category"),
-					rs.getString("engagement_type"),
-					rs.getInt("enthusiast_id"),
-					id,
-					rs.getString("created_at")
-				);
-				engagementList.add(engagement);
-			} 		
-		} catch(SQLException e) {
-			e.printStackTrace();
-		}
-
-		return engagementList;
-	}
-
 	public ArrayList<Engagement> getEngagement(int enthusiastID, String type) {
 		ArrayList<Engagement> engagementList = new ArrayList<>();
 
