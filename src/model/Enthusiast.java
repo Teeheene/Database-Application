@@ -13,6 +13,7 @@ public class Enthusiast {
 	private String firstName;
 	private String middleName;
 	private String sex;
+	private boolean status;
 	private CustomTimestamp dateOfBirth;	
 	private CustomTimestamp joinDate;
 	//temporary until IDs are implemented for other classes
@@ -38,13 +39,14 @@ public class Enthusiast {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public Enthusiast(int ID, String username, String lastName, String firstName, String middleName, String sex, String dateOfBirth, String joinDate) {
+	public Enthusiast(int ID, String username, String lastName, String firstName, String middleName, String sex, String dateOfBirth, String joinDate, boolean status) {
 		this.ID = ID;
 		this.username = username;
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.sex = sex;
+		this.status = status;
 
 		String[] dateTokens = dateOfBirth.split("-");
 		String[] joinPart = joinDate.split(" ");
@@ -87,6 +89,7 @@ public class Enthusiast {
 	public String getFirstName() { return firstName; }
 	public String getMiddleName() { return middleName; }
 	public String getSex() { return sex; }
+	public boolean getStatus() { return status; }
 	public CustomTimestamp getDateOfBirth() { return dateOfBirth; }
 	public CustomTimestamp getJoinDate() { return joinDate; }
 

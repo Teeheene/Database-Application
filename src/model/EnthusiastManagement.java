@@ -118,7 +118,7 @@ public class EnthusiastManagement {
 	public ArrayList<Enthusiast> getEnthusiasts() {
 		ArrayList<Enthusiast> enthusiastList = new ArrayList<>();
 
-		String sql = "SELECT * FROM enthusiast WHERE status = true";
+		String sql = "SELECT * FROM enthusiast";
 	
 		try(Connection conn = DatabaseConnection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql)) {
@@ -132,7 +132,8 @@ public class EnthusiastManagement {
 					rs.getString("middlename"),
 					rs.getString("sex"),
 					rs.getString("date_of_birth"),
-					rs.getString("created_at")
+					rs.getString("created_at"),
+					rs.getBoolean("status")
 				);
 				enthusiastList.add(enthusiast);
 			}
@@ -165,7 +166,8 @@ public class EnthusiastManagement {
 					rs.getString("middlename"),
 					rs.getString("sex"),
 					rs.getString("date_of_birth"),
-					rs.getString("created_at")
+					rs.getString("created_at"),
+					rs.getBoolean("status")
 				);
 			}
 		} catch(SQLException e) {

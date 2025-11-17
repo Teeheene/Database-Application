@@ -99,14 +99,12 @@ public class GUIEnthusiastView {
 		JButton submitBtn = GUIUtil.createIButton(598,66,88,27);
 		JTextField field = GUIUtil.createTextField(63,67,514,27);
 
-		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
 		JButton engageBtn = GUIUtil.createIButton(423,0,97,53);
 		JButton profileBtn = GUIUtil.createIButton(521,0,93,53);
 		JButton logoutBtn = GUIUtil.createIButton(614,0,93,53);
 		
 		cp.add(field);
 		cp.add(submitBtn);
-		cp.add(backBtn);
 		cp.add(engageBtn);
 		cp.add(profileBtn);
 		cp.add(logoutBtn);
@@ -243,7 +241,6 @@ public class GUIEnthusiastView {
 			}
 		});
 
-		backBtn.addActionListener(e -> profilePanel());
 		profileBtn.addActionListener(e -> profilePanel());
 		logoutBtn.addActionListener(e -> controller.handleLogout());
 
@@ -438,6 +435,15 @@ public class GUIEnthusiastView {
 							"Required Field! Please input update for " + type + ".");
 						return;
 					}
+			}
+
+			if(type.equals("sex") && 
+				!(input.equals("Male") || 
+				input.equals("Female") || 
+				input.equals("Other"))) {
+					JOptionPane.showMessageDialog(frame, 
+					"Sex must be Male, Female or Other.");
+				return;
 			}
 
 			switch(type) {

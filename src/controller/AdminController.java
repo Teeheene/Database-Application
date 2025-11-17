@@ -34,16 +34,21 @@ public class AdminController {
 
 	public void handleEnthusiast(String option) {
 		switch(option) {
+			case "home":
+				handleMenu("enthusiast");
+				break;
 			case "create":
 				view.createEnthusiastPanel();
 				break;
 			case "viewAll":
-				view.viewAllEnthusiastPanel(getEnthusiastInformation());
-				break;
-			case "viewDeleted":
+				view.viewAllEnthusiastPanel(getEnthusiastInformation("all"));
 				break;
 			case "viewActive":
-				break;	
+				view.viewAllEnthusiastPanel(getEnthusiastInformation("active"));
+				break;
+			case "viewInactive":
+				view.viewAllEnthusiastPanel(getEnthusiastInformation("inactive"));
+				break;
 			case "update":
 				view.searchUpdateEnthusiastPanel();
 				break;
@@ -63,9 +68,9 @@ public class AdminController {
 		enthusiastModel.addEnthusiast(enthusiast);
 	}
 
-	public void showEnthusiast(int ID) {
+	public void showEnthusiast(int ID, String status) {
 		Enthusiast enthusiast = enthusiastModel.searchEnthusiastByID(ID);
-		view.viewEnthusiastPanel(enthusiast);
+		view.viewEnthusiastPanel(enthusiast, status, "viewAll");
 	}
 
 	public boolean updateEnthusiastView(int ID) {
@@ -77,7 +82,7 @@ public class AdminController {
 	
 	public void updateEnthusiast(Enthusiast updatedEnthusiast) {
 		Enthusiast enthusiast = enthusiastModel.updateEnthusiast(updatedEnthusiast);
-		view.viewEnthusiastPanel(enthusiast);
+		view.viewEnthusiastPanel(enthusiast, "active", "home");
 	}
 		
 	public boolean deleteEnthusiastView(int ID) {
@@ -92,12 +97,26 @@ public class AdminController {
 	}
 
 	//admin helper
-	public LinkedHashMap<String, String> getEnthusiastInformation() {
+	public LinkedHashMap<String, String> getEnthusiastInformation(String status) {
 		LinkedHashMap<String, String> information = new LinkedHashMap<>();
 
 		for(Enthusiast e : enthusiastModel.getEnthusiasts()) {
 			if(e == null) { continue; }
+
 			String key = String.valueOf(e.getID());
+			key += "-"; //delimiter
+			if(e.getStatus())
+				key += "active";
+			else
+				key += "inactive";
+			
+			if(status.equals("active") && !e.getStatus()) {
+				continue;
+			}
+			if(status.equals("inactive") && e.getStatus()) {
+				continue;
+			}
+				
 			String value = e.getSimpleInfo();
 			information.put(key, value);
 			System.out.println(e.getSimpleInfo());

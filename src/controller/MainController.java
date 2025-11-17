@@ -61,17 +61,17 @@ public class MainController {
 		return true;
 	}
 
-	public boolean handleEnthusiastLogin(int ID) {
+	public String handleEnthusiastLogin(int ID) {
 		Enthusiast enthusiast = enthusiastModel.searchEnthusiastByID(ID);
-		if(enthusiast == null) return false;
-
+		if(enthusiast == null) return "ERR|DNE"; //does not exist
+		if(!enthusiast.getStatus()) return "ERR|DA"; //deactivated
 		enthusiastView.setListeners(enthusiastController);
 		enthusiastView.start(enthusiast);
 		enthusiastView.profilePanel();
 		view.hide();
 		enthusiastView.show();
 
-		return true;
+		return null;
 	}
 
 	public void handleEnthusiastRegister(Enthusiast enthusiast) {

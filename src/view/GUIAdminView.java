@@ -5,6 +5,7 @@ import controller.*;
 import util.*;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.time.LocalDate;
 import java.time.DateTimeException;
 import java.time.format.DateTimeFormatter;
@@ -199,33 +200,105 @@ public class GUIAdminView {
 		cp.setLayout(null);
 		frame.setContentPane(cp);
 
+		JButton inactiveBtn = GUIUtil.createIButton(647,107,64,20);
+		JButton activeBtn = GUIUtil.createIButton(647,133,64,20);
+		JButton allBtn = GUIUtil.createIButton(647,159,64,20);
 		JLabel overlayBg = new JLabel(new ImageIcon("assets/admin/enthusiast/view_all.png"));
+		overlayBg.setBounds(0,0,720,480);	
 		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
-		JPanel scrollingPanel = GUIUtil.showScrollingPanel(information, -19, -3, 57, 6,
-			clicked -> {
-				String[] parts = clicked.split("/",2);
-				String key = parts[0]; 
-				controller.showEnthusiast(Integer.parseInt(key));
+		
+		JPanel scrollingPanel = new JPanel(null);
+		int index = 0;
+		int gap = 60;
+		int y = 121;
+		for(Map.Entry<String, String> entry : information.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue();	
+
+			String[] keys = key.split("-");
+			int enthusiastID = Integer.parseInt(keys[0]);
+			String status = keys[1];
+
+			JPanel user = new JPanel(null);
+			user.setOpaque(false);
+
+			String imagePath = "assets/admin/enthusiast/";
+			if(status.equals("active")) {
+				imagePath += "banner_active";
+			} else {
+				imagePath += "banner_archived";
+			}
+			imagePath += ".png";
+
+			JLabel banner = new JLabel(new ImageIcon(imagePath));
+			banner.setBounds(0,0,588,54);
+			banner.setOpaque(false);
+
+			JButton bannerBtn = GUIUtil.createIButton(0,0,588,54);
+			JLabel userInfo = GUIUtil.createText(value,62,17,443,20);
+
+			bannerBtn.addActionListener(e -> {
+				controller.showEnthusiast(enthusiastID, status);
+				System.out.println("enthusiast is " + status);
 			});
 
-		overlayBg.setBounds(0, 0, 720, 480);
-		scrollingPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
-		
+			user.add(userInfo);
+			user.add(banner);
+			user.add(bannerBtn);
+
+			user.setBounds(41,y+index*gap,589,55);
+			scrollingPanel.add(user);
+			index++;
+		}
+
 		cp.add(overlayBg);
-		cp.add(backBtn);
+		int totalHeight = y + information.size() * gap;
+		scrollingPanel.setBounds(0,0,720,totalHeight);
+		scrollingPanel.setOpaque(false);
 		cp.add(scrollingPanel);
 
+		cp.addMouseWheelListener(new MouseWheelListener() {
+			int offset = 0;
+
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) 
+			{
+				int rotation = e.getWheelRotation(); //1 down -1 up
+				offset -= rotation * 20; //so 20 is the offset like when scrolled ykykyk
+
+				int maxOffset = 0;
+				int minOffset = Math.min(0,cp.getHeight()-20 - totalHeight);
+				offset = Math.max(minOffset, Math.min(maxOffset, offset));
+
+				scrollingPanel.setLocation(0,offset);
+				cp.repaint();
+			}
+		});
+
+		inactiveBtn.addActionListener(e -> controller.handleEnthusiast("viewInactive"));
+		activeBtn.addActionListener(e -> controller.handleEnthusiast("viewActive"));
+		allBtn.addActionListener(e -> controller.handleEnthusiast("viewAll"));
 		backBtn.addActionListener(e -> enthusiastDashboardPanel());
 
+		cp.add(backBtn);
+		cp.add(inactiveBtn);
+		cp.add(activeBtn);
+		cp.add(allBtn);
 		cp.revalidate();
 		cp.repaint();
 	}
 
-	public void viewEnthusiastPanel(Enthusiast enthusiast) {
-		cp = BackgroundPanel.create("assets/admin/enthusiast/view.png");
+	public void viewEnthusiastPanel(Enthusiast enthusiast, String status, String backPath) {
+		String imagePath = "assets/admin/enthusiast/" + status + ".png";
+		cp = BackgroundPanel.create(imagePath);
 		cp.setLayout(null);
 		frame.setContentPane(cp);
 
+		JButton reactivateBtn = new JButton();
+		if(status.equals("inactive")) {
+			reactivateBtn = GUIUtil.createIButton(490,440,145,27);
+			cp.add(reactivateBtn);
+		}
 		JLabel username = GUIUtil.createText(enthusiast.getUsername(),100,199,286,27);
 		JLabel id = GUIUtil.createText(String.valueOf(enthusiast.getID()),410,199,92,27);
 		JLabel sex = GUIUtil.createText(enthusiast.getSex(),526,199,89,27);
@@ -243,7 +316,11 @@ public class GUIAdminView {
 		cp.add(joinedBy);
 		cp.add(backBtn);
 
-		backBtn.addActionListener(e -> controller.handleEnthusiast("viewAll"));
+		reactivateBtn.addActionListener(e -> {
+			controller.toggleEnthusiast(enthusiast);
+			controller.handleEnthusiast(backPath);
+		});
+		backBtn.addActionListener(e -> controller.handleEnthusiast(backPath));
 
 		cp.revalidate();
 		cp.repaint();
@@ -367,6 +444,15 @@ public class GUIAdminView {
 							"Required Field! Please input update for " + type + ".");
 						return;
 					}
+			}
+
+			if(type.equals("sex") && 
+				!(input.equals("Male") || 
+				input.equals("Female") || 
+				input.equals("Other"))) {
+					JOptionPane.showMessageDialog(frame, 
+					"Sex must be Male, Female or Other.");
+				return;
 			}
 
 			switch(type) {
