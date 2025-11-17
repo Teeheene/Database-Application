@@ -14,8 +14,6 @@ public class GameManagement {
     // constructor
     public GameManagement() {
     }
-	 //PLEASE FIX BUGS B4 PUSHING  
-	 /*
 
     // add game (draft)
     public int addGame(Game game) {
@@ -94,16 +92,16 @@ public class GameManagement {
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement statement = conn.prepareStatement(sql)) {
-            statement.setInt(1, game.getGameID());
-            statement.setInt(2, game.getTournamentID());
-            statement.setInt(3, game.getCompetingTeamA_ID());
-            statement.setInt(4, game.getCompetingTeamB_ID());
-            statement.setInt(5, game.getWinningTeamID());
-            statement.setInt(6, game.getLosingTeamID());
-            statement.setString(7, game.getScoreRatio());
-            statement.setString(8, game.getGameStatus());
-            statement.setDate(9, Date.valueOf(game.getStartDate().toStringDate()));
-            statement.setDate(10, Date.valueOf(game.getEndDate().toStringDate()));
+            statement.setInt(1, gameReference.getGameID());
+            statement.setInt(2, gameReference.getTournamentID());
+            statement.setInt(3, gameReference.getCompetingTeamA_ID());
+            statement.setInt(4, gameReference.getCompetingTeamB_ID());
+            statement.setInt(5, gameReference.getWinningTeamID());
+            statement.setInt(6, gameReference.getLosingTeamID());
+            statement.setString(7, gameReference.getScoreRatio());
+            statement.setString(8, gameReference.getGameStatus());
+            statement.setDate(9, Date.valueOf(gameReference.getStartDate().toStringDate()));
+            statement.setDate(10, Date.valueOf(gameReference.getEndDate().toStringDate()));
 
             int rowsDeleted = statement.executeUpdate();
             if (rowsDeleted > 0)
@@ -114,6 +112,7 @@ public class GameManagement {
             e.printStackTrace();
         }
 
+        return gameReference;
     }
 
     // get all game
@@ -177,5 +176,4 @@ public class GameManagement {
 
         return game;
     }
-	*/
 }

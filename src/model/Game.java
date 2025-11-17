@@ -5,7 +5,6 @@ import java.util.*;
 
 public class Game {
 
-	/*
     private int gameID;
     private int tournamentID;
     private int competingTeamA_ID;
@@ -19,7 +18,7 @@ public class Game {
 
     // constructor
     public Game (int gameID, int tournamentID, int competingTeamA_ID, int competingTeamB_ID, int winningTeamID, int losingTeamID,
-                 int scoreRatio, String gameStatus, CustomTimestamp startDate, CustomTimestamp endDate) {
+                 String scoreRatio, String gameStatus, String startDate, String endDate) {
         this.gameID = gameID;
         this.tournamentID = tournamentID;
         this.competingTeamA_ID = competingTeamA_ID;
@@ -29,23 +28,18 @@ public class Game {
         this.scoreRatio = scoreRatio;
         this.gameStatus = gameStatus;
 
-        if (startDate != null && !startDate.isEmpty()) {
-            String[] startTokens = startDate.split("-");
-            this.startDate = new CustomTimestamp(
-                    Integer.parseInt(startTokens[0]),
-                    Integer.parseInt(startTokens[1]),
-                    Integer.parseInt(startTokens[2])
-            );
-        }
-
-        if (endDate != null && !endDate.isEmpty()) {
-            String[] endTokens = endDate.split("-");
-            this.endDate = new CustomTimestamp(
-                    Integer.parseInt(endTokens[0]),
-                    Integer.parseInt(endTokens[1]),
-                    Integer.parseInt(endTokens[2])
-            );
-        }
+        String[] startToken = startDate.split("-");
+        String[] endToken = endDate.split("-");
+        this.startDate = new CustomTimestamp(
+                Integer.parseInt(startToken[0]),
+                Integer.parseInt(startToken[1]),
+                Integer.parseInt(startToken[2])
+        );
+        this.endDate = new CustomTimestamp(
+                Integer.parseInt(endToken[0]),
+                Integer.parseInt(endToken[1]),
+                Integer.parseInt(endToken[2])
+        );
     }
 
 
@@ -73,5 +67,4 @@ public class Game {
     public void setStartDate(CustomTimestamp startDate) { this.startDate = startDate; }
     public void setEndDate(CustomTimestamp endDate) { this.endDate = endDate; }
 
-	 */
 }
