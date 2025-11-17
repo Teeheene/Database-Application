@@ -37,14 +37,14 @@ public class GUIUtil {
 		}
 	}
 	
-	public static JFrame setupGUI(JFrame frame, Container cp) {
+	public static JFrame setupGUI(JFrame frame, Container cp, int width, int height) {
 		setGlobalFont();
 		frame = new JFrame();
 
 		//null layout for custom placing (i hate layouts!!)
 		cp = BackgroundPanel.create("assets/main_menu/bg.jpg"); //temp
 		cp.setLayout(null);
-		cp.setPreferredSize(new Dimension(720,480));
+		cp.setPreferredSize(new Dimension(width, height));
 
 		frame.setContentPane(cp);
 		frame.pack();
@@ -60,6 +60,35 @@ public class GUIUtil {
 		frame.setLocationRelativeTo(null);
 		frame.setTitle("BasketGram");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		return frame;
+	}
+	
+	public static JFrame setupGUI(JFrame frame, Container cp, int width, int height, String title, boolean dispose) {
+		setGlobalFont();
+		frame = new JFrame();
+
+		//null layout for custom placing (i hate layouts!!)
+		cp = BackgroundPanel.create("assets/main_menu/bg.jpg"); //temp
+		cp.setLayout(null);
+		cp.setPreferredSize(new Dimension(width, height));
+
+		frame.setContentPane(cp);
+		frame.pack();
+		frame.setVisible(true);
+
+		/*
+		Insets insets = frame.getInsets();
+		int targetWidth = 720 + insets.left + insets.right;
+		int targetHeight = 480 + insets.top + insets.bottom;
+		frame.setSize(targetWidth, targetHeight);
+		*/
+		frame.setResizable(true);
+		frame.setLocationRelativeTo(null);
+		frame.setTitle(title);
+		if(dispose)
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		else
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		return frame;
 	}
 

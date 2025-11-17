@@ -25,7 +25,7 @@ public class GUIEnthusiastView {
 	public GUIEnthusiastView() {}	
 		
 	public void start(Enthusiast enthusiast) {
-		frame = GUIUtil.setupGUI(frame, cp);
+		frame = GUIUtil.setupGUI(frame, cp, 720, 480);
 		this.enthusiast = enthusiast;
 	}
 

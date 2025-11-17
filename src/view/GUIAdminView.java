@@ -22,7 +22,7 @@ public class GUIAdminView {
 	public GUIAdminView() {}	
 		
 	public void start() {
-		frame = GUIUtil.setupGUI(frame, cp);
+		frame = GUIUtil.setupGUI(frame, cp, 720, 480);
 		dashboardPanel();
 	}
 
@@ -460,6 +460,18 @@ public class GUIAdminView {
 		cp.add(generatePdfBtn);
 		cp.add(backBtn);
 
+		generateBtn.addActionListener(e -> {
+			JFrame reportsFrame = new JFrame();
+			Container reportsCp = new Container();
+			reportsFrame = GUIUtil.setupGUI(reportsFrame, reportsCp, 1920,1080, "enthusiast reports", true);
+
+			reportsCp = BackgroundPanel.create("assets/admin/enthusiast/report_bg.png");
+			reportsCp.setLayout(null);
+			reportsFrame.setContentPane(reportsCp);
+
+			reportsCp.revalidate();
+			reportsCp.repaint();
+		});
 		backBtn.addActionListener(e -> enthusiastDashboardPanel());
 
 		cp.revalidate();

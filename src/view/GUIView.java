@@ -28,7 +28,7 @@ public class GUIView {
 	}
 	
 	public void start() {
-		frame = GUIUtil.setupGUI(frame, cp);
+		frame = GUIUtil.setupGUI(frame, cp, 720, 480);
 		menuPanel();
 	}
 
