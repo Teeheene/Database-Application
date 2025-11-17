@@ -612,11 +612,14 @@ public class GUIAdminView {
 		creationDate.setFont(creationDate.getFont().deriveFont(20f));
 		creationDate.setForeground(new Color(213,98,51));
 
+		/*
 		String[][] data = {
 			 {"a1", "b1", "c1", "a2", "b2", "c2", "a3", "b3", "c3"},
 			 {"a4", "b4", "c4", "a5", "b5", "c5", "a6", "b6", "c6"},
 			 {"a7", "b7", "c7", "a8", "b8", "c8", "a9", "b9", "c9"}
 		};
+		*/
+		String[][] data = controller.generateEnthusiastReport();
 		String[] columns = new String[data[0].length];
 		Arrays.fill(columns, "");
 	
@@ -629,7 +632,7 @@ public class GUIAdminView {
 
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 		renderer.setOpaque(false);
-		renderer.setHorizontalAlignment(SwingConstants.CENTER);
+		renderer.setHorizontalAlignment(SwingConstants.LEFT);
 
 
 		for (int i = 0; i < table.getColumnCount(); i++) {
@@ -644,7 +647,7 @@ public class GUIAdminView {
 		scroll.setBounds(129,309,1663,690);
 
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.getColumnModel().getColumn(0).setPreferredWidth(85);
+		table.getColumnModel().getColumn(0).setPreferredWidth(97);
 		table.getColumnModel().getColumn(1).setPreferredWidth(367);
 		table.getColumnModel().getColumn(2).setPreferredWidth(120);
 		table.getColumnModel().getColumn(3).setPreferredWidth(170);
@@ -652,7 +655,7 @@ public class GUIAdminView {
 		table.getColumnModel().getColumn(5).setPreferredWidth(170);
 		table.getColumnModel().getColumn(6).setPreferredWidth(190);
 		table.getColumnModel().getColumn(7).setPreferredWidth(170);
-		table.getColumnModel().getColumn(8).setPreferredWidth(218);
+		table.getColumnModel().getColumn(8).setPreferredWidth(207);
 		table.setRowHeight(40);
 
 		reportsCp.add(scroll);

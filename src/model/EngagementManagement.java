@@ -319,5 +319,156 @@ public class EngagementManagement {
 
 		return feed;
 	}
+
+	//report functions
+	public int getTotalEngagement(int ID) {
+		String sql =
+			"SELECT COUNT(*) AS total_engagement " + 
+			"FROM engagement e " + 
+			"WHERE e.enthusiast_id = ? " +
+			"AND e.status = true";
+
+		try(Connection conn = DatabaseConnection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			statement.setInt(1, ID);
+			ResultSet rs = statement.executeQuery();
+
+			if(rs.next())
+				return rs.getInt("total_engagement");
+			else
+				return 0;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+
+	public int getTotalPlayerEngagement(int ID) {
+		String sql =
+			"SELECT COUNT(*) AS total_player_engagement " +
+			"FROM engagement e " + 
+			"JOIN engagement_player ep ON e.engagement_id = ep.engagement_id " + 
+			"WHERE e.enthusiast_id = ? " +
+			"AND e.status = true";
+
+		try(Connection conn = DatabaseConnection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			statement.setInt(1, ID);
+			ResultSet rs = statement.executeQuery();
+
+			if(rs.next())
+				return rs.getInt("total_player_engagement");
+			else
+				return 0;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}	
+
+	public int getTotalCoachEngagement(int ID) {
+		String sql =
+			"SELECT COUNT(*) AS total_coach_engagement " +
+			"FROM engagement e " + 
+			"JOIN engagement_coach ep ON e.engagement_id = ep.engagement_id " + 
+			"WHERE e.enthusiast_id = ?";
+		
+		try(Connection conn = DatabaseConnection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			statement.setInt(1, ID);
+			ResultSet rs = statement.executeQuery();
+
+			if(rs.next())
+				return rs.getInt("total_coach_engagement");
+			else
+				return 0;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}	
+
+	public int getTotalTournamentEngagement(int ID) {
+		String sql =
+			"SELECT COUNT(*) AS total_tournament_engagement " +
+			"FROM engagement e " + 
+			"JOIN engagement_tournament ep ON e.engagement_id = ep.engagement_id " + 
+			"WHERE e.enthusiast_id = ?";
+
+		try(Connection conn = DatabaseConnection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			statement.setInt(1, ID);
+			ResultSet rs = statement.executeQuery();
+
+			if(rs.next())
+				return rs.getInt("total_tournament_engagement");
+			else
+				return 0;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}	
+
+	public int getAvgEngagements(int ID) {
+		String sql =
+			"SELECT AVG(cnt) AS avg_engagements " +
+			"FROM ( " +
+				"SELECT COUNT(*) AS cnt " + 
+				"FROM engagement e " +
+				"JOIN engagement_player ep ON e.engagement_id = ep.engagement_id " +
+				"WHERE e.enthusiast_id = ? " +
+
+				 "UNION ALL " +
+
+				 "SELECT COUNT(*) " +
+				 "FROM engagement e " +
+				 "JOIN engagement_coach ec ON e.engagement_id = ec.engagement_id " +
+				 "WHERE e.enthusiast_id = ? " +
+				 "UNION ALL " +
+				 "SELECT COUNT(*) " +
+				 "FROM engagement e " +
+				 "JOIN engagement_tournament et ON e.engagement_id = et.engagement_id " +
+				 "WHERE e.enthusiast_id = ? " +
+			") AS sub";
+
+		try(Connection conn = DatabaseConnection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			statement.setInt(1, ID);
+			statement.setInt(2, ID);
+			statement.setInt(3, ID);
+			ResultSet rs = statement.executeQuery();
+
+			if(rs.next())
+				return rs.getInt("avg_engagements");
+			else
+				return 0;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	public String getLastEngagement(int ID) {
+		String sql = 
+			"SELECT MAX(e.created_at) AS last_engagement " +
+			"FROM engagement e " + 
+			"WHERE e.enthusiast_id = ? "; 
+
+		try(Connection conn = DatabaseConnection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+			statement.setInt(1, ID);
+			ResultSet rs = statement.executeQuery();
+
+			if(rs.next())
+				return rs.getString("last_engagement") == null ? "N/A" : rs.getString("last_engagement");
+			else
+				return "N/A";
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return "N/A";
+		}
+	}
 }
 

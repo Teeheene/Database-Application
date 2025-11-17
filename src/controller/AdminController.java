@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import model.*;
 import view.*;
 
@@ -9,6 +10,7 @@ public class AdminController {
 	private GUIAdminView view;
 
 	private EnthusiastManagement enthusiastModel;
+	private EngagementManagement engagementModel;
 
 	public AdminController() {}
 	public AdminController(GUIView prevView, GUIAdminView view) {
@@ -16,6 +18,7 @@ public class AdminController {
 		this.view = view;	
 
 		enthusiastModel = new EnthusiastManagement();
+		engagementModel = new EngagementManagement();
 	}	
 
 	public void handleMenu(String option) {
@@ -124,4 +127,26 @@ public class AdminController {
 
 		return information;
 	}
+
+	public String[][] generateEnthusiastReport() {
+		ArrayList<Enthusiast> enthusiasts = enthusiastModel.getEnthusiasts();
+		String data[][] = new String[enthusiasts.size()][9];
+		int i;
+		for(i = 0; i < enthusiasts.size(); i++) {
+			if(enthusiasts.get(i) == null) { continue; }
+			int id = enthusiasts.get(i).getID();
+			data[i][0] = String.valueOf(id);
+			data[i][1] = enthusiasts.get(i).getFullName();
+			data[i][2] = enthusiasts.get(i).getSex();
+			data[i][3] = String.valueOf(engagementModel.getTotalEngagement(id));  
+			data[i][4] =  String.valueOf(engagementModel.getTotalPlayerEngagement(id));  
+			data[i][5] =  String.valueOf(engagementModel.getTotalCoachEngagement(id));  
+			data[i][6] =  String.valueOf(engagementModel.getTotalTournamentEngagement(id));  
+			data[i][7] =  String.valueOf(engagementModel.getAvgEngagements(id));
+			data[i][8] =  String.valueOf(engagementModel.getLastEngagement(id));
+		}
+
+		return data;
+	}
 }
+
