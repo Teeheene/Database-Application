@@ -346,7 +346,6 @@ public class GUIEnthusiastView {
 		profileBtn.addActionListener(e -> profilePanel());
 		logoutBtn.addActionListener(e -> controller.handleLogout());
 
-
 		cp.revalidate();
 		cp.repaint();	
 	}

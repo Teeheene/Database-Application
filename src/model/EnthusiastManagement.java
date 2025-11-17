@@ -19,8 +19,8 @@ public class EnthusiastManagement {
 	 * @return An int to get the auto incremented ID 
 	 * */
 	public int addEnthusiast(Enthusiast enthusiast) {
-		String sql = "INSERT INTO enthusiast (username, lastname, firstname, middlename, sex, date_of_birth) " 
-			+ "VALUES (?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO enthusiast (username, lastname, firstname, middlename, sex, date_of_birth, status) " 
+			+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		try(Connection conn = DatabaseConnection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -33,6 +33,7 @@ public class EnthusiastManagement {
 			statement.setDate(6, Date.valueOf(enthusiast
 						.getDateOfBirth()
 						.toStringDate()));
+			statement.setBoolean(7, true);
 
 			int affectedRows = statement.executeUpdate();
 			

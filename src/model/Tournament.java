@@ -61,7 +61,7 @@ public class Tournament {
     }
 	
 	public String toHtmlString() {
-		String info = "<html>#Season" + seasonYear + " #" + tournamentType +"<br>Tournament Status: " + startDate.toStringDate() + "-" + endDate.toStringDate();  
+		String info = "<html>#Season" + seasonYear + " #" + tournamentType +"<br>Tournament Status: " + startDate.getDisplayDate() + " to " + endDate.getDisplayDate();  
 
 		return info;
 	}

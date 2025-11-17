@@ -33,7 +33,7 @@ public class EnthusiastController {
 				value = p.toHtmlString();
 			} else if(o instanceof Coach) {
 				Coach c = (Coach) o;
-				key = "coach-" + c.getLastName() + ", " + c.getFirstName() + " " + c.getMiddleName() + String.valueOf(c.getCoachID());	
+				key = "coach-" + c.getLastName() + ", " + c.getFirstName() + " " + c.getMiddleName() + "-" + String.valueOf(c.getCoachID());	
 				value = c.toHtmlString();
 			} else if(o instanceof Tournament) {
 				Tournament t = (Tournament) o;
@@ -64,10 +64,28 @@ public class EnthusiastController {
 
 		for(Engagement e : engagementModel.getEngagement(enthusiast.getID(), "follow")) {
 			if(e == null) { continue; }
+			String value = "";
+
+			switch(e.getTargetCategory()) {
+				case "player":
+					Player p = new PlayerManagement().searchPlayer(e.getTargetID()); 
+					value = "[player#" + p.getPlayerID() + "] " + p.getLastName() + ", " + p.getFirstName() + " ";  		
+					if(!p.getMiddleName().isEmpty() || p.getMiddleName() != null) {
+						value += p.getMiddleName();
+					}
+					break;
+				case "coach":
+					Coach c = new CoachManagement().searchCoach(e.getTargetID()); 
+					value = c.toHtmlString();		
+					break;
+				case "tournament":
+					Tournament t = new TournamentManagement().searchTournamentByID(e.getTargetID()); 
+					value = t.toHtmlString();		
+					break;
+			}
+
 			String key = String.valueOf(e.getID());
-			String value = String.valueOf(e.getSimpleInfo());
 			information.put(key, value);
-			System.out.println(e.getSimpleInfo());
 		}
 
 		return information;

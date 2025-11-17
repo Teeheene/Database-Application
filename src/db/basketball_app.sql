@@ -25,6 +25,7 @@ CREATE TABLE enthusiast (
 	middlename VARCHAR(50),
 	sex VARCHAR(10) NOT NULL,
 	date_of_birth DATE NOT NULL,
+	status BOOLEAN NOT NULL,	
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (enthusiast_id)
 );
@@ -75,7 +76,7 @@ CREATE TABLE engagement (
 	engagement_id INT NOT NULL AUTO_INCREMENT,
 	engagement_type VARCHAR(10) NOT NULL,
 	enthusiast_id INT NOT NULL,
-	status INT NOT NULL,
+	status BOOLEAN NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (engagement_id),
 	FOREIGN KEY (enthusiast_id) REFERENCES enthusiast(enthusiast_id)

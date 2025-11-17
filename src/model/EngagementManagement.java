@@ -27,7 +27,7 @@ public class EngagementManagement {
 			PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			statement.setString(1, engagement.getType());
 			statement.setInt(2, engagement.getEnthusiastID());
-			statement.setInt(3, 1);
+			statement.setBoolean(3, true);
 
 			if(statement.executeUpdate() == 0)
 				throw new SQLException("Engagement creation failed. No ID Found.");
@@ -212,15 +212,16 @@ public class EngagementManagement {
 		ArrayList<Engagement> engagementList = new ArrayList<>();
 
 		String sql = 
-        "SELECT g.engagement_id, g.engagement_type, g.enthusiast_id, g.status, g.created_at, " +
-        "       ep.player_id, ec.coach_id, et.tournament_id " +
-        "FROM engagement g " +
-        "LEFT JOIN engagement_player ep ON g.engagement_id = ep.engagement_id " +
-        "LEFT JOIN engagement_coach ec ON g.engagement_id = ec.engagement_id " +
-        "LEFT JOIN engagement_tournament et ON g.engagement_id = et.engagement_id " +
+      	"SELECT g.engagement_id, g.engagement_type, " +
+			"	g.enthusiast_id, g.status, g.created_at, " +
+      	"	ep.player_id, ec.coach_id, et.tournament_id " +
+      	"FROM engagement g " +
+			"LEFT JOIN engagement_player ep ON g.engagement_id = ep.engagement_id " +
+      	"LEFT JOIN engagement_coach ec ON g.engagement_id = ec.engagement_id " +
+      	"LEFT JOIN engagement_tournament et ON g.engagement_id = et.engagement_id " +
       	"WHERE g.enthusiast_id = ? " +
-   			"AND g.engagement_type = ?" +
-		  		"AND g.status = 1";
+   		"	AND g.engagement_type = ?" +
+		  	"	AND g.status = true";
 		
 		try(Connection conn = DatabaseConnection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql)) {
@@ -303,6 +304,8 @@ public class EngagementManagement {
 						feed.add(o);
 						break;
 					case "coach":
+						o = new CoachManagement().searchCoach(id);
+						feed.add(o);
 						break;
 					case "tournament":
 						o = new TournamentManagement().searchTournamentByID(id);
