@@ -4,12 +4,18 @@ import model.*;
 import controller.*;
 import util.*;
 
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Arrays;
 import java.time.LocalDate;
 import java.time.DateTimeException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -579,22 +585,80 @@ public class GUIAdminView {
 		cp.add(generatePdfBtn);
 		cp.add(backBtn);
 
-		generateBtn.addActionListener(e -> {
-			JFrame reportsFrame = new JFrame();
-			Container reportsCp = new Container();
-			reportsFrame = GUIUtil.setupGUI(reportsFrame, reportsCp, 1920,1080, "enthusiast reports", true);
-
-			reportsCp = BackgroundPanel.create("assets/admin/enthusiast/report_bg.png");
-			reportsCp.setLayout(null);
-			reportsFrame.setContentPane(reportsCp);
-
-			reportsCp.revalidate();
-			reportsCp.repaint();
-		});
+		generateBtn.addActionListener(e -> generateReport());
 		backBtn.addActionListener(e -> enthusiastDashboardPanel());
 
 		cp.revalidate();
 		cp.repaint();
+	}
+
+	public void generateReport() {
+		JFrame reportsFrame = new JFrame();
+		Container reportsCp = new Container();
+		reportsFrame = GUIUtil.setupGUI(reportsFrame, reportsCp, 1920,1080, "enthusiast reports", true);
+
+		reportsCp = BackgroundPanel.create("assets/admin/enthusiast/report_bg.png");
+		reportsCp.setLayout(null);
+		reportsFrame.setContentPane(reportsCp);
+
+		LocalDate today = LocalDate.now();
+		String month = today.getMonth().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+		String year = String.valueOf(today.getYear());
+		String date = month + " " + year;
+
+		JLabel creationDate = GUIUtil.createText(date,1350,219,443,21);
+
+		creationDate.setHorizontalAlignment(SwingConstants.RIGHT);
+		creationDate.setFont(creationDate.getFont().deriveFont(20f));
+		creationDate.setForeground(new Color(213,98,51));
+
+		String[][] data = {
+			 {"a1", "b1", "c1", "a2", "b2", "c2", "a3", "b3", "c3"},
+			 {"a4", "b4", "c4", "a5", "b5", "c5", "a6", "b6", "c6"},
+			 {"a7", "b7", "c7", "a8", "b8", "c8", "a9", "b9", "c9"}
+		};
+		String[] columns = new String[data[0].length];
+		Arrays.fill(columns, "");
+	
+
+		JTable table = new JTable(data, columns);
+		table.setTableHeader(null);
+		table.setOpaque(false);
+		((DefaultTableCellRenderer)table.getDefaultRenderer(Object.class)).setOpaque(false);
+		table.setShowGrid(false);
+
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setOpaque(false);
+		renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+
+		for (int i = 0; i < table.getColumnCount(); i++) {
+			 table.getColumnModel().getColumn(i).setCellRenderer(renderer);
+		}
+
+
+		JScrollPane scroll = new JScrollPane(table);
+		scroll.setOpaque(false);
+		scroll.getViewport().setOpaque(false);
+		scroll.setBorder(BorderFactory.createEmptyBorder());
+		scroll.setBounds(129,309,1663,690);
+
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.getColumnModel().getColumn(0).setPreferredWidth(85);
+		table.getColumnModel().getColumn(1).setPreferredWidth(367);
+		table.getColumnModel().getColumn(2).setPreferredWidth(120);
+		table.getColumnModel().getColumn(3).setPreferredWidth(170);
+		table.getColumnModel().getColumn(4).setPreferredWidth(170);
+		table.getColumnModel().getColumn(5).setPreferredWidth(170);
+		table.getColumnModel().getColumn(6).setPreferredWidth(190);
+		table.getColumnModel().getColumn(7).setPreferredWidth(170);
+		table.getColumnModel().getColumn(8).setPreferredWidth(218);
+		table.setRowHeight(40);
+
+		reportsCp.add(scroll);
+		reportsCp.add(creationDate);
+		reportsCp.revalidate();
+		reportsCp.repaint();
 	}
 	
 	//ENTHUSIASTS DASHBOARD!!!!!!!
