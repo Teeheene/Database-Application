@@ -151,7 +151,7 @@ public class EnthusiastController {
 	}
 
 	public void handleDelete(Enthusiast enthusiast) {
-		model.deleteEnthusiast(enthusiast.getID());
+		model.toggleEnthusiast(enthusiast.getID());
 	}
 
 	public void handleLogout() {

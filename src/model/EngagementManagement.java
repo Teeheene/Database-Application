@@ -72,7 +72,7 @@ public class EngagementManagement {
 	}
 
 	public boolean toggleEngagementStatus(int engagementID) {
-		String sql = "UPDATE engagement SET status = CASE WHEN status = 1 THEN 0 ELSE 1 END WHERE engagement_id = ?";
+		String sql = "UPDATE engagement SET status = CASE WHEN status = true THEN false ELSE true END WHERE engagement_id = ?";
 		String checkSql = "SELECT status FROM engagement WHERE engagement_id = ?";
 		
 		try(Connection conn = DatabaseConnection.getConnection();

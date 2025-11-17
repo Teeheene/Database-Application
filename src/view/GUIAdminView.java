@@ -210,7 +210,7 @@ public class GUIAdminView {
 		cp.add(joinedBy);
 		cp.add(backBtn);
 
-		backBtn.addActionListener(e -> enthusiastDashboardPanel());
+		backBtn.addActionListener(e -> controller.handleEnthusiast("viewAll"));
 
 		cp.revalidate();
 		cp.repaint();
@@ -439,7 +439,7 @@ public class GUIAdminView {
 
 		backBtn.addActionListener(e -> enthusiastDashboardPanel());
 		delBtn.addActionListener(e -> {
-			controller.deleteEnthusiast(enthusiast);
+			controller.toggleEnthusiast(enthusiast);
 			enthusiastDashboardPanel();
 		});
 

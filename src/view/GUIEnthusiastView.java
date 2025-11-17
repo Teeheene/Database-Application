@@ -292,6 +292,7 @@ public class GUIEnthusiastView {
 		cp.add(logoutBtn);
 		cp.add(scrollingPanel);
 
+		engageBtn.addActionListener(e -> engagePanel(false, ""));
 		backBtn.addActionListener(e -> profilePanel());
 		profileBtn.addActionListener(e -> profilePanel());
 		logoutBtn.addActionListener(e -> controller.handleLogout());
@@ -344,6 +345,7 @@ public class GUIEnthusiastView {
 		cp.add(logoutBtn);
 		cp.add(scrollingPanel);
 
+		engageBtn.addActionListener(e -> engagePanel(false, ""));
 		backBtn.addActionListener(e -> profilePanel());
 		profileBtn.addActionListener(e -> profilePanel());
 		logoutBtn.addActionListener(e -> controller.handleLogout());

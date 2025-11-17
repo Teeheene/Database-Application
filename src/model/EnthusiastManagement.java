@@ -60,18 +60,13 @@ public class EnthusiastManagement {
 	 *
 	 * @param enthusiastID The ID of the enthusiast to be deleted from DB
 	 * */
-	public void deleteEnthusiast(int enthusiastID) {
-		String sql = "DELETE FROM enthusiast WHERE enthusiast_id = ?";
+	public void toggleEnthusiast(int enthusiastID) {
+		String sql = "UPDATE enthusiast SET status = CASE WHEN status = true THEN false ELSE true END WHERE enthusiast_id = ?";
 
 		try(Connection conn = DatabaseConnection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql)) {
 			statement.setInt(1, enthusiastID);
-
-			int rowsDeleted = statement.executeUpdate();
-			if(rowsDeleted > 0) 
-				System.out.println("Enthusiast deleted");
-			else
-				System.out.println("Failed to delete");
+			statement.executeUpdate();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -123,7 +118,7 @@ public class EnthusiastManagement {
 	public ArrayList<Enthusiast> getEnthusiasts() {
 		ArrayList<Enthusiast> enthusiastList = new ArrayList<>();
 
-		String sql = "SELECT * FROM enthusiast";
+		String sql = "SELECT * FROM enthusiast WHERE status = true";
 	
 		try(Connection conn = DatabaseConnection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql)) {

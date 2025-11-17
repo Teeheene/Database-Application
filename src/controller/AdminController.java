@@ -35,23 +35,22 @@ public class AdminController {
 	public void handleEnthusiast(String option) {
 		switch(option) {
 			case "create":
-				System.out.println("Opening create...");
 				view.createEnthusiastPanel();
 				break;
 			case "viewAll":
-				System.out.println("Opening view all...");
 				view.viewAllEnthusiastPanel(getEnthusiastInformation());
 				break;
+			case "viewDeleted":
+				break;
+			case "viewActive":
+				break;	
 			case "update":
-				System.out.println("Opening update...");
 				view.searchUpdateEnthusiastPanel();
 				break;
 			case "delete":
-				System.out.println("Opening search...");
 				view.searchDeleteEnthusiastPanel();
 				break;
 			case "report":
-				System.out.println("Opening report...");
 				view.viewReportEnthusiastPanel();
 				break;
 			case "exit":
@@ -88,8 +87,8 @@ public class AdminController {
 		return true;
 	}
 	
-	public void deleteEnthusiast(Enthusiast enthusiast) {
-		enthusiastModel.deleteEnthusiast(enthusiast.getID());
+	public void toggleEnthusiast(Enthusiast enthusiast) {
+		enthusiastModel.toggleEnthusiast(enthusiast.getID());
 	}
 
 	//admin helper
