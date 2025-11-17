@@ -10,6 +10,7 @@ import java.time.DateTimeException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -83,15 +84,17 @@ public class GUIAdminView {
 		cp = BackgroundPanel.create("assets/admin/enthusiast/create.png");
 		cp.setLayout(null);
 		frame.setContentPane(cp);
-		JTextField usernameField = GUIUtil.createTextField(119,198,261,27);
-		JTextField lastNameField = GUIUtil.createTextField(119,254,261,27);
-		JTextField firstNameField = GUIUtil.createTextField(119,308,261,27);
-		JTextField middleNameField = GUIUtil.createTextField(119,364,261,27);
-		JTextField yearField = GUIUtil.createTextField(445,198,139,27);
-		JTextField monthField = GUIUtil.createTextField(445,253,139,27);
-		JTextField dayField = GUIUtil.createTextField(445,309,139,27);
-		JTextField sexField = GUIUtil.createTextField(445,364,139,27);
-		JButton submitBtn = GUIUtil.createIButton(110,410,486,27);
+		JTextField usernameField = GUIUtil.createTextField(121,194,268,27);
+		JTextField lastNameField = GUIUtil.createTextField(121,249,268,27);
+		JTextField firstNameField = GUIUtil.createTextField(121,304,268,27);
+		JTextField middleNameField = GUIUtil.createTextField(121,359,268,27);
+		JTextField yearField = GUIUtil.createTextField(447,194,151,27);
+		JTextField monthField = GUIUtil.createTextField(447,248,151,27);
+		JTextField dayField = GUIUtil.createTextField(447,305,151,27);
+		JButton sexF = GUIUtil.createIButton(439,359,40,27);
+		JButton sexM = GUIUtil.createIButton(485,359,40,27);
+		JButton sexOther = GUIUtil.createIButton(530,359,71,27);
+		JButton submitBtn = GUIUtil.createIButton(575,440,60,27);
 		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
 		cp.add(usernameField);
 		cp.add(lastNameField);
@@ -100,25 +103,53 @@ public class GUIAdminView {
 		cp.add(yearField);
 		cp.add(monthField);
 		cp.add(dayField);
-		cp.add(sexField);
+		cp.add(sexF);
+		cp.add(sexM);
+		cp.add(sexOther);
 		cp.add(submitBtn);
 		cp.add(backBtn);
 
+		final String[] sex = { "none" };
+		Border blackBorder = BorderFactory.createLineBorder(new Color(141,53,18), 2);
+		Border noBorder = BorderFactory.createLineBorder(Color.BLACK, 0);
+
+		sexF.addActionListener(e -> {
+			sex[0] = "Female";
+			sexF.setBorder(blackBorder);
+			sexM.setBorder(noBorder);
+			sexOther.setBorder(noBorder);
+		});
+		sexM.addActionListener(e -> {
+			sex[0] = "Male";
+			sexM.setBorder(blackBorder);
+			sexF.setBorder(noBorder);
+			sexOther.setBorder(noBorder);
+		});
+		sexOther.addActionListener(e -> {
+			sex[0] = "Other";
+			sexOther.setBorder(blackBorder);
+			sexF.setBorder(noBorder);
+			sexM.setBorder(noBorder);
+		});
 		submitBtn.addActionListener(e -> {
 			try {
 				String username = usernameField.getText().trim();
 				String lastName = lastNameField.getText().trim();
 				String firstName = firstNameField.getText().trim();
 				String middleName = middleNameField.getText().trim();
-				String sex = sexField.getText().trim();
 
+				//err handling
 				if(username.isEmpty() || lastName.isEmpty() || 
-					firstName.isEmpty() || sex.isEmpty()) {
+					firstName.isEmpty()) {
 					JOptionPane.showMessageDialog(frame, 
 						"Required Fields! Fill in all the required fields (middle name is optional).");
    				return; // stop further processing
 				}
-
+				if(sex[0].equals("none")) {
+					JOptionPane.showMessageDialog(frame, 
+						"Required Fields! No sex chosen.");
+   				return; // stop further processing
+				}
 				int year = Integer.parseInt(yearField.getText().trim());
       		int month = Integer.parseInt(monthField.getText().trim());
    			int day = Integer.parseInt(dayField.getText().trim());
@@ -129,7 +160,7 @@ public class GUIAdminView {
 				Enthusiast enthusiast = new Enthusiast(
 					username, 
 					lastName, firstName, middleName, 
-					sex, 
+					sex[0], 
 					new CustomTimestamp(year, month, day)
 				);
 
@@ -146,7 +177,9 @@ public class GUIAdminView {
 				yearField.setText("");
 				monthField.setText("");
 				dayField.setText("");
-				sexField.setText("");
+				sexOther.setBorder(noBorder);
+				sexF.setBorder(noBorder);
+				sexM.setBorder(noBorder);
 			} catch (NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(frame,
 					"Invalid Date. Please enter numerical values.");
