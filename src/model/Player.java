@@ -60,7 +60,13 @@ public class Player
     public String getLastName() { return lastName; }
 	public String getFirstName() { return firstName; }
 	public String getMiddleName() { return middleName; }
-	public CustomTimestamp getDateofBirth() { return birthday; }
+	/** Returns the birthday as a String in "YYYY-MM-DD" format. Required by GUI. */
+    public String getDateOfBirth() {return birthday.toStringDate();} 
+    
+    /** Returns the CustomTimestamp object. Used in the update method. */
+    public CustomTimestamp getBirthday() { 
+        return birthday; 
+    } 
 	public String getGender() { return gender; }
    public double getHeight() { return height; }
 	public double getWeight() { return weight; }
@@ -80,9 +86,22 @@ public class Player
     }
 
     //Setters
+	public void setPlayerID(int playerID) { this.PlayerID = playerID; } 
+	public void setHeight(int height){this.height = height;}
+    public void setWeight(int weight){this.weight = weight;}
     public void setLastName(String lastName) { this.lastName = lastName; }
 	public void setFirstName(String firstName) { this.firstName = firstName; }
 	public void setMiddleName(String middleName) { this.middleName = middleName; }
+	public void setDateOfBirth(String dateOfBirth) { 
+        // Logic to convert String date (YYYY-MM-DD) back into CustomTimestamp
+        String[] dateTokens = dateOfBirth.split("-");
+        this.birthday = new CustomTimestamp(
+            Integer.parseInt(dateTokens[0]), 
+            Integer.parseInt(dateTokens[1]), 
+            Integer.parseInt(dateTokens[2])
+        );
+    } 
 	public void setDateOfBirth(CustomTimestamp dateOfBirth) { this.birthday = birthday; }
 	public void setSex(String sex) { this.gender = sex; }
 }
+
