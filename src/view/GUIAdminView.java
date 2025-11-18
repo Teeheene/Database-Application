@@ -45,7 +45,7 @@ public class GUIAdminView {
 		frame.setContentPane(cp);
 
 		JButton enthusiastBtn = GUIUtil.createIButton(259,208,200,27);
-		JButton playerBtn = GUIUtil.createIButton(259, 200, 200, 27);
+		JButton playerBtn = GUIUtil.createIButton(259, 244, 200, 27);
 		JButton tournamentBtn = GUIUtil.createIButton(259,313,200,27);
 		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
 		
