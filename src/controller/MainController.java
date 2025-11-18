@@ -14,6 +14,7 @@ public class MainController {
 	private EnthusiastController enthusiastController;
 	private EnthusiastManagement enthusiastModel;
 	//player
+	private GUIPlayerView playerView;
 	private PlayerManagement playerModel;
 	private PlayerController playerController;
 
@@ -28,8 +29,9 @@ public class MainController {
 		enthusiastController = new EnthusiastController(view, enthusiastView);
 		enthusiastModel = new EnthusiastManagement();
 		
+		this.playerView = new GUIPlayerView();
 		playerModel = new PlayerManagement();
-		playerController = new PlayerController(playerModel);
+		playerController = new PlayerController(view, playerView);
 	}
 	
 	public void handleMenu(String option) {
@@ -76,6 +78,23 @@ public class MainController {
 
 	public void handleEnthusiastRegister(Enthusiast enthusiast) {
 		enthusiastModel.addEnthusiast(enthusiast);
+	}
+
+	public boolean handlePlayerLogin(int ID) {
+		Player player = playerModel.searchPlayer(ID);
+		if(player == null) return false;
+
+		playerView.setListeners(playerController);
+		playerView.start(player);
+		playerView.profilePanel();
+		view.hide();
+		playerView.show();
+
+		return true;
+	}
+
+	public void handlePlayerRegister(Player player) {
+		playerModel.addPlayer(player);
 	}
 	
 	/*
