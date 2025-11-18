@@ -270,6 +270,13 @@ public class GUIView {
 		Border blackBorder = BorderFactory.createLineBorder(new Color(141,53,18), 2);
 		Border noBorder = BorderFactory.createLineBorder(Color.BLACK, 0);
 
+		sexF.setBorderPainted(true);
+		sexF.setBorder(noBorder);
+		sexM.setBorderPainted(true);
+		sexM.setBorder(noBorder);
+		sexOther.setBorderPainted(true);
+		sexOther.setBorder(noBorder);
+
 		sexF.addActionListener(e -> {
 			sex[0] = "Female";
 			sexF.setBorder(blackBorder);

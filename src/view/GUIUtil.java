@@ -99,7 +99,7 @@ public class GUIUtil {
 
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
-		button.setBorderPainted(true);
+		button.setBorderPainted(false);
 		button.setFocusPainted(false);
 
 		//debugging
