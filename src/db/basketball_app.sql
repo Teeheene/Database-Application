@@ -122,6 +122,18 @@ PRIMARY KEY(team_ID),
 FOREIGN KEY(coach_id) REFERENCES coach(coach_id)
 );
 
+DROP TABLE IF EXISTS competing_team;
+CREATE TABLE competing_team (
+    competing_team_id INT NOT NULL AUTO_INCREMENT,
+    coach_id INT, 
+	team_name VARCHAR(50) NOT NULL,
+	number_of_players INT,
+    registry_status BOOLEAN,
+    tCreated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY(competing_team_id),
+FOREIGN KEY(coach_id) REFERENCES coach(coach_id)
+);
+
 DROP TABLE IF EXISTS game;
 CREATE TABLE game (
     game_id INT NOT NULL AUTO_INCREMENT,
