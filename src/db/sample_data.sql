@@ -48,6 +48,19 @@ INSERT INTO tournament (tournament_name, season_year, tournament_type, start_dat
 ('Basketball Masters',2021,'Major','2021-06-10','2021-07-05'),
 ('Regional Clash',2023,'Regional','2023-10-01','2023-10-25');
 
+INSERT INTO team (coach_id, team_name, number_of_players, registry_status)
+VALUES
+(1, 'Red Hawks', 15, TRUE),
+(2, 'Blue Titans', 14, TRUE),
+(3, 'Golden Vipers', 12, FALSE),
+(4, 'Silver Wolves', 16, TRUE),
+(5, 'Iron Stallions', 13, TRUE),
+(6, 'Crimson Blades', 11, FALSE),
+(7, 'Emerald Eagles', 17, TRUE),
+(8, 'Shadow Panthers', 10, TRUE),
+(9, 'Phantom Foxes', 14, FALSE),
+(10, 'Azure Serpents', 15, TRUE);
+
 INSERT INTO engagement (engagement_type, enthusiast_id, status) VALUES
 ('follow',1,true),
 ('like',1,true),
