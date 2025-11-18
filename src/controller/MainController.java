@@ -17,6 +17,10 @@ public class MainController {
 	private GUIPlayerView playerView;
 	private PlayerManagement playerModel;
 	private PlayerController playerController;
+    //tournament
+    private GUITournamentView tournamentView;
+    private TournamentManagement tournamentModel;
+    private TournamentController tournamentController;
 
 	public MainController(GUIView view) {
 		//gui inits
@@ -32,6 +36,8 @@ public class MainController {
 		this.playerView = new GUIPlayerView();
 		playerModel = new PlayerManagement();
 		playerController = new PlayerController(view, playerView);
+
+        tournamentModel = new TournamentManagement();
 	}
 	
 	public void handleMenu(String option) {
@@ -96,6 +102,8 @@ public class MainController {
 	public void handlePlayerRegister(Player player) {
 		playerModel.addPlayer(player);
 	}
+
+    public void handleTournamentRegister(Tournament tournament) {tournamentModel.addTournament(tournament);}
 	
 	/*
 	public void start() {
