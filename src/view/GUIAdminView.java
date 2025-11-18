@@ -1219,17 +1219,17 @@ public class GUIAdminView {
         cp.setLayout(null);
         frame.setContentPane(cp);
 
-        JTextField nameField = GUIUtil.createTextField(250, 80, 300, 27);
-        JTextField seasonField = GUIUtil.createTextField(250, 120, 300, 27);
-        JTextField typeField = GUIUtil.createTextField(250, 160, 300, 27);
+        JTextField nameField = GUIUtil.createVisibleTextField(250, 80, 300, 27);
+        JTextField seasonField = GUIUtil.createVisibleTextField(250, 120, 300, 27);
+        JTextField typeField = GUIUtil.createVisibleTextField(250, 160, 300, 27);
         // start date
-        JTextField startYearField = GUIUtil.createTextField(250, 200, 90, 27);
-        JTextField startMonthField = GUIUtil.createTextField(250, 240, 90, 27);
-        JTextField startDayField = GUIUtil.createTextField(250, 280, 90, 27);
+        JTextField startYearField = GUIUtil.createVisibleTextField(250, 200, 90, 27);
+        JTextField startMonthField = GUIUtil.createVisibleTextField(250, 240, 90, 27);
+        JTextField startDayField = GUIUtil.createVisibleTextField(250, 280, 90, 27);
         // end date
-        JTextField endYearField = GUIUtil.createTextField(250, 320, 90, 27);
-        JTextField endMonthField = GUIUtil.createTextField(250, 360, 90, 27);
-        JTextField endDayField = GUIUtil.createTextField(250, 400, 90, 27);
+        JTextField endYearField = GUIUtil.createVisibleTextField(250, 320, 90, 27);
+        JTextField endMonthField = GUIUtil.createVisibleTextField(250, 360, 90, 27);
+        JTextField endDayField = GUIUtil.createVisibleTextField(250, 400, 90, 27);
 
         JButton submitBtn = GUIUtil.createIButton(250, 440, 150, 40);
         JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
@@ -1283,12 +1283,19 @@ public class GUIAdminView {
                 int endMonth = Integer.parseInt(endMonthField.getText().trim());
                 int endDay = Integer.parseInt(endDayField.getText().trim());
 
-
-                // Validate parts length
                 CustomTimestamp startDate = new CustomTimestamp(startYear, startMonth, startDay);
                 CustomTimestamp endDate = new CustomTimestamp(endYear, endMonth, endDay);
 
+                // Validate that end date is not before start date
+                if (endDate.isBefore(startDate)) {
+                    JOptionPane.showMessageDialog(frame, "End date cannot be before start date!");
+                    return;
+                }
+
                 Tournament tournament = new Tournament(name, seasonYear, type, startDate, endDate);
+                controller.addTournament(tournament);
+
+
 
                 // Clear fields
                 nameField.setText("");
@@ -1304,7 +1311,7 @@ public class GUIAdminView {
             } catch (NumberFormatException nfe) {
                 JOptionPane.showMessageDialog(frame, "Invalid number format (Year or Date parts).");
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(frame, "Invalid Date Format. Use YYYY-MM-DD.");
+                JOptionPane.showMessageDialog(frame, "Invalid Date");
             }
         });
 
@@ -1386,7 +1393,7 @@ public class GUIAdminView {
         frame.setContentPane(cp);
 
         JButton submitBtn = GUIUtil.createIButton(528, 260, 98, 27);
-        JTextField field = GUIUtil.createTextField(142, 261, 367, 27);
+        JTextField field = GUIUtil.createVisibleTextField(142, 261, 367, 27);
         JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
 
         JLabel title = GUIUtil.createText("UPDATE", 180, 50, 500, 50);
@@ -1475,7 +1482,7 @@ public class GUIAdminView {
         frame.setContentPane(cp);
 
         JButton submitBtn = GUIUtil.createIButton(528, 260, 98, 27);
-        JTextField field = GUIUtil.createTextField(142, 261, 367, 27);
+        JTextField field = GUIUtil.createVisibleTextField(142, 261, 367, 27);
         JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
 
         JLabel title = GUIUtil.createText("DELETE", 180, 50, 500, 50);
@@ -1534,7 +1541,6 @@ public class GUIAdminView {
         cp.revalidate();
         cp.repaint();
     }
-
 
     // helper
     private void quickUpdate(Tournament tournament, String field, JLabel label) {

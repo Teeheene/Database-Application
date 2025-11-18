@@ -13,7 +13,7 @@ public class AdminController {
 	private EnthusiastManagement enthusiastModel;
 	private EngagementManagement engagementModel;
 	private ReportsManagement reportModel;
-   private TournamentManagement tournamentModel;
+    private TournamentManagement tournamentModel;
 	private PlayerManagement playerModel;
 
 	public AdminController() {}
@@ -168,7 +168,7 @@ public class AdminController {
 	}
 
 	public boolean generatePdfEnthusiastReport() {
-		return reportModel.engagementReport(generateEnthusiastReport());	
+        return reportModel.engagementReport(generateEnthusiastReport());
 	}
 
 	//PLAYER===========================================
@@ -279,8 +279,7 @@ public class AdminController {
     // ========== Tournament CRUD logic ==========
 
     public void addTournament(Tournament tournament) {
-        int newID = tournamentModel.addTournament(tournament);
-        tournament.setTournamentID(newID);
+        tournamentModel.addTournament(tournament);
     }
 
     public void showTournament(int tournamentID) {

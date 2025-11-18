@@ -119,18 +119,21 @@ public class GUIView {
 		JButton loginBtn = GUIUtil.createIButton(527,0,76,53);
 		JButton registerBtn = GUIUtil.createIButton(603,0,104,53);
 		JButton enthusiastBtn = GUIUtil.createIButton(259,208,200,27);
+        JButton gameBtn = GUIUtil.createIButton(259,313,200,27);
 
 		cp.add(homeBtn);
 		cp.add(adminBtn);
 		cp.add(loginBtn);
 		cp.add(registerBtn);
 		cp.add(enthusiastBtn);
+        cp.add(gameBtn);
 
 		homeBtn.addActionListener(e -> menuPanel());
 		adminBtn.addActionListener(e -> controller.handleMenu("admin"));
 		loginBtn.addActionListener(e -> controller.handleMenu("login"));
 		registerBtn.addActionListener(e -> controller.handleMenu("register"));
 		enthusiastBtn.addActionListener(e -> enthusiastLoginPanel());
+        gameBtn.addActionListener(e ->gamePanel());
 			
 		cp.revalidate();
 		cp.repaint();
@@ -419,24 +422,22 @@ public class GUIView {
 		cp.repaint();
 	}
 
-// fix a bit design and logic
     public void tournamentRegisterPanel() {
         cp = GUIUtil.createColorPanel("#CD5C33");
         cp.setLayout(null);
         frame.setContentPane(cp);
 
-        JTextField nameField = GUIUtil.createTextField(250, 80, 300, 27);
-        JTextField seasonField = GUIUtil.createTextField(250, 120, 300, 27);
-        JTextField typeField = GUIUtil.createTextField(250, 160, 300, 27);
+        JTextField nameField = GUIUtil.createVisibleTextField(250, 80, 300, 27);
+        JTextField seasonField = GUIUtil.createVisibleTextField(250, 120, 300, 27);
+        JTextField typeField = GUIUtil.createVisibleTextField(250, 160, 300, 27);
         // start date
-        JTextField startYearField = GUIUtil.createTextField(250, 200, 90, 27);
-        JTextField startMonthField = GUIUtil.createTextField(250, 240, 90, 27);
-        JTextField startDayField = GUIUtil.createTextField(250, 280, 90, 27);
+        JTextField startYearField = GUIUtil.createVisibleTextField(250, 200, 90, 27);
+        JTextField startMonthField = GUIUtil.createVisibleTextField(250, 240, 90, 27);
+        JTextField startDayField = GUIUtil.createVisibleTextField(250, 280, 90, 27);
         // end date
-        JTextField endYearField = GUIUtil.createTextField(250, 320, 90, 27);
-        JTextField endMonthField = GUIUtil.createTextField(250, 360, 90, 27);
-        JTextField endDayField = GUIUtil.createTextField(250, 400, 90, 27);
-
+        JTextField endYearField = GUIUtil.createVisibleTextField(250, 320, 90, 27);
+        JTextField endMonthField = GUIUtil.createVisibleTextField(250, 360, 90, 27);
+        JTextField endDayField = GUIUtil.createVisibleTextField(250, 400, 90, 27);
         JButton submitBtn = GUIUtil.createIButton(250, 440, 150, 40);
         JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
 
@@ -489,12 +490,18 @@ public class GUIView {
                 int endMonth = Integer.parseInt(endMonthField.getText().trim());
                 int endDay = Integer.parseInt(endDayField.getText().trim());
 
-
-                // Validate parts length
                 CustomTimestamp startDate = new CustomTimestamp(startYear, startMonth, startDay);
                 CustomTimestamp endDate = new CustomTimestamp(endYear, endMonth, endDay);
 
+                // Validate that end date is not before start date
+                if (endDate.isBefore(startDate)) {
+                    JOptionPane.showMessageDialog(frame, "End date cannot be before start date!");
+                    return;
+                }
+
                 Tournament tournament = new Tournament(name, seasonYear, type, startDate, endDate);
+                controller.handleTournamentRegister(tournament);
+
 
                 // Clear fields
                 nameField.setText("");
@@ -510,7 +517,7 @@ public class GUIView {
             } catch (NumberFormatException nfe) {
                 JOptionPane.showMessageDialog(frame, "Invalid number format (Year or Date parts).");
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(frame, "Invalid Date Format. Use YYYY-MM-DD.");
+                JOptionPane.showMessageDialog(frame, "Invalid Date");
             }
         });
 
@@ -518,6 +525,10 @@ public class GUIView {
 
         cp.revalidate();
         cp.repaint();
+    }
+
+    public void gamePanel() {
+
     }
 
 	public void show() { frame.setVisible(true); }

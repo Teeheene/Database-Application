@@ -40,6 +40,19 @@ public class CustomTimestamp {
 		return year + "-" + month + "-" + day;	
 	}
 
+    public boolean isBefore(CustomTimestamp other) {
+        if (this.year < other.year) {
+            return true;
+        } else if (this.year == other.year) {
+            if (this.month < other.month) {
+                return true;
+            } else if (this.month == other.month) {
+                return this.day < other.day;
+            }
+        }
+        return false;
+    }
+
 	public int getYear() { return year; }
 	public int getMonth() { return month; }
 	public int getDay() { return day; }
