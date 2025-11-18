@@ -48,7 +48,7 @@ public class PlayerManagement {
 			statement.setString(2, player.getLastName());
 			statement.setString(3, player.getFirstName());
 			statement.setString(4, player.getMiddleName());
-			statement.setDate(5, Date.valueOf(player.getDateofBirth().toStringDate()));
+			statement.setDate(5, Date.valueOf(player.getDateOfBirth()));
 			statement.setString(6, String.valueOf(player.getGender()));
 			statement.setDouble(7, player.getHeight());
 			statement.setDouble(8, player.getWeight());
@@ -113,7 +113,7 @@ public class PlayerManagement {
      *   <li>Returns the fresh record after update via {@link #searchPlayer(int)}.</li>
      * </ul>
      */
-    public Player updatePlayer(Player oldPlayer, Player newPlayer) {
+    public Player updatePlayer(Player newPlayer) {
         String sql = "UPDATE player SET lastname = ?, firstname = ?, middlename = ?, date_of_birth = ?, "
             + "sex = ?, height = ?, weight = ?, rStatus = ? WHERE player_id = ?";
 
@@ -123,12 +123,12 @@ public class PlayerManagement {
         statement.setString(1, newPlayer.getLastName());
         statement.setString(2, newPlayer.getFirstName());
         statement.setString(3, newPlayer.getMiddleName());
-        statement.setDate(4, Date.valueOf(newPlayer.getDateofBirth().toStringDate()));
+        statement.setDate(5, Date.valueOf(newPlayer.getDateOfBirth()));
         statement.setString(5, String.valueOf(newPlayer.getGender()));
         statement.setDouble(6, newPlayer.getHeight());
         statement.setDouble(7, newPlayer.getWeight());
         statement.setBoolean(8, newPlayer.getStatus());
-        statement.setInt(9, oldPlayer.getPlayerID());
+        statement.setInt(9, newPlayer.getPlayerID());
 
         int rowsUpdated = statement.executeUpdate();
         if (rowsUpdated > 0)
@@ -139,7 +139,7 @@ public class PlayerManagement {
         e.printStackTrace();
     }
 
-    return searchPlayer(oldPlayer.getPlayerID());
+    return searchPlayer(newPlayer.getPlayerID());
 }
 	/**
      * Searches for a player in the database by their player ID.
@@ -226,5 +226,37 @@ public ArrayList<Player> getAllPlayers() {
 
     return players;
 }
-}
 
+    public int generatePlayerID() {
+        String sql = "SELECT MAX(player_id) AS max_id FROM player";
+        int newID = 1;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            if (rs.next()) {
+                newID = rs.getInt("max_id") + 1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return newID;
+    }
+    /* Delete Player from DB
+	 *
+	 * @param playerID The ID of the player to be deleted from DB
+	 * */
+	public void togglePlayer(int playerID) {
+		String sql = "UPDATE player SET status = CASE WHEN status = true THEN false ELSE true END WHERE player_id = ?";
+
+		try(Connection conn = DatabaseConnection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql)) {
+			statement.setInt(1, playerID);
+			statement.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
