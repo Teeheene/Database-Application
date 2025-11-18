@@ -246,4 +246,16 @@ public class GUIUtil {
         return panel;
     }
 
+    public static JTextField createVisibleTextField(int x, int y, int w, int h)
+    {
+        JTextField textField = new JTextField();
+        textField.setBounds(x, y, w, h);
+        textField.setOpaque(true);
+        textField.setBackground(Color.WHITE);
+        textField.setForeground(Color.BLACK);
+        textField.setCaretColor(Color.BLACK);
+        textField.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        return textField;
+    }
+
 }
