@@ -44,11 +44,14 @@ public class GUIAdminView {
 		frame.setContentPane(cp);
 
 		JButton enthusiastBtn = GUIUtil.createIButton(259,208,200,27);
+        JButton tournamentBtn = GUIUtil.createIButton(259,313,200,27);
 		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
 		cp.add(enthusiastBtn);
+        cp.add(tournamentBtn);
 		cp.add(backBtn);
 
 		enthusiastBtn.addActionListener(e -> controller.handleMenu("enthusiast"));
+        tournamentBtn.addActionListener((e ->controller.handleMenu("tournament")));
 		backBtn.addActionListener(e -> controller.handleMenu("exit"));
 
 		cp.revalidate();
@@ -669,12 +672,439 @@ public class GUIAdminView {
 		reportsCp.revalidate();
 		reportsCp.repaint();
 	}
-	
-	//ENTHUSIASTS DASHBOARD!!!!!!!
+
+    //TOURNAMENT DASHBOARD!!!!!!!
+
+    // tournament dashboard
+    public void tournamentDashboardPanel() {
+        cp = GUIUtil.createColorPanel("#CD5C33");
+        cp.setLayout(null);
+        frame.setContentPane(cp);
+
+        // Coordinates aligned with your previous 'Enthusiast' style menu
+        JButton createBtn = GUIUtil.createIButton(235, 198, 246, 27);
+        JButton viewAllBtn = GUIUtil.createIButton(235, 235, 246, 27);
+        JButton updateBtn = GUIUtil.createIButton(235, 269, 246, 27);
+        JButton deleteBtn = GUIUtil.createIButton(235, 305, 246, 27);
+        JButton reportBtn = GUIUtil.createIButton(235, 341, 246, 27);
+        JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
+
+        cp.add(createBtn);
+        cp.add(viewAllBtn);
+        cp.add(updateBtn);
+        cp.add(deleteBtn);
+        cp.add(reportBtn);
+        cp.add(backBtn);
+
+        JLabel title = GUIUtil.createText("TOURNAMENT", 180, 50, 500, 50);
+        cp.add(title);
+        title.setFont(new Font("Arial", Font.PLAIN, 50));
+
+
+        cp.add(GUIUtil.createTextLabel("ADD", 235, 198, 246, 27));
+        cp.add(GUIUtil.createTextLabel("VIEW", 235, 235, 246, 27));
+        cp.add(GUIUtil.createTextLabel("UPDATE", 235, 269, 246, 27));
+        cp.add(GUIUtil.createTextLabel("DELETE", 235, 305, 246, 27));
+        cp.add(GUIUtil.createTextLabel("GENERATE REPORT", 235, 341, 246, 27));
+        cp.add(GUIUtil.createTextLabel("BACK", 648, 440, 64, 27));
+
+
+        createBtn.addActionListener(e -> controller.handleTournament("create"));
+        viewAllBtn.addActionListener(e -> controller.handleTournament("viewAll"));
+        updateBtn.addActionListener(e -> controller.handleTournament("update"));
+        deleteBtn.addActionListener(e -> controller.handleTournament("delete"));
+        reportBtn.addActionListener(e -> controller.handleTournament("report"));
+        backBtn.addActionListener(e -> controller.handleTournament("exit"));
+
+        cp.revalidate();
+        cp.repaint();
+    }
+
+    // create tournament
+    public void createTournamentPanel() {
+        cp = GUIUtil.createColorPanel("#CD5C33");
+        cp.setLayout(null);
+        frame.setContentPane(cp);
+
+        JTextField nameField = GUIUtil.createTextField(250, 80, 300, 27);
+        JTextField seasonField = GUIUtil.createTextField(250, 120, 300, 27);
+        JTextField typeField = GUIUtil.createTextField(250, 160, 300, 27);
+        // start date
+        JTextField startYearField = GUIUtil.createTextField(250, 200, 90, 27);
+        JTextField startMonthField = GUIUtil.createTextField(250, 240, 90, 27);
+        JTextField startDayField = GUIUtil.createTextField(250, 280, 90, 27);
+        // end date
+        JTextField endYearField = GUIUtil.createTextField(250, 320, 90, 27);
+        JTextField endMonthField = GUIUtil.createTextField(250, 360, 90, 27);
+        JTextField endDayField = GUIUtil.createTextField(250, 400, 90, 27);
+
+        JButton submitBtn = GUIUtil.createIButton(250, 440, 150, 40);
+        JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
+
+        cp.add(GUIUtil.createTextLabel("Tournament Name:", 10, 80, 300, 27));
+        cp.add(GUIUtil.createTextLabel("Season Year:", 35, 120, 300, 27));
+        cp.add(GUIUtil.createTextLabel("Tournament Type:", 15, 160, 300, 27));
+        cp.add(GUIUtil.createTextLabel("Start Date (year):", 10, 200, 300, 27));
+        cp.add(GUIUtil.createTextLabel("Start Date (month):", 10, 240, 300, 27));
+        cp.add(GUIUtil.createTextLabel("Start Date (day):", 10, 280, 300, 27));
+        cp.add(GUIUtil.createTextLabel("End Date (year):", 10, 320, 300, 27));
+        cp.add(GUIUtil.createTextLabel("End Date (month):", 10, 360, 300, 27));
+        cp.add(GUIUtil.createTextLabel("End Date (day):", 10, 400, 300, 27));
+        cp.add(GUIUtil.createTextLabel("Submit", 250, 440, 150, 40));
+        cp.add(GUIUtil.createTextLabel("Back", 648, 440, 64, 27));
+
+        cp.add(nameField);
+        cp.add(seasonField);
+        cp.add(typeField);
+        cp.add(startYearField);
+        cp.add(startMonthField);
+        cp.add(startDayField);
+        cp.add(endYearField);
+        cp.add(endMonthField);
+        cp.add(endDayField);
+        cp.add(submitBtn);
+        cp.add(backBtn);
+
+        submitBtn.addActionListener(e -> {
+            try {
+                String name = nameField.getText().trim();
+                String type = typeField.getText().trim();
+
+                if (name.isEmpty() || type.isEmpty() ||
+                        startYearField.getText().trim().isEmpty() ||
+                        startMonthField.getText().trim().isEmpty() ||
+                        startDayField.getText().trim().isEmpty() ||
+                        endYearField.getText().trim().isEmpty() ||
+                        endMonthField.getText().trim().isEmpty() ||
+                        endDayField.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "All fields are required!");
+                    return;
+                }
+
+                int seasonYear = Integer.parseInt(seasonField.getText().trim());
+                int startYear = Integer.parseInt(startYearField.getText().trim());
+                int startMonth = Integer.parseInt(startMonthField.getText().trim());
+                int startDay = Integer.parseInt(startDayField.getText().trim());
+
+                int endYear = Integer.parseInt(endYearField.getText().trim());
+                int endMonth = Integer.parseInt(endMonthField.getText().trim());
+                int endDay = Integer.parseInt(endDayField.getText().trim());
+
+
+                // Validate parts length
+                CustomTimestamp startDate = new CustomTimestamp(startYear, startMonth, startDay);
+                CustomTimestamp endDate = new CustomTimestamp(endYear, endMonth, endDay);
+
+                Tournament tournament = new Tournament(name, seasonYear, type, startDate, endDate);
+
+                // Clear fields
+                nameField.setText("");
+                seasonField.setText("");
+                typeField.setText("");
+                startYearField.setText("");
+                startMonthField.setText("");
+                startDayField.setText("");
+                endYearField.setText("");
+                endMonthField.setText("");
+                endDayField.setText("");
+
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(frame, "Invalid number format (Year or Date parts).");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frame, "Invalid Date Format. Use YYYY-MM-DD.");
+            }
+        });
+
+        backBtn.addActionListener(e -> tournamentDashboardPanel());
+
+        cp.revalidate();
+        cp.repaint();
+    }
+
+    // view all tournament
+    public void viewAllTournamentPanel(LinkedHashMap<String, String> information) {
+        cp = GUIUtil.createColorPanel("#CD5C33");
+        cp.setLayout(null);
+        frame.setContentPane(cp);
+
+        JLabel overlayBg = new JLabel(new ImageIcon("assets/tournament/view_all_overlay.png"));
+        overlayBg.setBounds(0, 0, 720, 480);
+
+        JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
+
+        // Use GUIUtil's scrolling panel logic
+        // x=0, yStart=-19, yGap=57, visibleCount=6 are standard from your Util example
+        JPanel scrollingPanel = GUIUtil.showScrollingPanel(information, -19, -3, 57, 6,
+                clicked -> {
+                    String[] parts = clicked.split("/", 2);
+                    String key = parts[0];
+                    controller.showTournament(Integer.parseInt(key));
+                });
+
+        scrollingPanel.setBounds(0, 0, frame.getWidth(), frame.getHeight());
+
+        cp.add(GUIUtil.createTextLabel("Back", 648, 440, 64, 27));
+        cp.add(backBtn);
+        cp.add(overlayBg);
+        cp.add(scrollingPanel);
+        cp.add(GUIUtil.createTextLabel("Tournament", 10, 50, 150, 40));
+
+        backBtn.addActionListener(e -> tournamentDashboardPanel());
+
+        cp.revalidate();
+        cp.repaint();
+    }
+
+    // view individual tournament
+    public void viewTournamentPanel(Tournament tournament) {
+        cp = GUIUtil.createColorPanel("#CD5C33");
+        cp.setLayout(null);
+        frame.setContentPane(cp);
+
+        JLabel id = GUIUtil.createText(String.valueOf(tournament.getTournamentID()), 410, 100, 92, 27);
+        JLabel name = GUIUtil.createText(tournament.getTournamentName(), 100, 140, 286, 27);
+        JLabel season = GUIUtil.createText(String.valueOf(tournament.getSeasonYear()), 100, 180, 100, 27);
+        JLabel type = GUIUtil.createText(tournament.getTournamentType(), 100, 220, 200, 27);
+        JLabel start = GUIUtil.createText(tournament.getStartDate().toStringDate(), 100, 260, 245, 27);
+        JLabel end = GUIUtil.createText(tournament.getEndDate().toStringDate(), 370, 260, 245, 27);
+
+        JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
+
+        cp.add(GUIUtil.createTextLabel("Tournament", 10, 50, 150, 40));
+        cp.add(GUIUtil.createTextLabel("Back", 648, 440, 64, 27));
+        cp.add(id);
+        cp.add(name);
+        cp.add(season);
+        cp.add(type);
+        cp.add(start);
+        cp.add(end);
+        cp.add(backBtn);
+
+        backBtn.addActionListener(e -> tournamentDashboardPanel());
+
+        cp.revalidate();
+        cp.repaint();
+    }
+
+    // search for update
+    public void searchUpdateTournamentPanel() {
+        cp = GUIUtil.createColorPanel("#CD5C33");
+        cp.setLayout(null);
+        frame.setContentPane(cp);
+
+        JButton submitBtn = GUIUtil.createIButton(528, 260, 98, 27);
+        JTextField field = GUIUtil.createTextField(142, 261, 367, 27);
+        JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
+
+        JLabel title = GUIUtil.createText("UPDATE", 180, 50, 500, 50);
+        cp.add(title);
+        title.setFont(new Font("Arial", Font.PLAIN, 50));
+        cp.add(GUIUtil.createTextLabel("ID:", 100, 261, 50, 27));
+        cp.add(GUIUtil.createTextLabel("SUBMIT", 528, 260, 98, 27));
+        cp.add(GUIUtil.createTextLabel("Back", 648, 440, 64, 27));
+        cp.add(submitBtn);
+        cp.add(field);
+        cp.add(backBtn);
+
+        submitBtn.addActionListener(e -> {
+            String input = field.getText().trim();
+            field.setText("");
+            try {
+                int id = Integer.parseInt(input);
+                if (!controller.updateTournamentView(id)) {
+                    JOptionPane.showMessageDialog(frame, "ID does not exist.");
+                }
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(frame, "Invalid ID number.");
+            }
+        });
+
+        backBtn.addActionListener(e -> tournamentDashboardPanel());
+
+        cp.revalidate();
+        cp.repaint();
+    }
+
+    // update form
+    public void updateTournamentPanel(Tournament tournament) {
+        cp = GUIUtil.createColorPanel("#CD5C33");
+        cp.setLayout(null);
+        frame.setContentPane(cp);
+
+        // Display current info
+        JLabel name = GUIUtil.createText(tournament.getTournamentName(), 100, 80, 300, 27);
+        JLabel season = GUIUtil.createText(String.valueOf(tournament.getSeasonYear()), 100, 120, 300, 27);
+        JLabel type = GUIUtil.createText(tournament.getTournamentType(), 100, 160, 300, 27);
+        JLabel start = GUIUtil.createText(tournament.getStartDate().toStringDate(), 100, 200, 300, 27);
+        JLabel end = GUIUtil.createText(tournament.getEndDate().toStringDate(), 100, 240, 300, 27);
+
+        GUIUtil.createWhiteLayer(cp, 550, 80, 36, 18);
+        GUIUtil.createWhiteLayer(cp, 550, 120, 36, 18);
+        GUIUtil.createWhiteLayer(cp, 550, 160, 36, 18);
+        GUIUtil.createWhiteLayer(cp, 550, 200, 36, 18);
+        GUIUtil.createWhiteLayer(cp, 550, 240, 36, 18);
+
+
+        // Buttons
+        JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
+        JButton saveBtn = GUIUtil.createIButton(570, 440, 64, 27);
+        JButton editName = GUIUtil.createIButton(550, 80, 36, 18);
+        JButton editSeason = GUIUtil.createIButton(550, 120, 36, 18);
+        JButton editType = GUIUtil.createIButton(550, 160, 36, 18);
+        JButton editStart = GUIUtil.createIButton(550, 200, 36, 18);
+        JButton editEnd = GUIUtil.createIButton(550, 240, 36, 18);
+
+        cp.add(GUIUtil.createTextLabel("Update", 570, 440, 64, 27));
+        cp.add(GUIUtil.createTextLabel("Back", 648, 440, 64, 27));
+
+        cp.add(name); cp.add(season); cp.add(type); cp.add(start); cp.add(end);
+        cp.add(backBtn); cp.add(saveBtn);
+        cp.add(editName); cp.add(editSeason); cp.add(editType); cp.add(editStart); cp.add(editEnd);
+
+        backBtn.addActionListener(e -> tournamentDashboardPanel());
+        saveBtn.addActionListener(e -> controller.updateTournament(tournament));
+
+        // Using a helper for input dialogs to keep it simple since we aren't making a full panel for each field
+        editName.addActionListener(e -> quickUpdate(tournament, "name", name));
+        editSeason.addActionListener(e -> quickUpdate(tournament, "season", season));
+        editType.addActionListener(e -> quickUpdate(tournament, "type", type));
+        editStart.addActionListener(e -> quickUpdate(tournament, "start", start));
+        editEnd.addActionListener(e -> quickUpdate(tournament, "end", end));
+
+        cp.revalidate();
+        cp.repaint();
+    }
+
+    // search id for delete
+    public void searchDeleteTournamentPanel() {
+        cp = GUIUtil.createColorPanel("#CD5C33");
+        cp.setLayout(null);
+        frame.setContentPane(cp);
+
+        JButton submitBtn = GUIUtil.createIButton(528, 260, 98, 27);
+        JTextField field = GUIUtil.createTextField(142, 261, 367, 27);
+        JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
+
+        JLabel title = GUIUtil.createText("DELETE", 180, 50, 500, 50);
+        cp.add(title);
+        title.setFont(new Font("Arial", Font.PLAIN, 50));
+        cp.add(GUIUtil.createTextLabel("ID:", 100, 261, 50, 27));
+        cp.add(GUIUtil.createTextLabel("SUBMIT", 528, 260, 98, 27));
+        cp.add(GUIUtil.createTextLabel("Back", 648, 440, 64, 27));
+        cp.add(submitBtn);
+        cp.add(field);
+        cp.add(backBtn);
+
+        submitBtn.addActionListener(e -> {
+            try {
+                int id = Integer.parseInt(field.getText().trim());
+                if (!controller.deleteTournamentView(id)) {
+                    JOptionPane.showMessageDialog(frame, "ID does not exist.");
+                }
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(frame, "Invalid ID number.");
+            }
+        });
+        backBtn.addActionListener(e -> tournamentDashboardPanel());
+
+        cp.revalidate();
+        cp.repaint();
+    }
+
+    // delete confirmation
+    public void deleteTournamentPanel(Tournament tournament) {
+        cp = GUIUtil.createColorPanel("#CD5C33");
+        cp.setLayout(null);
+        frame.setContentPane(cp);
+
+        JLabel name = GUIUtil.createText(tournament.getTournamentName(), 100, 199, 286, 27);
+        JLabel id = GUIUtil.createText(String.valueOf(tournament.getTournamentID()), 410, 199, 92, 27);
+
+        JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
+        JButton delBtn = GUIUtil.createIButton(521, 440, 113, 27);
+
+        cp.add(GUIUtil.createTextLabel("Delete", 521, 440, 113, 27));
+        cp.add(GUIUtil.createTextLabel("Back", 648, 440, 64, 27));
+
+        cp.add(name);
+        cp.add(id);
+        cp.add(backBtn);
+        cp.add(delBtn);
+
+        backBtn.addActionListener(e -> tournamentDashboardPanel());
+        delBtn.addActionListener(e -> {
+            controller.deleteTournament(tournament);
+            JOptionPane.showMessageDialog(frame, "Tournament deleted.");
+            tournamentDashboardPanel();
+        });
+
+        cp.revalidate();
+        cp.repaint();
+    }
+
+
+    // helper
+    private void quickUpdate(Tournament tournament, String field, JLabel label) {
+        String input = JOptionPane.showInputDialog(frame, "Enter new " + field + ":");
+        if (input == null || input.trim().isEmpty()) return;
+
+        try {
+            switch (field) {
+                case "name":
+                    tournament.setTournamentName(input);
+                    label.setText(input);
+                    break;
+                case "season":
+                    tournament.setSeasonYear(Integer.parseInt(input));
+                    label.setText(input);
+                    break;
+                case "type":
+                    tournament.setTournamentType(input);
+                    label.setText(input);
+                    break;
+                case "start":
+                    String[] parts = input.split("-");
+                    tournament.setStartDate(new CustomTimestamp(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2])));
+                    label.setText(input);
+                    break;
+                case "end":
+                    String[] eParts = input.split("-");
+                    tournament.setEndDate(new CustomTimestamp(Integer.parseInt(eParts[0]), Integer.parseInt(eParts[1]), Integer.parseInt(eParts[2])));
+                    label.setText(input);
+                    break;
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Invalid format!");
+        }
+    }
+
+    // report
+    public void viewReportTournamentPanel() {
+        cp = GUIUtil.createColorPanel("#CD5C33");
+        cp.setLayout(null);
+        frame.setContentPane(cp);
+
+        JButton generateBtn = GUIUtil.createIButton(259, 249, 200, 27);
+        JButton generatePdfBtn = GUIUtil.createIButton(259, 286, 200, 27);
+        JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
+
+        cp.add(generateBtn);
+        cp.add(generatePdfBtn);
+        cp.add(backBtn);
+
+        backBtn.addActionListener(e -> tournamentDashboardPanel());
+
+        cp.revalidate();
+        cp.repaint();
+    }
+
+    //ENTHUSIASTS DASHBOARD!!!!!!!
 
 	public void show() { frame.setVisible(true); }
 	public void hide() { frame.setVisible(false); }
-	public void dispose() { if(frame != null) frame.dispose(); }
+	public void dispose() { if(frame != null) frame.dispose();}
+
+
 }
 
 

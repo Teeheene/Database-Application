@@ -237,4 +237,13 @@ public class GUIUtil {
         return label;
     }
 
+    // create small white layer
+    public static JPanel createWhiteLayer(Container parent, int x, int y, int w, int h) {
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.WHITE);
+        panel.setBounds(x, y, w, h);
+        parent.add(panel);
+        return panel;
+    }
+
 }

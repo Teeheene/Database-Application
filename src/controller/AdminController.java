@@ -11,6 +11,7 @@ public class AdminController {
 
 	private EnthusiastManagement enthusiastModel;
 	private EngagementManagement engagementModel;
+    private TournamentManagement tournamentModel;
 
 	public AdminController() {}
 	public AdminController(GUIView prevView, GUIAdminView view) {
@@ -19,6 +20,7 @@ public class AdminController {
 
 		enthusiastModel = new EnthusiastManagement();
 		engagementModel = new EngagementManagement();
+        tournamentModel = new TournamentManagement();
 	}	
 
 	public void handleMenu(String option) {
@@ -27,6 +29,10 @@ public class AdminController {
 				System.out.println("Opening enthusiast dashboard...");
 				view.enthusiastDashboardPanel();
 				break;
+            case "tournament":
+                System.out.println("Opening tournament dashboard...");
+                view.tournamentDashboardPanel();
+                break;
 			case "exit":
 				view.dispose();
 				prevView.menuPanel();
@@ -148,5 +154,91 @@ public class AdminController {
 
 		return data;
 	}
+
+    // ========= TOURNAMENT============
+
+    public void handleTournament(String option) {
+        switch(option) {
+            case "home":
+                handleMenu("tournament");
+                break;
+            case "create":
+                view.createTournamentPanel();
+                break;
+            case "viewAll":
+                view.viewAllTournamentPanel(getTournamentInformation());
+                break;
+            case "update":
+                view.searchUpdateTournamentPanel();
+                break;
+            case "delete":
+                view.searchDeleteTournamentPanel();
+                break;
+            case "report":
+                view.viewReportTournamentPanel();
+                break;
+            case "exit":
+                view.dashboardPanel();
+                break;
+        }
+    }
+
+    // ========== Tournament CRUD logic ==========
+
+    public void addTournament(Tournament tournament) {
+        int newID = tournamentModel.addTournament(tournament);
+        tournament.setTournamentID(newID);
+    }
+
+    public void showTournament(int tournamentID) {
+        Tournament tournament = tournamentModel.searchTournamentByID(tournamentID);
+        view.viewTournamentPanel(tournament);
+    }
+
+    public boolean updateTournamentView(int tournamentID) {
+        Tournament tournament = tournamentModel.searchTournamentByID(tournamentID);
+        if(tournament == null) return false;
+        view.updateTournamentPanel(tournament);
+        return true;
+    }
+
+    public void updateTournament(Tournament updatedTournament) {
+        Tournament tournament = tournamentModel.updateTournament(updatedTournament);
+        view.viewTournamentPanel(tournament);
+    }
+
+    public boolean deleteTournamentView(int tournamentID) {
+        Tournament tournament = tournamentModel.searchTournamentByID(tournamentID);
+        if(tournament == null) return false;
+        view.deleteTournamentPanel(tournament);
+        return true;
+    }
+
+    public void deleteTournament(Tournament tournament) {
+        tournamentModel.deleteTournament(tournament.getTournamentID());
+    }
+
+    public LinkedHashMap<String, String> getTournamentInformation() {
+        LinkedHashMap<String, String> information = new LinkedHashMap<>();
+
+        for (Tournament t : tournamentModel.getTournaments()) {
+            if (t == null) continue;
+
+            String key = String.valueOf(t.getTournamentID());
+            String value = t.getTournamentName() + " - Season " + t.getSeasonYear() +
+                    " (" + t.getTournamentType() + ")";
+
+            information.put(key, value);
+        }
+
+        return information;
+    }
+
+
+
+
+
+
+
 }
 
