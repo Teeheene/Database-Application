@@ -3,7 +3,7 @@
 mkdir -p src/classes
 
 # Path to connector
-JAR_PATH="lib/mysql-connector-j-9.4.0.jar"
+MYSQL_JAR="lib/mysql-connector-j-9.4.0.jar"
 OPENPDF_CORE_JAR="lib/openpdf-3.0.1-SNAPSHOT.jar"
 OPENPDF_SWING_JAR="lib/pdf-swing-3.0.1-SNAPSHOT.jar"
 

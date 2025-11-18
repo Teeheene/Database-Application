@@ -118,7 +118,7 @@ INSERT INTO engagement (engagement_type, enthusiast_id, status) VALUES
 ('follow',7,true),
 ('like',7,true),
 ('follow',7,true),
-('like',7,1,true),
+('like',7,true),
 ('follow',7,true),
 ('like',7,true),
 ('follow',7,true),

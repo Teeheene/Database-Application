@@ -16,6 +16,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -612,47 +614,16 @@ public class GUIAdminView {
 		creationDate.setFont(creationDate.getFont().deriveFont(20f));
 		creationDate.setForeground(new Color(213,98,51));
 
-		/*
-		String[][] data = {
-			 {"a1", "b1", "c1", "a2", "b2", "c2", "a3", "b3", "c3"},
-			 {"a4", "b4", "c4", "a5", "b5", "c5", "a6", "b6", "c6"},
-			 {"a7", "b7", "c7", "a8", "b8", "c8", "a9", "b9", "c9"}
-		};
-		*/
 		String[][] data = controller.generateEnthusiastReport();
 		String[] columns = new String[data[0].length];
 		Arrays.fill(columns, "");
-	
 
 		JTable table = new JTable(data, columns);
 		table.setTableHeader(null);
 		table.setOpaque(false);
-		((DefaultTableCellRenderer)table.getDefaultRenderer(Object.class)).setOpaque(false);
 		table.setShowGrid(false);
-
-		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-		renderer.setOpaque(false);
-		renderer.setHorizontalAlignment(SwingConstants.LEFT);
-
-
-		for (int i = 0; i < table.getColumnCount(); i++) {
-			 table.getColumnModel().getColumn(i).setCellRenderer(renderer);
-		}
-
-
-		JScrollPane scroll = new JScrollPane(table);
-		scroll.setBounds(129,309,1663,690);
-		scroll.setOpaque(false);
-		scroll.getViewport().setOpaque(false);
-		scroll.getVerticalScrollBar().setOpaque(false);
-		scroll.getHorizontalScrollBar().setOpaque(false);
-		scroll.setBorder(BorderFactory.createEmptyBorder());
-
-		scroll.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
-		scroll.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
-
-
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
 		table.getColumnModel().getColumn(0).setPreferredWidth(97);
 		table.getColumnModel().getColumn(1).setPreferredWidth(367);
 		table.getColumnModel().getColumn(2).setPreferredWidth(120);
@@ -662,8 +633,23 @@ public class GUIAdminView {
 		table.getColumnModel().getColumn(6).setPreferredWidth(190);
 		table.getColumnModel().getColumn(7).setPreferredWidth(170);
 		table.getColumnModel().getColumn(8).setPreferredWidth(199);
-		table.setRowHeight(40);
 
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setOpaque(false);
+		renderer.setHorizontalAlignment(SwingConstants.LEFT);
+
+		JScrollPane scroll = new JScrollPane(table);
+		scroll.setBounds(129,309,1663,690);
+		scroll.setOpaque(false);
+		scroll.getViewport().setOpaque(false);
+		scroll.getVerticalScrollBar().setOpaque(false);
+		scroll.getHorizontalScrollBar().setOpaque(false);
+		scroll.setBorder(BorderFactory.createEmptyBorder());
+		scroll.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
+		scroll.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+
+		table.setRowHeight(40);
+		
 		reportsCp.add(scroll);
 		reportsCp.add(creationDate);
 		reportsCp.revalidate();
