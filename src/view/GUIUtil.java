@@ -99,7 +99,7 @@ public class GUIUtil {
 
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
-		button.setBorderPainted(false);
+		button.setBorderPainted(true);
 		button.setFocusPainted(false);
 
 		//debugging
@@ -235,6 +235,15 @@ public class GUIUtil {
         label.setHorizontalAlignment(SwingConstants.CENTER);
 
         return label;
+    }
+
+    // create small white layer
+    public static JPanel createWhiteLayer(Container parent, int x, int y, int w, int h) {
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.WHITE);
+        panel.setBounds(x, y, w, h);
+        parent.add(panel);
+        return panel;
     }
 
 }

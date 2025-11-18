@@ -1,161 +1,105 @@
 package controller;
 
-import model.Player;
-import model.PlayerManagement;
-import view.PlayerView;
-import view.CLIPlayerView;
+import model.*;
+import view.*;
+import javax.swing.JOptionPane;
 
 public class PlayerController {
+
+    private GUIView prevView;          // Main menu screen
+    private GUIPlayerView playerView;  // Player screen
     private PlayerManagement model;
-    private PlayerView view;
 
-    public PlayerController(PlayerManagement model/*, PlayerView view*/) {
-        this.model = model;
-        //this.view = view;
+    public PlayerController(GUIView prevView, GUIPlayerView view) {
+        this.prevView = prevView;
+        this.playerView = view;
+
+        this.model = new PlayerManagement();
     }
 
-    public void run() {
-        boolean running = true;
-
-        while (running) {
-            try {
-                view.displayMenu();
-                int choice = view.getMenuChoice();
-
-                switch (choice) {
-                    case 1:
-                        createPlayer();
-                        break;
-                    case 2:
-                        searchPlayer();
-                        break;
-                    case 3:
-                        updatePlayer();
-                        break;
-                    case 4:
-                        deletePlayer();
-                        break;
-                    case 5:
-                        displayAllPlayers();
-                        break;
-                    case 6:
-                        running = false;
-                        view.displayMessage("Thank you for using Player Management System!");
-                        break;
-                    default:
-                        view.displayError("Invalid choice. Please try again.");
-                }
-            } catch (Exception e) {
-                view.displayError("An error occurred: " + e.getMessage());
-            }
-        }
-        view.close();
+    /* ===========================================================
+        NAVIGATION / VIEW CONTROL
+       =========================================================== */
+    public void showPlayerProfile(Player p) {
+        playerView.profilePanel(p);
+        playerView.show();
     }
 
-    private void createPlayer() {
-		 //pls fix yo bugs ToT
-		 /*
+    public void handleBackToMenu() {
+        playerView.hide();
+        prevView.menuPanel();
+        prevView.show();
+    }
+
+    public void handleLogout() {
+        playerView.hide();
+        prevView.menuPanel();
+        prevView.show();
+    }
+
+    /* ===========================================================
+        CRUD OPERATIONS – rewritten for GUI use
+       =========================================================== */
+
+    // Called when GUI saves player updates
+    public void handleUpdate(Player updatedPlayer) {
         try {
-            Player newPlayer = view.getPlayerInput();
-            
-            Player existingPlayer = model.searchPlayer("id", String.valueOf(newPlayer.getPlayerID()));
-            if (existingPlayer != null) {
-                view.displayError("Player with ID " + newPlayer.getPlayerID() + " already exists.");
-                return;
-            }
-
-            model.addPlayer(newPlayer);
-            view.displayMessage("Player added successfully!");
-            view.displayPlayer(newPlayer);
-        } catch (Exception e) {
-            view.displayError("Failed to add player: " + e.getMessage());
-        }
-		  */
-    }
-
-    private void searchPlayer() {
-		 //update this
-		 /*
-        try {
-            String category = view.getSearchCategory();
-            String key = view.getSearchKey();
-            
-            Player player = model.searchPlayer(category, key);
-            view.displayPlayer(player);
-        } catch (Exception e) {
-            view.displayError("Failed to search player: " + e.getMessage());
-        }
-		  */
-    }
-
-    private void updatePlayer() {
-		 //update this
-		 /*
-        try {
-            view.displayMessage("Search for the player to update:");
-            String category = view.getSearchCategory();
-            String key = view.getSearchKey();
-            
-            Player oldPlayer = model.searchPlayer(category, key);
-            
-            if (oldPlayer == null) {
-                view.displayError("Player not found.");
-                return;
-            }
-
-            view.displayMessage("Current player details:");
-            view.displayPlayer(oldPlayer);
-
-            if (view.confirmAction("update this player")) {
-                Player updatedInfo = view.getPlayerUpdateInput();
-                Player updatedPlayer = model.updatePlayer(oldPlayer, updatedInfo);
-                
-                view.displayMessage("Player updated successfully!");
-                view.displayPlayer(updatedPlayer);
+            Player result = model.updatePlayer(updatedPlayer);
+            if (result != null) {
+                JOptionPane.showMessageDialog(null, "Player updated successfully!");
+                playerView.profilePanel(result);     // Refresh
             } else {
-                view.displayMessage("Update cancelled.");
+                JOptionPane.showMessageDialog(null, "Database update failed.");
             }
         } catch (Exception e) {
-            view.displayError("Failed to update player: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error updating: " + e.getMessage());
         }
-		  */
     }
 
-    private void deletePlayer() {
-		 //update this
-		 /*
+    // Called by deletePanel()
+    public void handleDelete(Player p) {
+    try {
+        model.deletePlayer(p.getPlayerID());   // void
+        playerView.displayMessage("Player deleted successfully!");
+    } catch (Exception e) {
+        playerView.displayError("Error deleting player: " + e.getMessage());
+    }
+}
+
+    /* ===========================================================
+        SEARCH → show profile
+       =========================================================== */
+    public void handleSearchPlayer(int playerID) {
         try {
-            view.displayMessage("Search for the player to delete:");
-            String category = view.getSearchCategory();
-            String key = view.getSearchKey();
-            
-            Player player = model.searchPlayer(category, key);
-            
-            if (player == null) {
-                view.displayError("Player not found.");
-                return;
-            }
-
-            view.displayMessage("Player found:");
-            view.displayPlayer(player);
-
-            if (view.confirmAction("delete this player")) {
-                model.deletePlayer(player);
-                view.displayMessage("Player deleted successfully!");
+            Player p = model.searchPlayer(playerID);
+            if (p != null) {
+                showPlayerProfile(p);
             } else {
-                view.displayMessage("Deletion cancelled.");
+                JOptionPane.showMessageDialog(null, "Player not found.");
             }
         } catch (Exception e) {
-            view.displayError("Failed to delete player: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Search error: " + e.getMessage());
         }
-		  */
     }
 
-    private void displayAllPlayers() {
+    /* ===========================================================
+        CREATE PLAYER – GUI version (uses a dialog)
+       =========================================================== */
+    public void handleCreatePlayer(Player newPlayer) {
         try {
-            view.displayPlayers(model.getAllPlayers());
+            int newID = model.addPlayer(newPlayer);
+
+            if (newID > 0) {
+                newPlayer.setPlayerID(newID);
+                JOptionPane.showMessageDialog(null, "Player created! ID = " + newID);
+
+                showPlayerProfile(newPlayer);
+            } else {
+                JOptionPane.showMessageDialog(null, "Create failed.");
+            }
         } catch (Exception e) {
-            view.displayError("Failed to display players: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
     }
+
 }

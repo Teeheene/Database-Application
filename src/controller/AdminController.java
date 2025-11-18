@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.LinkedHashMap;
+import java.util.Comparator;
 import java.util.ArrayList;
 import model.*;
 import view.*;
@@ -12,14 +13,21 @@ public class AdminController {
 	private EnthusiastManagement enthusiastModel;
 	private EngagementManagement engagementModel;
 	private ReportsManagement reportModel;
+   private TournamentManagement tournamentModel;
+	private PlayerManagement playerModel;
 
 	public AdminController() {}
 	public AdminController(GUIView prevView, GUIAdminView view) {
 		this.prevView = prevView;
 		this.view = view;	
 
+		//core
 		enthusiastModel = new EnthusiastManagement();
+		playerModel = new PlayerManagement();
+		//transactions
 		engagementModel = new EngagementManagement();
+		tournamentModel = new TournamentManagement();
+		//reports
 		reportModel = new ReportsManagement();
 	}	
 
@@ -29,6 +37,14 @@ public class AdminController {
 				System.out.println("Opening enthusiast dashboard...");
 				view.enthusiastDashboardPanel();
 				break;
+			case "player":
+				System.out.println("Opening player dashboard...");
+				view.playerDashboardPanel();
+			    break;
+            case "tournament":
+                System.out.println("Opening tournament dashboard...");
+                view.tournamentDashboardPanel();
+                break;
 			case "exit":
 				view.dispose();
 				prevView.menuPanel();
@@ -154,5 +170,161 @@ public class AdminController {
 	public boolean generatePdfEnthusiastReport() {
 		return reportModel.engagementReport(generateEnthusiastReport());	
 	}
+
+	//PLAYER===========================================
+	public ArrayList<Player> getPlayerInformation() {
+
+		ArrayList<Player> players = new ArrayList<>();
+        for(Player p : playerModel.getAllPlayers()){
+			if(p == null) {continue;}
+			players.add(p);
+		}
+		players.sort(Comparator.comparingInt(Player::getPlayerID));
+		return players;
+	}
+
+	public void addPlayer(Player player) {
+		playerModel.addPlayer(player);
+	}
+
+	public void togglePlayer(Player player) {
+		playerModel.togglePlayer(player.getPlayerID());
+	}
+
+	public void showPlayer(int ID) {
+		Player player = playerModel.searchPlayer(ID);
+		view.viewPlayerPanel(player);
+	}
+
+	public boolean updatePlayerView(int ID) {
+		Player player = playerModel.searchPlayer(ID);
+		if(player == null) return false; 
+		view.updatePlayerPanel(player);
+		return true;
+	}
+	
+	public void updatePlayer(Player updatedPlayer) {
+		Player player = playerModel.updatePlayer(updatedPlayer);
+		view.viewPlayerPanel(player);
+	}
+		
+	public boolean deletePlayerView(int ID) {
+		Player player = playerModel.searchPlayer(ID);
+		if(player == null) return false; 
+		view.deletePlayerPanel(player);
+		return true;
+	}
+	
+	public void deletePlayer(Player player) {
+		playerModel.deletePlayer(player.getPlayerID());
+	}
+
+	public int generatePlayerID() {
+		return playerModel.generatePlayerID();
+	}
+    public void handlePlayer(String option) {
+		switch(option) {
+			case "home":
+				handleMenu("player");
+				break;
+			case "create":
+				view.createPlayerPanel();
+				break;
+			case "viewAll":
+				view.viewAllPlayerPanel(getPlayerInformation());
+				break;
+			case "update":
+				view.searchUpdatePlayerPanel();
+				break;
+			case "delete":
+				view.searchDeletePlayerPanel();
+				break;
+			case "report":
+				view.viewReportPlayerPanel();
+				break;
+			case "exit":
+				view.dashboardPanel();
+				break;
+		}
+	}
+
+    // ========= TOURNAMENT============
+
+    public void handleTournament(String option) {
+        switch(option) {
+            case "home":
+                handleMenu("tournament");
+                break;
+            case "create":
+                view.createTournamentPanel();
+                break;
+            case "viewAll":
+                view.viewAllTournamentPanel(getTournamentInformation());
+                break;
+            case "update":
+                view.searchUpdateTournamentPanel();
+                break;
+            case "delete":
+                view.searchDeleteTournamentPanel();
+                break;
+            case "report":
+                view.viewReportTournamentPanel();
+                break;
+            case "exit":
+                view.dashboardPanel();
+                break;
+        }
+    }
+
+    // ========== Tournament CRUD logic ==========
+
+    public void addTournament(Tournament tournament) {
+        int newID = tournamentModel.addTournament(tournament);
+        tournament.setTournamentID(newID);
+    }
+
+    public void showTournament(int tournamentID) {
+        Tournament tournament = tournamentModel.searchTournamentByID(tournamentID);
+        view.viewTournamentPanel(tournament);
+    }
+
+    public boolean updateTournamentView(int tournamentID) {
+        Tournament tournament = tournamentModel.searchTournamentByID(tournamentID);
+        if(tournament == null) return false;
+        view.updateTournamentPanel(tournament);
+        return true;
+    }
+
+    public void updateTournament(Tournament updatedTournament) {
+        Tournament tournament = tournamentModel.updateTournament(updatedTournament);
+        view.viewTournamentPanel(tournament);
+    }
+
+    public boolean deleteTournamentView(int tournamentID) {
+        Tournament tournament = tournamentModel.searchTournamentByID(tournamentID);
+        if(tournament == null) return false;
+        view.deleteTournamentPanel(tournament);
+        return true;
+    }
+
+    public void deleteTournament(Tournament tournament) {
+        tournamentModel.deleteTournament(tournament.getTournamentID());
+    }
+
+    public LinkedHashMap<String, String> getTournamentInformation() {
+        LinkedHashMap<String, String> information = new LinkedHashMap<>();
+
+        for (Tournament t : tournamentModel.getTournaments()) {
+            if (t == null) continue;
+
+            String key = String.valueOf(t.getTournamentID());
+            String value = t.getTournamentName() + " - Season " + t.getSeasonYear() +
+                    " (" + t.getTournamentType() + ")";
+
+            information.put(key, value);
+        }
+
+        return information;
+    }
 }
 
