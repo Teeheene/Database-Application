@@ -4,16 +4,18 @@ import model.*;
 import controller.*;
 import util.*;
 
+//time
 import java.time.LocalDate;
 import java.time.format.TextStyle;
+import java.time.DateTimeException;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+//utils
 import java.util.Locale;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Arrays;
-import java.time.LocalDate;
-import java.time.DateTimeException;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+//gui
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
@@ -588,6 +590,12 @@ public class GUIAdminView {
 		cp.add(backBtn);
 
 		generateBtn.addActionListener(e -> generateReport());
+		generatePdfBtn.addActionListener(e -> {
+			if(controller.generatePdfEnthusiastReport())
+				JOptionPane.showMessageDialog(frame, "Succesfully Generated PDF!");
+			else 
+				JOptionPane.showMessageDialog(frame, "Something went wrong.");
+		});
 		backBtn.addActionListener(e -> enthusiastDashboardPanel());
 
 		cp.revalidate();
@@ -655,7 +663,7 @@ public class GUIAdminView {
 		reportsCp.revalidate();
 		reportsCp.repaint();
 	}
-	
+
 	//ENTHUSIASTS DASHBOARD!!!!!!!
 
 	public void show() { frame.setVisible(true); }

@@ -11,6 +11,7 @@ public class AdminController {
 
 	private EnthusiastManagement enthusiastModel;
 	private EngagementManagement engagementModel;
+	private ReportsManagement reportModel;
 
 	public AdminController() {}
 	public AdminController(GUIView prevView, GUIAdminView view) {
@@ -19,6 +20,7 @@ public class AdminController {
 
 		enthusiastModel = new EnthusiastManagement();
 		engagementModel = new EngagementManagement();
+		reportModel = new ReportsManagement();
 	}	
 
 	public void handleMenu(String option) {
@@ -147,6 +149,10 @@ public class AdminController {
 		}
 
 		return data;
+	}
+
+	public boolean generatePdfEnthusiastReport() {
+		return reportModel.engagementReport(generateEnthusiastReport());	
 	}
 }
 

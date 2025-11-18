@@ -365,19 +365,17 @@ public class EngagementManagement {
 				"SELECT COUNT(*) AS cnt " + 
 				"FROM engagement e " +
 				"JOIN engagement_player ep ON e.engagement_id = ep.engagement_id " +
-				"WHERE e.enthusiast_id = ? " +
-
+				"WHERE e.enthusiast_id = ? AND e.status = true " +
 				 "UNION ALL " +
-
 				 "SELECT COUNT(*) " +
 				 "FROM engagement e " +
 				 "JOIN engagement_coach ec ON e.engagement_id = ec.engagement_id " +
-				 "WHERE e.enthusiast_id = ? " +
+				 "WHERE e.enthusiast_id = ?  AND e.status = true " +
 				 "UNION ALL " +
 				 "SELECT COUNT(*) " +
 				 "FROM engagement e " +
 				 "JOIN engagement_tournament et ON e.engagement_id = et.engagement_id " +
-				 "WHERE e.enthusiast_id = ? " +
+				 "WHERE e.enthusiast_id = ?  AND e.status = true " +
 			") AS sub";
 
 		try(Connection conn = DatabaseConnection.getConnection();
