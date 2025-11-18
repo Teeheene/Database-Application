@@ -753,7 +753,7 @@ public class GUIAdminView {
 		JButton sexM = GUIUtil.createIButton(485,359,40,27);
 		JButton sexOther = GUIUtil.createIButton(530,359,71,27);
 		JTextField rStatusField = GUIUtil.createTextField(445,410,139,27);
-		JButton submitBtn = GUIUtil.createIButton(110,410,486,27);
+		JButton submitBtn = GUIUtil.createIButton(575,440,64,27);
 		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
 
 		cp.add(lastNameField);
