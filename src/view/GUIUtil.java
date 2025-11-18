@@ -99,7 +99,7 @@ public class GUIUtil {
 
 		button.setOpaque(false);
 		button.setContentAreaFilled(false);
-		button.setBorderPainted(false);
+		button.setBorderPainted(true);
 		button.setFocusPainted(false);
 
 		//debugging
@@ -217,4 +217,24 @@ public class GUIUtil {
 
 		return cp;
 	}
+
+    // create background color
+    public static JPanel createColorPanel(String hex) {
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.decode(hex));
+        return panel;
+    }
+
+    // create text label
+    public static JLabel createTextLabel(String text, int x, int y, int w, int h) {
+        JLabel label = new JLabel(text);
+        label.setBounds(x, y, w, h);
+
+        label.setForeground(Color.BLACK);
+        label.setFont(new Font("Arial", Font.BOLD, 18));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+
+        return label;
+    }
+
 }
