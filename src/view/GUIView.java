@@ -350,6 +350,68 @@ public class GUIView {
 		cp.revalidate();
 		cp.repaint();
 	}
+	public void playerLoginPanel(){
+		cp = BackgroundPanel.create("assets/login/login_player.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JButton homeBtn = GUIUtil.createIButton(11,6,100,40);
+		JButton adminBtn = GUIUtil.createIButton(441,0,86,53);
+		JButton loginBtn = GUIUtil.createIButton(527,0,76,53);
+		JButton registerBtn = GUIUtil.createIButton(603,0,104,53);
+		JButton submitBtn = GUIUtil.createIButton(528,260,98,27);
+		JTextField field = GUIUtil.createTextField(142,261,366,27);
+
+		cp.add(homeBtn);
+		cp.add(adminBtn);
+		cp.add(loginBtn);
+		cp.add(registerBtn);
+		cp.add(submitBtn);
+		cp.add(field);
+
+		homeBtn.addActionListener(e -> menuPanel());
+		adminBtn.addActionListener(e -> controller.handleMenu("admin"));
+		loginBtn.addActionListener(e -> controller.handleMenu("login"));
+		registerBtn.addActionListener(e -> controller.handleMenu("register"));
+		submitBtn.addActionListener(e -> {
+			String input = field.getText();
+			field.setText("");
+
+			try {
+				int id = Integer.parseInt(input);
+				if(!controller.handlePlayerLogin(id)) {
+					JOptionPane.showMessageDialog(frame, "ID does not exist.");
+				}
+			} catch(NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(frame, "Invalid ID number.");
+			}
+		});
+
+		//field when 'enter' pressed, accepts input to password
+		field.requestFocusInWindow();
+		field.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					String input = field.getText();
+					field.setText("");
+
+					try {
+						int id = Integer.parseInt(input);
+						if(!controller.handlePlayerLogin(id)) {
+							JOptionPane.showMessageDialog(frame, "ID does not exist.");
+						}
+					} catch(NumberFormatException nfe) {
+						JOptionPane.showMessageDialog(frame, "Invalid ID number.");
+					}
+				}
+			}
+		});
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
 // fix a bit design and logic
     public void tournamentRegisterPanel() {
         cp = GUIUtil.createColorPanel("#CD5C33");
