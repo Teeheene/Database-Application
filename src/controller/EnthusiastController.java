@@ -83,7 +83,7 @@ public class EnthusiastController {
 					break;
 				case "tournament":
 					Tournament t = new TournamentManagement().searchTournamentByID(e.getTargetID()); 
-					value = "[tournament] Season " + t.getSeasonYear() + " " + t.getTournamentType(); 
+					value = "[tournament] \"" + t.getTournamentName() + "\" Season " + t.getSeasonYear() + " " + t.getTournamentType(); 
 					break;
 			}
 
@@ -118,7 +118,7 @@ public class EnthusiastController {
 					break;
 				case "tournament":
 					Tournament t = new TournamentManagement().searchTournamentByID(e.getTargetID()); 
-					value = "[tournament] Season " + t.getSeasonYear() + " " + t.getTournamentType(); 
+					value = "[tournament] \"" + t.getTournamentName() + "\" Season " + t.getSeasonYear() + " " + t.getTournamentType(); 
 					break;
 			}
 

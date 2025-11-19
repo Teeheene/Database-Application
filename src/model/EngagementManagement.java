@@ -235,6 +235,7 @@ public class EngagementManagement {
 		//thats the feed for enthusiast
 		try(Connection conn = DatabaseConnection.getConnection();
 			Statement statement = conn.createStatement()) {
+			statement.executeUpdate("DROP TABLE IF EXISTS all_ids");
 			statement.executeUpdate(sql);
 			System.out.println("Successfully created table");
 

@@ -18,9 +18,7 @@ public class MainController {
 	private PlayerManagement playerModel;
 	private PlayerController playerController;
     //tournament
-    private GUITournamentView tournamentView;
     private TournamentManagement tournamentModel;
-    private TournamentController tournamentController;
 
 	public MainController(GUIView view) {
 		//gui inits
@@ -37,7 +35,7 @@ public class MainController {
 		playerModel = new PlayerManagement();
 		playerController = new PlayerController(view, playerView);
 
-        tournamentModel = new TournamentManagement();
+      tournamentModel = new TournamentManagement();
 	}
 	
 	public void handleMenu(String option) {

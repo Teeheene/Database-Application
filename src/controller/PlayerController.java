@@ -20,7 +20,6 @@ public class PlayerController {
         this.playerView = view;
 
         this.model = new PlayerManagement();
-        this.playerView.setListeners(this);   // Connect GUI to controller
         this.registrationModel = new RegistrationManagement();
         this.teamModel = new TeamManagement();
     }
