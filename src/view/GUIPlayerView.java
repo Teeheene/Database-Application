@@ -22,6 +22,13 @@ public class GUIPlayerView {
     private PlayerController controller;
     private Player player; 
 
+    private CoachManagement coachModel;
+    private Coach coach;
+    private GameManagement gameModel;
+    private Game game;
+
+
+
     public GUIPlayerView() {}
 
     public void start() {
@@ -49,7 +56,7 @@ public class GUIPlayerView {
         // FIX: Corrected getPLayerID() -> getPlayerID()
         JLabel id = GUIUtil.createText(String.valueOf(player.getPlayerID()),416,205,92,27);
         // FIX: Corrected getSex() -> getGender()
-        JLabel sex = GUIUtil.createText(String.valueOf(player.getGender()),532,205,87,27); 
+        JLabel sex = GUIUtil.createText(String.valueOf(player.getSex()),532,205,87,27); 
         JLabel fullname = GUIUtil.createText(player.getFullName(),105,261,514,27);
         JLabel birthday = GUIUtil.createText(player.getDateOfBirth(),106,318,243,27);
         JLabel height = GUIUtil.createText(String.valueOf(player.getHeight()) + " cm",368,318,125,27);
@@ -98,7 +105,7 @@ public class GUIPlayerView {
         JLabel birthday = GUIUtil.createText(player.getDateOfBirth(),100,346,245,27);
         
         // FIX 2: Corrected getSex() to getGender()
-        JLabel sex = GUIUtil.createText(String.valueOf(player.getGender()),526,199,89,27);
+        JLabel sex = GUIUtil.createText(String.valueOf(player.getSex()),526,199,89,27);
         JLabel height = GUIUtil.createText(String.valueOf(player.getHeight()) + " cm",310,346,125,27);
         JLabel weight = GUIUtil.createText(String.valueOf(player.getWeight()) + " kg",521,346,98,27);
         
