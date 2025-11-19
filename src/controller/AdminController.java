@@ -25,10 +25,10 @@ public class AdminController {
 		//core
 		enthusiastModel = new EnthusiastManagement();
 		playerModel = new PlayerManagement();
+		coachModel = new CoachManagement();
 		//transactions
 		engagementModel = new EngagementManagement();
 		tournamentModel = new TournamentManagement();
-		coachModel = new CoachManagement();
 		//reports
 		reportModel = new ReportsManagement();
 	}	
