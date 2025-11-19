@@ -15,6 +15,7 @@ public class AdminController {
 	private ReportsManagement reportModel;
     private TournamentManagement tournamentModel;
 	private PlayerManagement playerModel;
+	private CoachManagement coachModel;
 
 	public AdminController() {}
 	public AdminController(GUIView prevView, GUIAdminView view) {
@@ -27,6 +28,7 @@ public class AdminController {
 		//transactions
 		engagementModel = new EngagementManagement();
 		tournamentModel = new TournamentManagement();
+		coachModel = new CoachManagement();
 		//reports
 		reportModel = new ReportsManagement();
 	}	
@@ -170,6 +172,106 @@ public class AdminController {
 	public boolean generatePdfEnthusiastReport() {
         return reportModel.engagementReport(generateEnthusiastReport());
 	}
+
+	// ------------------ COACH -------------------
+	public void handleCoach(String option) {
+		switch (option) {
+			case "home":
+				handleMenu("coach");
+				break;
+			case "create":
+				view.createCoachPanel();
+				break;
+			case "viewAll":
+				view.viewAllCoachesPanel(getCoachInformation("all"));
+				break;
+			case "viewCurrent":
+				view.viewAllCoachesPanel(getCoachInformation("current"));
+				break;
+			case "viewPast":
+				view.viewAllCoachesPanel(getCoachInformation("past"));
+				break;
+			case "update":
+				view.searchUpdateCoachPanel();
+				break;
+			case "delete":
+				view.searchDeleteCoachPanel();
+				break;
+			case "report":
+				view.viewReportCoachPanel();
+				break;
+			case "exit":
+				view.dashboardPanel();
+				break;
+		}
+	}
+
+	public void addCoach(Coach coach) {
+		coachModel.addCoach(coach);
+	}
+
+	public void showCoach(int ID, String status) {
+		Coach coach = coachModel.searchCoach(ID);
+		view.viewCoachPanel(coach, status, "viewAll");
+	}
+
+	public boolean updateCoachView(int ID) {
+		Coach coach = coachModel.searchCoach(ID);
+		if(coach == null)
+			return false;
+		view.updateCoachPanel(coach);
+		return true;
+	}
+
+	public void updateCoach(Coach updatedCoach) {
+		Coach coach = coachModel.updateCoach(updatedCoach);
+		String status;
+		if(updatedCoach.isInGameStatus())
+			status = "current";
+		else
+			status = "past";
+		view.viewCoachPanel(coach, status, "home");
+	}
+
+	public boolean deleteCoachView(int ID) {
+		Coach coach = coachModel.searchCoach(ID);
+		if(coach == null) return false;
+		view.deleteCoachPanel(coach);
+		return true;
+	}
+
+	public LinkedHashMap<String, String> getCoachInformation(String status) {
+		LinkedHashMap<String, String> info = new LinkedHashMap<>();
+
+		for(Coach c : coachModel.getAllCoaches()) {
+			if(c == null)
+				continue;
+
+			String key = String.valueOf(c.getCoachID());
+			key += "-";
+			if(c.isInGameStatus())
+				key += "current";
+			else
+				key += "past";
+			if(status.equals("current") && !c.isInGameStatus())
+				continue;
+
+			if(status.equals("past") && c.isInGameStatus())
+				continue;
+
+			String value = c.getInfo();
+			info.put(key, value);
+			System.out.println(c.getInfo());
+		}
+
+		return info;
+	}
+
+	public void deleteCoach(Coach coach) {
+		coachModel.deleteCoach(coach.getCoachID());
+	}
+
+	// ---------------------------------------------
 
 	//PLAYER===========================================
 	public ArrayList<Player> getPlayerInformation() {
