@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import util.*;
 
 public class Coach {
@@ -11,9 +10,19 @@ public class Coach {
     private CustomTimestamp birthday;
     private String gender;
     private int startYear;
-    private int endYear;
+    private Integer endYear;
     private boolean inGameStatus;
-    private ArrayList<Player> team;
+
+    public Coach(String lastName, String firstName, String middleName, String gender, CustomTimestamp birthday, int startYear, Integer endYear) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.startYear = startYear;
+        this.endYear = endYear;
+        this.inGameStatus = (endYear == null);
+    }
 
     public Coach(int coachID, String lastName, String firstName, String middleName,
                  String birthday, String gender, int startYear, int endYear,
@@ -26,7 +35,6 @@ public class Coach {
         this.startYear = startYear;
         this.endYear = endYear;
         this.inGameStatus = inGameStatus;
-        this.team = new ArrayList<>();
 		  
 		String[] dateTokens = birthday.split("-");
 		this.birthday = new CustomTimestamp(
@@ -43,11 +51,6 @@ public class Coach {
         if(other.getBirthday() != null) { this.birthday = other.getBirthday(); }
         if(other.getGender() != null) { this.gender = other.getGender(); }
         this.inGameStatus = other.isInGameStatus();
-    }
-
-    public void addPlayerToTeam(Player player) {
-        if(player != null)
-            team.add(player);
     }
 	
 	public String toHtmlString() {
@@ -69,16 +72,29 @@ public class Coach {
     public String getFirstName() { return firstName; }
     public String getMiddleName() { return middleName; }
     public String getLastName() { return lastName; }
+    public String getFullName() { return firstName + " " + middleName + " " + lastName; }
     public CustomTimestamp getBirthday() { return birthday; }
     public String getGender() { return gender; }
     public int getStartYear() { return startYear; }
-    public int getEndYear() { return endYear; }
+    public Integer getEndYear() {
+        return endYear;
+    }
     public boolean isInGameStatus() { return inGameStatus; }
+
+    public String getInfo() {
+        return("[ID " + String.valueOf(coachID) + "] " + lastName + ", " + firstName);
+    }
 
     public void setFirstName(String firstName) { this.firstName = firstName; }
     public void setMiddleName(String middleName) { this.middleName = middleName; }
     public void setLastName(String lastName) { this.lastName = lastName; }
     public void setBirthday(CustomTimestamp birthday) { this.birthday = birthday; }
     public void setGender(String gender) { this.gender = gender; }
-    public void setInGameStatus(boolean inGameStatus) { this.inGameStatus = inGameStatus; }
+    public void setStartYear(int year) { this.startYear = year; }
+    public void setEndYear(Integer year) {
+        this.endYear = year;
+    }
+    public void setInGameStatus(boolean inGameStatus) {
+        this.inGameStatus = inGameStatus;
+    }
 }

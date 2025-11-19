@@ -11,20 +11,22 @@ public class CoachManagement {
     }
 
     public int addCoach(Coach coach) {
-        String sql = "INSERT INTO coach (coach_id, lastname, firstname, middlename, sex, date_of_birth, start_year, end_year, status) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO coach (lastname, firstname, middlename, sex, date_of_birth, start_year, end_year, status) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, coach.getCoachID());
-            statement.setString(2, coach.getLastName());
-            statement.setString(3, coach.getFirstName());
-            statement.setString(4, coach.getMiddleName());
+            statement.setString(1, coach.getLastName());
+            statement.setString(2, coach.getFirstName());
+            statement.setString(3, coach.getMiddleName());
+            statement.setString(4, String.valueOf(coach.getGender()));
             statement.setDate(5, Date.valueOf(coach.getBirthday().toStringDate()));
-            statement.setString(6, String.valueOf(coach.getGender()));
-            statement.setInt(7, coach.getStartYear());
-            statement.setInt(8, coach.getEndYear());
-            statement.setBoolean(9, coach.isInGameStatus());
+            statement.setInt(6, coach.getStartYear());
+            if(coach.getEndYear() == null)
+                statement.setNull(7, Types.INTEGER);
+            else
+                statement.setInt(7, coach.getEndYear());
+            statement.setBoolean(8, coach.isInGameStatus());
 
             int affectedRows = statement.executeUpdate();
 
@@ -63,32 +65,86 @@ public class CoachManagement {
         }
     }
 
-    public Coach updateCoach(Coach oldCoach, Coach newCoach) {
-        String sql = "UPDATE coach SET lastname = ?, firstname = ?, middlename = ?, date_of_birth = ?, sex = ?, status = ?";
+    public Coach updateCoach(Coach coach) {
+        String sql = "UPDATE coach SET " +
+                "lastname = ?, " +
+                "firstname = ?, " +
+                "middlename = ?, " +
+                "date_of_birth = ?, " +
+                "sex = ?, " +
+                "start_year = ?, " +
+                "end_year = ? " +
+                "WHERE coach_id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, newCoach.getCoachID());
-            statement.setString(2, newCoach.getLastName());
-            statement.setString(3, newCoach.getFirstName());
-            statement.setString(4, newCoach.getMiddleName());
-            statement.setDate(5, Date.valueOf(newCoach.getBirthday().toStringDate()));
-            statement.setString(6, String.valueOf(newCoach.getGender()));
-            statement.setInt(7, newCoach.getStartYear());
-            statement.setInt(8, newCoach.getEndYear());
-            statement.setBoolean(9, newCoach.isInGameStatus());
+            statement.setString(1, coach.getLastName());
+            statement.setString(2, coach.getFirstName());
+            statement.setString(3, coach.getMiddleName());
+            statement.setDate(4, Date.valueOf(coach.getBirthday().toStringDate()));
+            statement.setString(5, coach.getGender());
+            statement.setInt(6, coach.getStartYear());
+            if(coach.getEndYear() == null) {
+                statement.setNull(7, Types.INTEGER);
+                updateCoachToCurrentStatus(coach);
+            }
+            else {
+                statement.setInt(7, coach.getEndYear());
+                updateCoachToPastStatus(coach);
+            }
+            statement.setInt(8, coach.getCoachID());
 
             int updatedRows = statement.executeUpdate();
 
             if (updatedRows > 0)
                 System.out.println("Coach successfully updated.");
             else
-                System.out.println("No coach found.");
+                System.out.println("Update failed.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return searchCoach(oldCoach.getCoachID());
+        return coach;
+    }
+
+    public void updateCoachToPastStatus(Coach coach) {
+        String sql = "UPDATE coach SET " +
+                    "status = ? " +
+                    "WHERE coach_id = ? AND end_year IS NULL";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setBoolean(1, false);
+            statement.setInt(2, coach.getCoachID());
+
+            int updatedRows = statement.executeUpdate();
+            if (updatedRows > 0)
+                System.out.println("Status successfully updated.");
+            else
+                System.out.println("Status update failed.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCoachToCurrentStatus(Coach coach) {
+        String sql = "UPDATE coach SET " +
+                "status = ? " +
+                "WHERE coach_id = ? AND end_year IS NOT NULL";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setBoolean(1, true);
+            statement.setInt(2, coach.getCoachID());
+
+            int updatedRows = statement.executeUpdate();
+            if (updatedRows > 0)
+                System.out.println("Status successfully updated.");
+            else
+                System.out.println("Status update failed.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Coach searchCoach(int coach_id) {
@@ -151,5 +207,17 @@ public class CoachManagement {
         }
 
         return coaches;
+    }
+
+    public void toggleCoach(int ID) {
+        String sql = "UPDATE coach SET status = CASE WHEN status = true THEN false ELSE true END WHERE coach_id = ?";
+
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setInt(1, ID);
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
