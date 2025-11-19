@@ -278,6 +278,7 @@ public class AdminController {
 	// ---------------------------------------------
 
 	//PLAYER===========================================
+	//PLAYER CONTROLLER CALLS
 	public ArrayList<Player> getPlayerInformation() {
 
 		ArrayList<Player> players = new ArrayList<>();
