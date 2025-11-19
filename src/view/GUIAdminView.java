@@ -2177,10 +2177,17 @@ public class GUIAdminView {
         cp.setLayout(null);
         frame.setContentPane(cp);
 
+        JLabel title = GUIUtil.createText("REPORT", 180, 50, 500, 50);
+        cp.add(title);
+        title.setFont(new Font("Arial", Font.PLAIN, 50));
+
         JButton generateBtn = GUIUtil.createIButton(259, 249, 200, 27);
         JButton generatePdfBtn = GUIUtil.createIButton(259, 286, 200, 27);
         JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
 
+        cp.add(GUIUtil.createTextLabel("Generate Report", 259, 249, 200, 27));
+        cp.add(GUIUtil.createTextLabel("Export Report", 259, 286, 200, 27));
+        cp.add(GUIUtil.createTextLabel("Back", 648, 440, 64, 27));
         cp.add(generateBtn);
         cp.add(generatePdfBtn);
         cp.add(backBtn);
@@ -2189,6 +2196,10 @@ public class GUIAdminView {
 
         cp.revalidate();
         cp.repaint();
+    }
+
+    public void generateTournamentReport () {
+
     }
 
 
