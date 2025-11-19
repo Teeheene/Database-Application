@@ -1409,7 +1409,7 @@ public class GUIAdminView {
         JLabel height = GUIUtil.createText(String.valueOf(player.getHeight()),100,199,286,27);
 		JLabel weight = GUIUtil.createText(String.valueOf(player.getWeight()),215,199,286,27);
 		JLabel id = GUIUtil.createText(String.valueOf(player.getPlayerID()),410,199,92,27);
-		JLabel sex = GUIUtil.createText(player.getGender(),526,199,89,27);
+		JLabel sex = GUIUtil.createText(player.getSex(),526,199,89,27);
 		JLabel firstname = GUIUtil.createText(player.getFirstName(),102,273,153,27);
 		JLabel middlename = GUIUtil.createText(player.getMiddleName(),276,271,164,27);
 		JLabel lastname = GUIUtil.createText(player.getLastName(),462,273,153,27);
@@ -1529,7 +1529,7 @@ public class GUIAdminView {
 						int month = Integer.parseInt(dateParts[0]);
 						int day = Integer.parseInt(dateParts[1]);
 						int year = Integer.parseInt(dateParts[2]);
-						player.setDateOfBirth(new CustomTimestamp(year, month, day));
+						player.setBirthday(new CustomTimestamp(year, month, day));
 					} catch(DateTimeParseException dtpe) {
 						JOptionPane.showMessageDialog(frame, 
 							"Invalid Date. Please input it as MM/DD/YYYY");
@@ -1551,7 +1551,7 @@ public class GUIAdminView {
 	frame.setContentPane(cp);
 
 		JLabel id = GUIUtil.createText(String.valueOf(player.getPlayerID()),410,199,92,27);
-		JLabel sex = GUIUtil.createText(player.getGender(),526,199,89,27);
+		JLabel sex = GUIUtil.createText(player.getSex(),526,199,89,27);
 		JLabel fullname = GUIUtil.createText(player.getFullName(),102,273,515,27);
 		JLabel birthday = GUIUtil.createText(player.getDateOfBirth(), 90, 338, 255, 27);
 
@@ -1603,7 +1603,7 @@ public class GUIAdminView {
 	}
 
 	public void viewPlayerPanel(Player player){
-    String imagePath = "assets/admin/player/" + "pView.png";
+    String imagePath = "assets/admin/player/pView.png";
 		cp = BackgroundPanel.create(imagePath);
 		cp.setLayout(null);
 		frame.setContentPane(cp);
@@ -1612,7 +1612,7 @@ public class GUIAdminView {
 		JLabel height = GUIUtil.createText(String.valueOf(player.getHeight()),100,199,286,27);
 		JLabel weight = GUIUtil.createText(String.valueOf(player.getWeight()),220,199,286,27);
 		JLabel id = GUIUtil.createText(String.valueOf(player.getPlayerID()),410,199,92,27);
-		JLabel sex = GUIUtil.createText(player.getGender(),526,199,89,27);
+		JLabel sex = GUIUtil.createText(player.getSex(),526,199,89,27);
 		JLabel fullname = GUIUtil.createText(player.getFullName(),102,273,515,27);
 		JLabel birthday = GUIUtil.createText(player.getDateOfBirth(), 100, 355, 270, 27);
 		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
@@ -1625,15 +1625,29 @@ public class GUIAdminView {
 		
 		cp.add(backBtn);
 
-		backBtn.addActionListener(e -> controller.handlePlayer("home"));
+		backBtn.addActionListener(e -> playerDashboardPanel());
 
 		cp.revalidate();
 		cp.repaint();
 	}
 
 	public void viewReportPlayerPanel(){
+        cp = BackgroundPanel.create("assets/admin/player/pReport.png");
+        cp.setLayout(null);
+        frame.setContentPane(cp);
 
+        JButton generateBtn = GUIUtil.createIButton(259, 249, 200, 27);
+        JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
+
+        cp.add(generateBtn);
+        cp.add(backBtn);
+
+        backBtn.addActionListener(e -> playerDashboardPanel());
+
+        cp.revalidate();
+        cp.repaint();
 	}
+
 	public void searchUpdatePlayerPanel(){
 
 		cp = BackgroundPanel.create("assets/admin/player/pSearch.png");
