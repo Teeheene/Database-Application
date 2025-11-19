@@ -43,6 +43,10 @@ public class AdminController {
 				System.out.println("Opening player dashboard...");
 				view.playerDashboardPanel();
 			    break;
+			case "coach":
+				System.out.println("Opening coach dashboard...");
+				view.coachDashboardPanel();
+				break;
             case "tournament":
                 System.out.println("Opening tournament dashboard...");
                 view.tournamentDashboardPanel();
