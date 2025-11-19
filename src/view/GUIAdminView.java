@@ -695,6 +695,541 @@ public class GUIAdminView {
 
 	//ENTHUSIASTS DASHBOARD!!!!!!!
 
+	// COACH DASHBOARD
+	public void coachDashboardPanel() {
+		cp = BackgroundPanel.create("assets/admin/coach_crud.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JButton createBtn = GUIUtil.createIButton(235,198,246,27);
+		JButton viewAllBtn = GUIUtil.createIButton(235,235,246,27);
+		JButton updateBtn = GUIUtil.createIButton(235,269,246,27);
+		JButton deleteBtn = GUIUtil.createIButton(235,305,246,27);
+		JButton reportBtn = GUIUtil.createIButton(235,341,246,27);
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		cp.add(createBtn);
+		cp.add(viewAllBtn);
+		cp.add(updateBtn);
+		cp.add(deleteBtn);
+		cp.add(reportBtn);
+		cp.add(backBtn);
+
+		createBtn.addActionListener(e -> controller.handleCoach("create"));
+		viewAllBtn.addActionListener(e -> controller.handleCoach("viewAll"));
+		updateBtn.addActionListener(e -> controller.handleCoach("update"));
+		deleteBtn.addActionListener(e -> controller.handleCoach("delete"));
+		reportBtn.addActionListener(e -> controller.handleCoach("report"));
+		backBtn.addActionListener(e -> controller.handleCoach("exit"));
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
+	public void createCoachPanel() {
+		cp = BackgroundPanel.create("assets/admin/coach/create.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JTextField lastNameField = GUIUtil.createTextField(121,196,268,27);
+		JTextField firstNameField = GUIUtil.createTextField(121,251,268,27);
+		JTextField middleNameField = GUIUtil.createTextField(121,306,268,27);
+		JTextField startYearField = GUIUtil.createTextField(120, 363, 161, 27);
+		JTextField endYearField = GUIUtil.createTextField(120, 417, 161, 27);
+		JTextField yearField = GUIUtil.createTextField(447,194,151,27);
+		JTextField monthField = GUIUtil.createTextField(447,248,151,27);
+		JTextField dayField = GUIUtil.createTextField(447,305,151,27);
+		JButton sexF = GUIUtil.createIButton(439,359,40,27);
+		JButton sexM = GUIUtil.createIButton(485,359,40,27);
+		JButton sexOther = GUIUtil.createIButton(530,359,71,27);
+		JButton submitBtn = GUIUtil.createIButton(575,440,60,27);
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		cp.add(lastNameField);
+		cp.add(firstNameField);
+		cp.add(middleNameField);
+		cp.add(startYearField);
+		cp.add(endYearField);
+		cp.add(yearField);
+		cp.add(monthField);
+		cp.add(dayField);
+		cp.add(sexF);
+		cp.add(sexM);
+		cp.add(sexOther);
+		cp.add(submitBtn);
+		cp.add(backBtn);
+
+		final String[] sex = { "none" };
+		Border blackBorder = BorderFactory.createLineBorder(new Color(141,53,18), 2);
+		Border noBorder = BorderFactory.createLineBorder(Color.BLACK, 0);
+
+		sexF.addActionListener(e -> {
+			sex[0] = "Female";
+			sexF.setBorder(blackBorder);
+			sexM.setBorder(noBorder);
+			sexOther.setBorder(noBorder);
+		});
+		sexM.addActionListener(e -> {
+			sex[0] = "Male";
+			sexM.setBorder(blackBorder);
+			sexF.setBorder(noBorder);
+			sexOther.setBorder(noBorder);
+		});
+		sexOther.addActionListener(e -> {
+			sex[0] = "Other";
+			sexOther.setBorder(blackBorder);
+			sexF.setBorder(noBorder);
+			sexM.setBorder(noBorder);
+		});
+		submitBtn.addActionListener(e -> {
+			try {
+				String lastName = lastNameField.getText().trim();
+				String firstName = firstNameField.getText().trim();
+				String middleName = middleNameField.getText().trim();
+				int start = Integer.parseInt(startYearField.getText().trim());
+				Integer end;
+				if(endYearField.getText().isEmpty())
+					end = null;
+				else
+					end = Integer.parseInt(endYearField.getText().trim());
+
+				//err handling
+				if(lastName.isEmpty() ||
+						firstName.isEmpty()) {
+					JOptionPane.showMessageDialog(frame,
+							"Required Fields! Fill in all the required fields (middle name is optional).");
+					return; // stop further processing
+				}
+				if(sex[0].equals("none")) {
+					JOptionPane.showMessageDialog(frame,
+							"Required Fields! No sex chosen.");
+					return; // stop further processing
+				}
+				int year = Integer.parseInt(yearField.getText().trim());
+				int month = Integer.parseInt(monthField.getText().trim());
+				int day = Integer.parseInt(dayField.getText().trim());
+
+				//for validating date of birth
+				LocalDate dateOfBirth = LocalDate.of(year, month, day);
+
+				Coach coach = new Coach(
+						lastName, firstName, middleName,
+						sex[0],
+						new CustomTimestamp(year, month, day), start, end
+				);
+
+				if(middleName.isEmpty()) {
+					coach.setMiddleName(null);
+				}
+
+				if(end == null)
+					coach.setEndYear(null);
+
+				controller.addCoach(coach);
+
+				lastNameField.setText("");
+				firstNameField.setText("");
+				middleNameField.setText("");
+				startYearField.setText("");
+				endYearField.setText("");
+				yearField.setText("");
+				monthField.setText("");
+				dayField.setText("");
+				sexOther.setBorder(noBorder);
+				sexF.setBorder(noBorder);
+				sexM.setBorder(noBorder);
+			} catch (NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(frame,
+						"Invalid Date. Please enter numerical values.");
+			} catch (DateTimeException dte) {
+				JOptionPane.showMessageDialog(frame,
+						"Invalid Date. Please check the day, month and or year.");
+			}
+		});
+		backBtn.addActionListener(e -> coachDashboardPanel());
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
+	public void viewAllCoachesPanel(LinkedHashMap<String, String> info) {
+		cp = BackgroundPanel.create("assets/admin/coach/view_all.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JButton currentBtn = GUIUtil.createIButton(647, 108, 64, 19);
+		JButton pastBtn = GUIUtil.createIButton(647, 133, 64, 20);
+		JButton allBtn = GUIUtil.createIButton(647, 159, 64, 20);
+		JLabel overlay = new JLabel(new ImageIcon("assets/admin/coach/view_all_overlay.png"));
+		overlay.setBounds(0, 0, 720, 480);
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		cp.add(backBtn);
+		cp.add(currentBtn);
+		cp.add(pastBtn);
+		cp.add(allBtn);
+
+		JPanel scrollingPanel = new JPanel(null);
+		int index = 0;
+		int gap = 60;
+		int y = 121;
+
+		for(Map.Entry<String, String> entry : info.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue();
+
+			String[] keys = key.split("-");
+			int coachID = Integer.parseInt(keys[0]);
+			String status = keys[1];
+
+			JPanel user = new JPanel(null);
+			user.setOpaque(false);
+
+			String imgPath = "assets/admin/coach/";
+			if(status.equals("current"))
+				imgPath += "label_current";
+			else if(status.equals("past"))
+				imgPath += "label_past";
+			imgPath += ".png";
+
+			JLabel label = new JLabel(new ImageIcon(imgPath));
+			label.setBounds(0, 0, 588, 54);
+			label.setOpaque(false);
+
+			JButton labelBtn = GUIUtil.createIButton(0, 0, 588, 54);
+			JLabel coachInfo = GUIUtil.createText(value, 62, 17, 443, 20);
+
+			labelBtn.addActionListener(e -> {
+				controller.showCoach(coachID, status);
+				System.out.println("coach is a " + status + " coach");
+			});
+
+			user.add(coachInfo);
+			user.add(label);
+			user.add(labelBtn);
+
+			user.setBounds(41, y + index * gap, 589, 55);
+			scrollingPanel.add(user);
+			index++;
+		}
+
+		cp.add(overlay);
+		int totalHeight = y + info.size() * gap;
+		scrollingPanel.setBounds(0, 0, 720, totalHeight);
+		scrollingPanel.setOpaque(false);
+		cp.add(scrollingPanel);
+
+		cp.addMouseWheelListener(new MouseWheelListener() {
+			int offset = 0;
+
+			@Override
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				int rotation = e.getWheelRotation();
+				offset -= rotation * 20;
+
+				int maxOffset = 0;
+				int minOffset = Math.min(0, cp.getHeight() - 20 - totalHeight);
+				offset = Math.max(minOffset, Math.min(maxOffset, offset));
+
+				scrollingPanel.setLocation(0, offset);
+				cp.repaint();
+			}
+		});
+
+		pastBtn.addActionListener(e -> controller.handleCoach("viewPast"));
+		currentBtn.addActionListener(e -> controller.handleCoach("viewCurrent"));
+		allBtn.addActionListener(e -> controller.handleCoach("viewAll"));
+		backBtn.addActionListener(e -> coachDashboardPanel());
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
+	public void viewCoachPanel(Coach coach, String status, String back) {
+		String imgPath = "assets/admin/coach/" + status + ".png";
+		cp = BackgroundPanel.create(imgPath);
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JLabel start = GUIUtil.createText(String.valueOf(coach.getStartYear()), 102, 200, 104, 29);
+		JLabel end = GUIUtil.createText(String.valueOf(coach.getEndYear()), 226, 200, 104, 29);
+		JLabel id = GUIUtil.createText(String.valueOf(coach.getCoachID()), 426, 200, 107, 29);
+		JLabel gender = GUIUtil.createText(coach.getGender(), 548, 200, 104, 29);
+		JLabel fullName = GUIUtil.createText(coach.getFullName(), 100, 278, 555, 32);
+		JLabel birthday = GUIUtil.createText(coach.getBirthday().getDisplayDate(), 100, 355, 269, 29);
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+
+		cp.add(start);
+		cp.add(end);
+		cp.add(id);
+		cp.add(gender);
+		cp.add(fullName);
+		cp.add(birthday);
+		cp.add(backBtn);
+
+		backBtn.addActionListener(e -> controller.handleCoach(back));
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
+	public void searchUpdateCoachPanel() {
+		cp = BackgroundPanel.create("assets/admin/coach/search.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JButton submitBtn = GUIUtil.createIButton(528,260,98,27);
+		JTextField field = GUIUtil.createTextField(142,261,367,27);
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		cp.add(submitBtn);
+		cp.add(field);
+		cp.add(backBtn);
+
+		backBtn.addActionListener(e -> coachDashboardPanel());
+		submitBtn.addActionListener(e -> {
+			String input = field.getText().trim();
+			field.setText("");
+
+			try {
+				int id = Integer.parseInt(input);
+				if(!controller.updateCoachView(id)) {
+					JOptionPane.showMessageDialog(frame,
+							"ID does not exist.");
+				}
+			} catch(NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(frame,
+						"Invalid ID number.");
+			}
+		});
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
+	public void updateCoachPanel(Coach coach) {
+		cp = BackgroundPanel.create("assets/admin/coach/update_view.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		cp.add(backBtn);
+		JButton saveBtn = GUIUtil.createIButton(570, 440, 64, 27);
+		cp.add(saveBtn);
+
+		JLabel start = GUIUtil.createText(String.valueOf(coach.getStartYear()), 102, 199, 99, 27);
+		JLabel end = GUIUtil.createText(String.valueOf(coach.getEndYear()), 220, 199, 99, 27);
+		JLabel id = GUIUtil.createText(String.valueOf(coach.getCoachID()), 410, 199, 102, 27);
+		JLabel gender = GUIUtil.createText(coach.getGender(), 526, 199, 99, 27);
+		JLabel firstName = GUIUtil.createText(coach.getFirstName(), 102, 273, 163, 27);
+		JLabel middleName = GUIUtil.createText(coach.getMiddleName(), 276, 271, 174, 27);
+		JLabel lastName = GUIUtil.createText(coach.getLastName(), 462, 273, 163, 27);
+		JLabel birthday = GUIUtil.createText(coach.getBirthday().getDisplayDate(), 100, 346, 255, 27);
+
+		JButton editStart = GUIUtil.createIButton(168, 178, 36, 18);
+		JButton editEnd = GUIUtil.createIButton(286, 178, 36, 18);
+		JButton editGender = GUIUtil.createIButton(584, 179, 36, 18);
+		JButton editFirst = GUIUtil.createIButton(223, 253, 36, 18);
+		JButton editMiddle = GUIUtil.createIButton(409, 252, 36, 18);
+		JButton editLast = GUIUtil.createIButton(584, 253, 36, 18);
+		JButton editBirthday = GUIUtil.createIButton(314, 326, 36, 18);
+
+		cp.add(start);
+		cp.add(end);
+		cp.add(id);
+		cp.add(gender);
+		cp.add(firstName);
+		cp.add(middleName);
+		cp.add(lastName);
+		cp.add(birthday);
+		cp.add(editStart);
+		cp.add(editEnd);
+		cp.add(editGender);
+		cp.add(editFirst);
+		cp.add(editMiddle);
+		cp.add(editLast);
+		cp.add(editBirthday);
+
+		backBtn.addActionListener(e -> coachDashboardPanel());
+		saveBtn.addActionListener(e -> controller.updateCoach(coach));
+		editStart.addActionListener(e -> updateFieldCoachPanel(coach, "start year"));
+		editEnd.addActionListener(e -> updateFieldCoachPanel(coach, "end year"));
+		editGender.addActionListener(e -> updateFieldCoachPanel(coach, "gender"));
+		editFirst.addActionListener(e -> updateFieldCoachPanel(coach, "first name"));
+		editMiddle.addActionListener(e -> updateFieldCoachPanel(coach, "middle name"));
+		editLast.addActionListener(e -> updateFieldCoachPanel(coach, "last name"));
+		editBirthday.addActionListener(e -> updateFieldCoachPanel(coach, "birthday"));
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
+	public void updateFieldCoachPanel(Coach coach, String type) {
+		cp = BackgroundPanel.create("assets/admin/coach/update_field.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JButton submitBtn = GUIUtil.createIButton(519, 252, 98, 27);
+		JTextField field = GUIUtil.createTextField(100, 252, 400, 27);
+		JButton backBtn = GUIUtil.createIButton(648, 440, 64, 27);
+		cp.add(submitBtn);
+		cp.add(field);
+		cp.add(backBtn);
+
+		backBtn.addActionListener(e -> updateCoachPanel(coach));
+		submitBtn.addActionListener(e -> {
+			String input = field.getText().trim();
+
+			switch(type) {
+				case "start year": case "first name":
+				case "last name": case "gender":
+				case "birthday":
+					if(input.isEmpty()) {
+						JOptionPane.showMessageDialog(frame,
+								"Required field! Please input for " + type + ".");
+						return;
+					}
+			}
+
+			if(type.equals("gender") &&
+					!(input.equals("Male") ||
+							input.equals("Female") ||
+							input.equals("Other"))) {
+				JOptionPane.showMessageDialog(frame,
+						"Sex must be Male, Female or Other.");
+				return;
+			}
+
+			switch(type) {
+				case "start year":
+					coach.setStartYear(Integer.parseInt(input));
+					break;
+				case "end year":
+					if(input.isEmpty())
+						coach.setEndYear(null);
+					else {
+						coach.setEndYear(Integer.parseInt(input));
+						coach.setInGameStatus(false);
+					}
+
+					break;
+				case "gender":
+					coach.setGender(input);
+					break;
+				case "first name":
+					coach.setFirstName(input);
+					break;
+				case "middle name":
+					if(input.isEmpty())
+						coach.setMiddleName(null);
+					else
+						coach.setMiddleName(input);
+
+					break;
+				case "last name":
+					coach.setLastName(input);
+					break;
+				case "birthday":
+					DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+					try {
+						LocalDate date = LocalDate.parse(input, format);
+						String[] dateParts = input.split("/");
+						int month = Integer.parseInt(dateParts[0]);
+						int day = Integer.parseInt(dateParts[1]);
+						int year = Integer.parseInt(dateParts[2]);
+						coach.setBirthday(new CustomTimestamp(year, month, day));
+					} catch(DateTimeParseException dtpe) {
+						JOptionPane.showMessageDialog(frame,
+								"Invalid Date. Please input it as MM/DD/YYYY");
+						return;
+					}
+					break;
+			}
+
+			updateCoachPanel(coach);
+		});
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
+	public void searchDeleteCoachPanel() {
+		cp = BackgroundPanel.create("assets/admin/coach/search.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JButton submitBtn = GUIUtil.createIButton(528,260,98,27);
+		JTextField field = GUIUtil.createTextField(142,261,367,27);
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		cp.add(submitBtn);
+		cp.add(field);
+		cp.add(backBtn);
+
+		backBtn.addActionListener(e -> coachDashboardPanel());
+		submitBtn.addActionListener(e -> {
+			String input = field.getText().trim();
+			field.setText("");
+
+			try {
+				int id = Integer.parseInt(input);
+				if(!controller.deleteCoachView(id)) {
+					JOptionPane.showMessageDialog(frame,
+							"ID does not exist.");
+				}
+			} catch(NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(frame,
+						"Invalid ID number.");
+			}
+		});
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
+	public void deleteCoachPanel(Coach coach) {
+		cp = BackgroundPanel.create("assets/admin/coach/delete.png");
+		cp.setLayout(null);
+		frame.setContentPane(cp);
+
+		JLabel id = GUIUtil.createText(String.valueOf(coach.getCoachID()), 95, 207, 102, 27);
+		JLabel gender = GUIUtil.createText(coach.getGender(), 211, 207, 99, 27);
+		JLabel fullName = GUIUtil.createText(coach.getFullName(), 92, 273, 525, 27);
+		JLabel birthday = GUIUtil.createText(coach.getBirthday().getDisplayDate(), 90, 338, 255, 27);
+		JButton backBtn = GUIUtil.createIButton(648,440,64,27);
+		JButton delBtn = GUIUtil.createIButton(521, 440, 113, 27);
+		cp.add(id);
+		cp.add(gender);
+		cp.add(fullName);
+		cp.add(birthday);
+		cp.add(backBtn);
+		cp.add(delBtn);
+
+		backBtn.addActionListener(e -> coachDashboardPanel());
+		delBtn.addActionListener(e -> {
+			int choice = JOptionPane.showConfirmDialog(frame, "Are you sure you want to delete this record?",
+					"Coach record deletion", JOptionPane.YES_NO_OPTION);
+
+			if(choice == JOptionPane.YES_OPTION) {
+				controller.deleteCoach(coach);
+				JOptionPane.showMessageDialog(null, "Record deleted.");
+			}
+			else
+				JOptionPane.showMessageDialog(null, "Deleting cancelled.");
+
+			coachDashboardPanel();
+		});
+
+		cp.revalidate();
+		cp.repaint();
+	}
+
+	// IN PROGRESS
+	public void viewReportCoachPanel() {
+
+	}
+
+	// IN PROGRESS
+	public void generateCoachReport() {
+
+	}
+
+	// -------------------------------------
+
 	//PLAYERS DASHBOARD!!!!!!!
     /**
 	 * CREATE PLAYER PANEL
