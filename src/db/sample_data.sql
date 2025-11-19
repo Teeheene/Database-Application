@@ -288,7 +288,7 @@ INSERT INTO engagement_tournament (engagement_id, tournament_id) VALUES
 (99,3);
 
 INSERT INTO game (game_id, tournament_id, competing_teamA_id, competing_teamB_id, winning_team_id,
-losing_team_id, score_ratio, game_status, start_date, end_date)
+losing_team_id, score_ratio, game_status, start_date, end_date) VALUES
 (1, 1, 1, 2, 1, 2, '89-75', 'Completed', '2020-01-12', '2020-01-12'),
 (2, 1, 3, 4, 4, 3, '92-88', 'Completed', '2020-01-15', '2020-01-15'),
 (3, 1, 5, 6, 5, 6, '101-90', 'Completed', '2020-01-18', '2020-01-18'),
