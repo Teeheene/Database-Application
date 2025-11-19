@@ -148,9 +148,8 @@ CREATE TABLE game (
     end_date DATE,
     PRIMARY KEY (game_id),
     FOREIGN KEY (tournament_id) REFERENCES tournament(tournament_id),
-    -- Note: waiting for competing team id
-    -- FOREIGN KEY (competing_teamA_id) REFERENCES competing_team(competing_team_id),
-    -- FOREIGN KEY (competing_teamB_id) REFERENCES competing_team(competing_team_id),
+    FOREIGN KEY (competing_teamA_id) REFERENCES competing_team(competing_team_id),
+    FOREIGN KEY (competing_teamB_id) REFERENCES competing_team(competing_team_id),
     FOREIGN KEY (winning_team_id) REFERENCES team(team_id),
     FOREIGN KEY (losing_team_id) REFERENCES team(team_id)
 );
