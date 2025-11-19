@@ -15,7 +15,7 @@ public class GameManagement {
     public GameManagement() {
     }
 
-    // add game (draft)
+    // add game
     public int addGame(Game game) {
         String sql = "INSERT INTO game (game_id, tournament_id, competing_teamA_id, competing_teamB_id, winning_team_id, losing_team_id, score_ratio, game_status, start_date, end_date)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -81,11 +81,11 @@ public class GameManagement {
                 "tournament_id = ?, " +
                 "competing_teamA_id = ?, " +
                 "competing_teamB_id = ?, " +
-                "winning_team_id = ? " +
-                "losing_team_id = ? " +
-                "score_ratio = ? " +
-                "game_status = ? " +
-                "start_date = ? " +
+                "winning_team_id = ?, " +
+                "losing_team_id = ?, " +
+                "score_ratio = ?, " +
+                "game_status = ?, " +
+                "start_date = ?, " +
                 "end_date = ? " +
 
                 "WHERE game_id = ?";
@@ -176,4 +176,33 @@ public class GameManagement {
 
         return game;
     }
+
+    // validation
+    public boolean tournamentExists(int tournamentID) {
+        String sql = "SELECT 1 FROM tournament WHERE tournament_id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            statement.setInt(1, tournamentID);
+            ResultSet rs = statement.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+
+
+
+
+
+    boolean teamExists(int teamID) {return true;}
+    boolean gameExists(int gameID) {return true;}
+    boolean isTeamInTournament(int teamID, int tournamentID) {return true;}
+    boolean isWinnerValid(Game game) {return true;}
+    boolean isGameInBracket(int gameID) {return true;}
+
 }
