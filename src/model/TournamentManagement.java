@@ -50,19 +50,50 @@ public class TournamentManagement {
 
     // delete tournament
     public void deleteTournament(int tournamentID) {
-        String sql = "DELETE FROM tournament WHERE tournament_id = ?";
+        Connection conn = null;
+        try {
+            conn = DatabaseConnection.getConnection();
+            conn.setAutoCommit(false); // Start transaction
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement statement = conn.prepareStatement(sql)) {
-            statement.setInt(1, tournamentID);
+            // First delete related records in engagement_tournament table
+            String deleteEngagementSQL = "DELETE FROM engagement_tournament WHERE tournament_id = ?";
+            try (PreparedStatement engagementStmt = conn.prepareStatement(deleteEngagementSQL)) {
+                engagementStmt.setInt(1, tournamentID);
+                engagementStmt.executeUpdate();
+            }
 
-            int rowsDeleted = statement.executeUpdate();
-            if (rowsDeleted > 0)
-                System.out.println("Tournament deleted");
-            else
-                System.out.println("Failed to delete");
+            // Then delete the tournament
+            String deleteTournamentSQL = "DELETE FROM tournament WHERE tournament_id = ?";
+            try (PreparedStatement tournamentStmt = conn.prepareStatement(deleteTournamentSQL)) {
+                tournamentStmt.setInt(1, tournamentID);
+                int rowsDeleted = tournamentStmt.executeUpdate();
+
+                if (rowsDeleted > 0) {
+                    conn.commit(); // Commit transaction
+                    System.out.println("Tournament and related records deleted successfully");
+                } else {
+                    conn.rollback(); // Rollback if tournament not found
+                    System.out.println("Tournament not found");
+                }
+            }
         } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback(); // Rollback on error
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true); // Reset auto-commit
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
