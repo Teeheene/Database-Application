@@ -2079,7 +2079,30 @@ public class GUIAdminView {
 
     // helper
     private void quickUpdate(Tournament tournament, String field, JLabel label) {
-        String input = JOptionPane.showInputDialog(frame, "Enter new " + field + ":");
+        String currentValue = "";
+        String message = "Enter new " + field + ":";
+
+        // Set current value and custom message for dates
+        switch (field) {
+            case "start":
+            case "end":
+                currentValue = (field.equals("start")) ?
+                        tournament.getStartDate().toStringDate() :
+                        tournament.getEndDate().toStringDate();
+                message = "Enter new " + field + " date (YYYY-MM-DD):\nCurrent: " + currentValue;
+                break;
+            case "name":
+                currentValue = tournament.getTournamentName();
+                break;
+            case "season":
+                currentValue = String.valueOf(tournament.getSeasonYear());
+                break;
+            case "type":
+                currentValue = tournament.getTournamentType();
+                break;
+        }
+
+        String input = JOptionPane.showInputDialog(frame, message, currentValue);
         if (input == null || input.trim().isEmpty()) return;
 
         try {
@@ -2098,17 +2121,39 @@ public class GUIAdminView {
                     break;
                 case "start":
                     String[] parts = input.split("-");
-                    tournament.setStartDate(new CustomTimestamp(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2])));
+                    if (parts.length != 3) throw new IllegalArgumentException("Invalid date format");
+                    CustomTimestamp newStart = new CustomTimestamp(
+                            Integer.parseInt(parts[0]),
+                            Integer.parseInt(parts[1]),
+                            Integer.parseInt(parts[2])
+                    );
+                    // Validate start date is not after end date
+                    if ((tournament.getEndDate().isBefore(newStart))) {
+                        JOptionPane.showMessageDialog(frame, "Start date cannot be after end date!");
+                        return;
+                    }
+                    tournament.setStartDate(newStart);
                     label.setText(input);
                     break;
                 case "end":
                     String[] eParts = input.split("-");
-                    tournament.setEndDate(new CustomTimestamp(Integer.parseInt(eParts[0]), Integer.parseInt(eParts[1]), Integer.parseInt(eParts[2])));
+                    if (eParts.length != 3) throw new IllegalArgumentException("Invalid date format");
+                    CustomTimestamp newEnd = new CustomTimestamp(
+                            Integer.parseInt(eParts[0]),
+                            Integer.parseInt(eParts[1]),
+                            Integer.parseInt(eParts[2])
+                    );
+                    // Validate end date is not before start date
+                    if (newEnd.isBefore(tournament.getStartDate())) {
+                        JOptionPane.showMessageDialog(frame, "End date cannot be before start date!");
+                        return;
+                    }
+                    tournament.setEndDate(newEnd);
                     label.setText(input);
                     break;
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(frame, "Invalid format!");
+            JOptionPane.showMessageDialog(frame, "Invalid format! Use YYYY-MM-DD for dates.");
         }
     }
 
